@@ -1,0 +1,45 @@
+body {
+    font-family: Envy Code R;
+    font-size: 80%;
+    height: 100%;
+}
+
+#top, #bottom {
+    width: 100vw;
+    height: 50vh;
+    float: left;
+}
+
+#bottom {
+    background-color: aqua;
+}
+
+.list-column {
+    width: 25vw;
+    float: left;
+    overflow-y: auto;
+    border-right: 1px solid black;
+}
+
+.list-column ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    height: 50vh;
+}
+
+.list-column ul li.odd {
+    background-color: #dadacf;
+}
+
+.list-column ul li {
+    cursor: pointer;
+}
+
+.list-column ul li:hover {
+    background-color: yellow;
+}
+
+#gem-list-box {
+    background: silver;
+}

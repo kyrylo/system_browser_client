@@ -2,8 +2,11 @@
   "name": "system_browser",
   "main": "index.html",
   "window": {
-	"toolbar": false,
+	"toolbar": true,
 	"width": 800,
 	"height": 600
+  },
+  "dependencies": {
+    "angular": "~1.4.1"
   }
 }

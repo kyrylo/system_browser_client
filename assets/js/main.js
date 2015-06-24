@@ -32,12 +32,13 @@ systemBrowser.factory('socket', function() {
   return socket;
 });
 
-var Request = function(action, resource, scope) {
+var Request = function(action, resource, scope, other) {
   this.body = {
     system_browser_server: {
       action: action,
       resource: resource,
-      scope: scope
+      scope: scope,
+      other: other
     }
   };
 };
@@ -47,8 +48,7 @@ Request.prototype.to_json = function() {
   return JSON.stringify(this.body) + '\n';
 };
 
-systemBrowser
-  .factory('gemFactory', ['socket', function(socket) {
+systemBrowser.factory('gemFactory', ['socket', function(socket) {
   return {
     getGems: function() {
       var req = new Request('get', 'gem', 'all');
@@ -57,11 +57,29 @@ systemBrowser
   };
 }]);
 
-systemBrowser
-  .factory('behaviourFactory', ['socket', function(socket) {
+systemBrowser.factory('behaviourFactory', ['socket', function(socket) {
   return {
     getBehaviours: function(gem_name) {
       var req = new Request('get', 'behaviour', gem_name);
+      socket.write(req.to_json());
+    }
+  };
+}]);
+
+systemBrowser.factory('methodFactory', ['socket', function(socket) {
+  return {
+    getMethods: function(behaviour) {
+      var req = new Request('get', 'method', behaviour);
+      socket.write(req.to_json());
+    }
+  };
+}]);
+
+systemBrowser.factory('sourceFactory', ['socket', function(socket) {
+  return {
+    getSource: function(owner, method) {
+      var params = {owner: owner, method: method};
+      var req = new Request('get', 'source', 'with-comment', params);
       socket.write(req.to_json());
     }
   };
@@ -84,9 +102,12 @@ var GemController = function($scope, emitter, gemFactory) {
   };
 };
 
-var BehaviourController = function($scope, emitter, behaviourFactory) {
+var BehaviourController = function($scope, $rootScope, emitter, behaviourFactory) {
   emitter.on('get:behaviour:all', function(gem_name) {
     emitter.once('add:behaviour:' + gem_name, function(behaviours) {
+      $rootScope.$emit('reset-methods');
+      $rootScope.$emit('reset-source');
+
       if (behaviours.length === 0) {
         $scope.$apply(function() {
           $scope.items = ['No behaviours found'];
@@ -100,12 +121,60 @@ var BehaviourController = function($scope, emitter, behaviourFactory) {
 
     behaviourFactory.getBehaviours(gem_name);
   });
+
+  $scope.getSublist = function(behaviour) {
+    emitter.emit('get:method:all', behaviour);
+  };
 };
 
 var GroupController = function($scope) {
 };
 
-var MethodController = function($scope) {
+var MethodController = function($scope, $rootScope, emitter, methodFactory) {
+  var methodGroup;
+
+  emitter.on('get:method:all', function(behaviour_name) {
+    emitter.once('add:method:' + behaviour_name, function(methods) {
+      $rootScope.$emit('reset-source');
+
+      if (methods.length === 0) {
+        $scope.$apply(function() {
+          $scope.items = ['No methods found'];
+        });
+      } else {
+        $scope.$apply(function() {
+          methodGroup = new MethodGroup(methods, behaviour_name);
+          $scope.items = methodGroup.instanceMethods();
+        });
+      }
+    });
+
+    methodFactory.getMethods(behaviour_name);
+  });
+
+  $rootScope.$on('reset-methods', function() {
+    $scope.items = [];
+  });
+
+  $scope.getSublist = function(method) {
+    $rootScope.$emit('get:source', methodGroup.owner, method);
+  };
+};
+
+var SourceController = function($scope, $rootScope, emitter, sourceFactory) {
+  $rootScope.$on('get:source', function(_event, owner, method) {
+    emitter.once('add:source:with-comment', function(source) {
+      $scope.$apply(function() {
+        $scope.source = source;
+      });
+    });
+
+    sourceFactory.getSource(owner, method);
+  });
+
+  $rootScope.$on('reset-source', function() {
+    $scope.source = null;
+  });
 };
 
 var MessageDispatcher = function() {
@@ -145,12 +214,45 @@ EventLoop.prototype.init = function() {
   };
 };
 
+var MethodGroup = function(methods, owner) {
+  this.owner = owner;
+
+  this.publicInstance = methods.public.instance;
+  this.publicClass = methods.public.singleton;
+
+  this.privateInstance = methods.private.instance;
+  this.privateClass = methods.private.singleton;
+
+  this.protectedInstance = methods.protected.instance;
+  this.protectedClass = methods.protected.singleton;
+};
+MethodGroup.prototype.constructor = MethodGroup;
+
+MethodGroup.prototype.instanceMethods = function() {
+  var methods = [];
+
+  methods = methods.concat(this.publicInstance);
+  methods = methods.concat(this.privateInstance);
+  methods = methods.concat(this.protectedInstance);
+
+  methods = methods.sort();
+
+  return methods.map(function(method) {
+    return '#' + method;
+  });
+};
+
 systemBrowser.controller('GemController',
                          ['$scope', 'emitter', 'gemFactory', GemController]);
 systemBrowser.controller('BehaviourController',
-                         ['$scope', 'emitter', 'behaviourFactory', BehaviourController]);
-systemBrowser.controller('GroupController', ['$scope', GroupController]);
-systemBrowser.controller('MethodController', ['$scope', MethodController]);
+                         ['$scope', '$rootScope', 'emitter', 'behaviourFactory', BehaviourController]);
+systemBrowser.controller('GroupController',
+                         ['$scope', GroupController]);
+systemBrowser.controller('MethodController',
+                         ['$scope', '$rootScope', 'emitter', 'methodFactory', MethodController]);
+
+systemBrowser.controller('SourceController',
+                         ['$scope', '$rootScope', 'emitter', 'sourceFactory', SourceController]);
 
 systemBrowser
   .controller('MainController', ['$scope', 'socket', 'emitter',

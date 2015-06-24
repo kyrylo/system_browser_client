@@ -9,14 +9,14 @@ body {
     height: 100%;
 }
 
-#top, #bottom {
+#top, #source {
     width: 100vw;
     height: 50vh;
     float: left;
 }
 
-#bottom {
-    background-color: aqua;
+#source {
+    background-color: #f8ecff;
 }
 
 .list-box {
@@ -39,7 +39,7 @@ body {
     height: 50vh;
 }
 
-.list-box ul li.odd {
+.list-box ul li.highlighted {
     background-color: #dadacf;
 }
 

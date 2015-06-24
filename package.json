@@ -2,11 +2,20 @@
   "name": "system_browser",
   "main": "index.html",
   "window": {
-	"toolbar": true,
-	"width": 800,
-	"height": 600
+    "toolbar": true,
+    "width": 800,
+    "height": 600
   },
   "dependencies": {
-    "angular": "~1.4.1"
+    "angular": "~1.4.1",
+    "angular-route": "^1.4.1",
+    "angular-socket-io": "^0.7.0",
+    "normalize.css": "^3.0.3",
+    "socket.io-client": "^1.3.5"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-concat": "^0.5.1",
+    "grunt-contrib-watch": "^0.6.1"
   }
 }

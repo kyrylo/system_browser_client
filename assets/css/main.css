@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Envy Code R';
+  src: url('../fonts/Envy Code R.ttf')  format('truetype');
+}
+
 body {
     font-family: Envy Code R;
     font-size: 80%;
@@ -14,32 +19,54 @@ body {
     background-color: aqua;
 }
 
-.list-column {
+.list-box {
     width: 25vw;
     float: left;
+}
+
+.list-box-content {
     overflow-y: auto;
+}
+
+.list-box-content {
     border-right: 1px solid black;
 }
 
-.list-column ul {
+.list-box ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
     height: 50vh;
 }
 
-.list-column ul li.odd {
+.list-box ul li.odd {
     background-color: #dadacf;
 }
 
-.list-column ul li {
+.list-box ul li {
     cursor: pointer;
 }
 
-.list-column ul li:hover {
+.list-box ul li:hover {
     background-color: yellow;
 }
 
 #gem-list-box {
     background: silver;
+}
+
+#behaviour-list-box {
+    background: #ffe1e1;
+}
+
+#group-list-box {
+    background: aliceblue;
+}
+
+#method-list-box {
+    background: #c2ffca;
+}
+
+#method-list-box .list-box-content {
+    border-right: none;
 }

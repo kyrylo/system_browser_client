@@ -3,25 +3,35 @@
   src: url('../fonts/Envy Code R.ttf')  format('truetype');
 }
 
+html, body {
+    height: 100vh;
+}
+
 body {
     font-family: Envy Code R;
     font-size: 80%;
+}
+
+pre {
+    margin: 0;
     height: 100%;
 }
 
-#top, #source {
+#top, #bottom {
     width: 100vw;
     height: 50vh;
-    float: left;
 }
 
 #source {
     background-color: #f8ecff;
+    height: 100%;
+    overflow: auto;
 }
 
 .list-box {
     width: 25vw;
     float: left;
+    height: 100%;
 }
 
 .list-box-content {
@@ -30,13 +40,13 @@ body {
 
 .list-box-content {
     border-right: 1px solid black;
+    height: 100%;
 }
 
 .list-box ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
-    height: 50vh;
 }
 
 .list-box ul li.highlighted {

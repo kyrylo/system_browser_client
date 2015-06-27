@@ -25,7 +25,7 @@ pre {
 
 #source {
     background-color: #f8ecff;
-    height: calc(100% - 5px);
+    height: calc(100% - 7px);
 }
 
 #bottom-content {
@@ -86,6 +86,17 @@ pre {
 }
 
 #resize-handle {
-    height: 5px;
+    height: 7px;
     background: #b8d9ff;
+    cursor: row-resize;
+}
+
+#handle {
+    width: 20px;
+    height: 2px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    margin: 0 auto;
+    position: relative;
+    top: 1px;
 }

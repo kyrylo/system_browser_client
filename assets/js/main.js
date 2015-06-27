@@ -3,7 +3,8 @@ var net = require('net'),
     events = require('events');
 
 var dependencies = [
-  'ngRoute'
+  'ngRoute',
+  'ui.layout'
 ];
 
 var systemBrowser = angular.module('systemBrowser', dependencies);

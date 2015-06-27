@@ -25,7 +25,7 @@ pre {
 
 #source {
     background-color: #f8ecff;
-    height: calc(100% - 7px);
+    height: 100%;
 }
 
 #bottom-content {
@@ -36,6 +36,10 @@ pre {
     width: 25vw;
     float: left;
     height: 100%;
+}
+
+#layout {
+    overflow: hidden;
 }
 
 .list-box-content {
@@ -83,20 +87,4 @@ pre {
 
 #method-list-box .list-box-content {
     border-right: none;
-}
-
-#resize-handle {
-    height: 7px;
-    background: #b8d9ff;
-    cursor: row-resize;
-}
-
-#handle {
-    width: 20px;
-    height: 2px;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
-    margin: 0 auto;
-    position: relative;
-    top: 1px;
 }

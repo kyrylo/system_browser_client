@@ -88,3 +88,7 @@ pre {
 #method-list-box .list-box-content {
     border-right: none;
 }
+
+.ui-splitbar {
+    background-color: #88b5c0;
+}

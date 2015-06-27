@@ -20,12 +20,16 @@ pre {
 #top, #bottom {
     width: 100vw;
     height: 50vh;
+    overflow: auto;
 }
 
 #source {
     background-color: #f8ecff;
+    height: calc(100% - 5px);
+}
+
+#bottom-content {
     height: 100%;
-    overflow: auto;
 }
 
 .list-box {
@@ -79,4 +83,9 @@ pre {
 
 #method-list-box .list-box-content {
     border-right: none;
+}
+
+#resize-handle {
+    height: 5px;
+    background: #b8d9ff;
 }

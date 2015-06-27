@@ -133,7 +133,7 @@ var BehaviourController = function($scope, $rootScope, emitter, behaviourFactory
 
       if (behaviours.length === 0) {
         $scope.$apply(function() {
-          $scope.items = ['No behaviours found'];
+          $scope.items = [{name: 'No behaviours found'}];
         });
       } else {
         $scope.$apply(function() {

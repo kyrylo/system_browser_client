@@ -88,8 +88,20 @@ systemBrowser.factory('sourceFactory', ['socket', function(socket) {
 
 systemBrowser.factory('groupFactory', [function() {
   return {
-    getGroups: function() {
-      return ['-- all --', 'public', 'private', 'protected'];
+    getAll: function() {
+      return '-- all --';
+    },
+
+    getPublic: function() {
+      return 'public';
+    },
+
+    getPrivate: function() {
+      return 'private';
+    },
+
+    getProtected: function() {
+      return 'protected';
     }
   };
 }]);
@@ -138,8 +150,12 @@ var BehaviourController = function($scope, $rootScope, emitter, behaviourFactory
   };
 };
 
-var GroupController = function($scope, $rootScope) {
-  $rootScope.$on('add:method-group', function(methodGroup) {
+var GroupController = function($scope, $rootScope, groupFactory) {
+  $rootScope.$on('add:method-group', function(_event, methodGroup) {
+    var groups = [];
+
+    // if (methodGroup.anyPublicMethods()) {
+    // }
   });
 };
 
@@ -158,7 +174,12 @@ var MethodController = function($scope, $rootScope, emitter, methodFactory) {
         $scope.$apply(function() {
           methodGroup = new MethodGroup(methods, behaviour.name);
           $rootScope.$emit('add:method-group', methodGroup);
-          $scope.items = methodGroup.instanceMethods();
+
+          if (document.querySelector('#main-toolbar input').checked) {
+            $scope.items = methodGroup.classMethods();
+          } else {
+            $scope.items = methodGroup.instanceMethods();
+          }
         });
       }
     });
@@ -168,6 +189,17 @@ var MethodController = function($scope, $rootScope, emitter, methodFactory) {
 
   $rootScope.$on('reset-methods', function() {
     $scope.items = [];
+  });
+
+  $rootScope.$on('class-side-checkbox', function(_event, showClassSide) {
+    if (methodGroup === undefined)
+      return;
+
+    if (showClassSide) {
+      $scope.items = methodGroup.classMethods();
+    } else {
+      $scope.items = methodGroup.instanceMethods();
+    }
   });
 
   $scope.getSublist = function(method) {
@@ -191,8 +223,10 @@ var SourceController = function($scope, $rootScope, emitter, sourceFactory) {
   });
 };
 
-var MainToolbarController = function($scope) {
-
+var MainToolbarController = function($scope, $rootScope) {
+  $scope.toggleClassSide = function() {
+    $rootScope.$emit('class-side-checkbox', $scope.toolbar.classSide);
+  };
 };
 
 var MessageDispatcher = function() {
@@ -258,6 +292,45 @@ MethodGroup.prototype.instanceMethods = function() {
   });
 };
 
+MethodGroup.prototype.classMethods = function() {
+  var methods = [];
+
+  methods = methods.concat(this.publicClass);
+  methods = methods.concat(this.privateClass);
+  methods = methods.concat(this.protectedClass);
+
+  return methods.map(function(method) {
+    return {name: '.' + method};
+  });
+};
+
+MethodGroup.prototype.anyPublicMethods = function(ctx) {
+  if (ctx == 'instance')
+    return this.publicInstance.length !== 0;
+  else if (ctx == 'singleton')
+    return this.publicClass.length !== 0;
+  else
+    throw new Error('unknown context: ' + ctx);
+};
+
+MethodGroup.prototype.anyPrivateMethods = function(ctx) {
+  if (ctx == 'instance')
+    return this.privateInstance.length !== 0;
+  else if (ctx == 'singleton')
+    return this.privateClass.length !== 0;
+  else
+    throw new Error('unknown context: ' + ctx);
+};
+
+MethodGroup.prototype.anyProtectedMethods = function(ctx) {
+  if (ctx == 'instance')
+    return this.protectedInstance.length !== 0;
+  else if (ctx == 'singleton')
+    return this.protectedClass.length !== 0;
+  else
+    throw new Error('unknown context: ' + ctx);
+};
+
 systemBrowser.controller('GemController',
                          ['$scope', 'emitter', 'gemFactory', GemController]);
 systemBrowser.controller('BehaviourController',
@@ -274,18 +347,19 @@ systemBrowser.controller('MainToolbarController',
 
 
 systemBrowser
-  .controller('MainController', ['$scope', 'socket', 'emitter',
-    function ($scope, socket, emitter, gemFactory) {
-  $scope.panes = [
-    {name: 'gem', controller: GemController},
-    {name: 'behaviour', controller: BehaviourController},
-    {name: 'group', controller: GroupController},
-    {name: 'method', controller: MethodController}
-  ];
+  .controller('MainController',
+              ['$scope', 'socket', 'emitter',
+               function ($scope, socket, emitter, gemFactory) {
+                 $scope.panes = [
+                   {name: 'gem', controller: GemController},
+                   {name: 'behaviour', controller: BehaviourController},
+                   {name: 'group', controller: GroupController},
+                   {name: 'method', controller: MethodController}
+                 ];
 
-  socket.on('data', new EventLoop(socket, emitter).init());
+                 socket.on('data', new EventLoop(socket, emitter).init());
 
-  emitter.on('init', function() {
-    emitter.emit('get:gem:all');
-  });
-}]);
+                 emitter.on('init', function() {
+                   emitter.emit('get:gem:all');
+                 });
+               }]);

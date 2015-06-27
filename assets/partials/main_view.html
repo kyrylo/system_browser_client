@@ -13,7 +13,7 @@
     <div id="bottom-content">
       <div id="main-toolbar" ng-controller="MainToolbarController">
         <label>
-          <input type="checkbox"/> Class side
+          <input type="checkbox" ng-model="toolbar.classSide" ng-change="toggleClassSide()"/> Class side
         </label>
       </div>
 

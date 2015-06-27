@@ -1,15 +1,18 @@
 'use strict';
 
 module.exports = function(grunt) {
-	grunt.initConfig({
-		pkg: grunt.file.readJSON("package.json"),
+  grunt.initConfig({
+    pkg: grunt.file.readJSON("package.json"),
 
-		watch: {
-			files: 'assets/js/**/*.js',
+    watch: {
+      files: [
+        'assets/js/**/*.js',
+        'Gruntfile.js'
+      ],
       tasks: ['concat']
-		},
+    },
 
-		concat: {
+    concat: {
       options: {
         banner: "'use strict';\n",
         process: function(src, filepath) {
@@ -20,18 +23,18 @@ module.exports = function(grunt) {
 
       dist: {
         src: [
-					'node_modules/angular/angular.js',
-					'node_modules/angular-route/angular-route.js',
+          'node_modules/angular/angular.js',
+          'node_modules/angular-route/angular-route.js',
           'assets/js/main.js'
         ],
 
         dest: 'dist/<%= pkg.name %>.js'
       }
     }
-	});
+  });
 
-	grunt.loadNpmTasks('grunt-contrib-concat');
-	grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
-	grunt.registerTask('default', ['concat', 'watch']);
+  grunt.registerTask('default', ['concat', 'watch']);
 };

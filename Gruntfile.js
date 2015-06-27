@@ -27,6 +27,7 @@ module.exports = function(grunt) {
           'node_modules/angular-route/angular-route.js',
           'bower_components/raf/index.js',
           'bower_components/angular-ui-layout/ui-layout.js',
+          'node_modules/underscore/underscore.js',
           'assets/js/main.js'
         ],
 

@@ -1,6 +1,8 @@
 /*global angular*/
 var net = require('net'),
-    events = require('events');
+    events = require('events'),
+    _ = require('underscore');
+
 
 var dependencies = [
   'ngRoute',
@@ -115,9 +117,7 @@ var GemController = function($scope, emitter, gemFactory) {
     var ruby_gems = gems.slice(2, gems.length);
     var core_gems = gems.slice(0, 2);
 
-    $scope.items = core_gems.concat(ruby_gems.sort(function(o1, o2) {
-      return o1.name > o2.name;
-    }));
+    $scope.items = core_gems.concat(_.sortBy(ruby_gems, 'name'));
   });
 
   $scope.getSublist = function(gem) {
@@ -137,7 +137,7 @@ var BehaviourController = function($scope, $rootScope, emitter, behaviourFactory
         });
       } else {
         $scope.$apply(function() {
-          $scope.items = behaviours;
+          $scope.items = _.sortBy(behaviours, 'name');
         });
       }
     });
@@ -162,6 +162,18 @@ var GroupController = function($scope, $rootScope, groupFactory) {
 var MethodController = function($scope, $rootScope, emitter, methodFactory) {
   var methodGroup;
 
+  var retrieveMethods = function(showClassSide) {
+    var methods;
+
+    if (showClassSide) {
+      methods = methodGroup.classMethods();
+    } else {
+      methods = methodGroup.instanceMethods();
+    }
+
+    $scope.items = _.sortBy(methods, 'name');
+  };
+
   emitter.on('get:method:all', function(behaviour) {
     emitter.once('add:method:' + behaviour.name, function(methods) {
       $rootScope.$emit('reset-source');
@@ -175,11 +187,7 @@ var MethodController = function($scope, $rootScope, emitter, methodFactory) {
           methodGroup = new MethodGroup(methods, behaviour.name);
           $rootScope.$emit('add:method-group', methodGroup);
 
-          if (document.querySelector('#main-toolbar input').checked) {
-            $scope.items = methodGroup.classMethods();
-          } else {
-            $scope.items = methodGroup.instanceMethods();
-          }
+          retrieveMethods(document.querySelector('#main-toolbar input').checked);
         });
       }
     });
@@ -195,11 +203,7 @@ var MethodController = function($scope, $rootScope, emitter, methodFactory) {
     if (methodGroup === undefined)
       return;
 
-    if (showClassSide) {
-      $scope.items = methodGroup.classMethods();
-    } else {
-      $scope.items = methodGroup.instanceMethods();
-    }
+    retrieveMethods(showClassSide);
   });
 
   $scope.getSublist = function(method) {

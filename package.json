@@ -10,7 +10,8 @@
     "angular": "~1.4.1",
     "angular-route": "^1.4.1",
     "angular-socket-io": "^0.7.0",
-    "normalize.css": "^3.0.3"
+    "normalize.css": "^3.0.3",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "grunt": "^0.4.5",

@@ -3,7 +3,7 @@
     <div id="{{ pane.name }}-list-box" class="list-box" ng-repeat="pane in panes" ng-controller="pane.controller">
       <div class="list-box-content">
         <ul>
-          <li ng-repeat="item in items track by $index" ng-click="getSublist(item)">{{ item }}</li>
+          <li ng-repeat="item in items track by $index" ng-click="getSublist(item)">{{ item.name }}</li>
         </ul>
       </div>
     </div>
@@ -11,6 +11,12 @@
 
   <div id="bottom" ui-layout-container min-size="100px">
     <div id="bottom-content">
+      <div id="main-toolbar" ng-controller="MainToolbarController">
+        <label>
+          <input type="checkbox"/> Class side
+        </label>
+      </div>
+
       <div id="source" ng-controller="SourceController">
         <pre>{{source}}</pre>
       </div>

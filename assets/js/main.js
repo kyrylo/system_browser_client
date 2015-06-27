@@ -86,6 +86,14 @@ systemBrowser.factory('sourceFactory', ['socket', function(socket) {
   };
 }]);
 
+systemBrowser.factory('groupFactory', [function() {
+  return {
+    getGroups: function() {
+      return ['-- all --', 'public', 'private', 'protected'];
+    }
+  };
+}]);
+
 var GemController = function($scope, emitter, gemFactory) {
   emitter.on('get:gem:all', function() {
     gemFactory.getGems();
@@ -95,17 +103,19 @@ var GemController = function($scope, emitter, gemFactory) {
     var ruby_gems = gems.slice(2, gems.length);
     var core_gems = gems.slice(0, 2);
 
-    $scope.items = core_gems.concat(ruby_gems.sort());
+    $scope.items = core_gems.concat(ruby_gems.sort(function(o1, o2) {
+      return o1.name > o2.name;
+    }));
   });
 
-  $scope.getSublist = function(gem_name) {
-    emitter.emit('get:behaviour:all', gem_name);
+  $scope.getSublist = function(gem) {
+    emitter.emit('get:behaviour:all', gem);
   };
 };
 
 var BehaviourController = function($scope, $rootScope, emitter, behaviourFactory) {
-  emitter.on('get:behaviour:all', function(gem_name) {
-    emitter.once('add:behaviour:' + gem_name, function(behaviours) {
+  emitter.on('get:behaviour:all', function(gem) {
+    emitter.once('add:behaviour:' + gem.name, function(behaviours) {
       $rootScope.$emit('reset-methods');
       $rootScope.$emit('reset-source');
 
@@ -120,7 +130,7 @@ var BehaviourController = function($scope, $rootScope, emitter, behaviourFactory
       }
     });
 
-    behaviourFactory.getBehaviours(gem_name);
+    behaviourFactory.getBehaviours(gem.name);
   });
 
   $scope.getSublist = function(behaviour) {
@@ -128,14 +138,16 @@ var BehaviourController = function($scope, $rootScope, emitter, behaviourFactory
   };
 };
 
-var GroupController = function($scope) {
+var GroupController = function($scope, $rootScope) {
+  $rootScope.$on('add:method-group', function(methodGroup) {
+  });
 };
 
 var MethodController = function($scope, $rootScope, emitter, methodFactory) {
   var methodGroup;
 
-  emitter.on('get:method:all', function(behaviour_name) {
-    emitter.once('add:method:' + behaviour_name, function(methods) {
+  emitter.on('get:method:all', function(behaviour) {
+    emitter.once('add:method:' + behaviour.name, function(methods) {
       $rootScope.$emit('reset-source');
 
       if (methods.length === 0) {
@@ -144,13 +156,14 @@ var MethodController = function($scope, $rootScope, emitter, methodFactory) {
         });
       } else {
         $scope.$apply(function() {
-          methodGroup = new MethodGroup(methods, behaviour_name);
+          methodGroup = new MethodGroup(methods, behaviour.name);
+          $rootScope.$emit('add:method-group', methodGroup);
           $scope.items = methodGroup.instanceMethods();
         });
       }
     });
 
-    methodFactory.getMethods(behaviour_name);
+    methodFactory.getMethods(behaviour.name);
   });
 
   $rootScope.$on('reset-methods', function() {
@@ -176,6 +189,10 @@ var SourceController = function($scope, $rootScope, emitter, sourceFactory) {
   $rootScope.$on('reset-source', function() {
     $scope.source = null;
   });
+};
+
+var MainToolbarController = function($scope) {
+
 };
 
 var MessageDispatcher = function() {
@@ -236,10 +253,8 @@ MethodGroup.prototype.instanceMethods = function() {
   methods = methods.concat(this.privateInstance);
   methods = methods.concat(this.protectedInstance);
 
-  methods = methods.sort();
-
   return methods.map(function(method) {
-    return '#' + method;
+    return {name: '#' + method};
   });
 };
 
@@ -254,6 +269,9 @@ systemBrowser.controller('MethodController',
 
 systemBrowser.controller('SourceController',
                          ['$scope', '$rootScope', 'emitter', 'sourceFactory', SourceController]);
+systemBrowser.controller('MainToolbarController',
+                         ['$scope', '$rootScope', MainToolbarController]);
+
 
 systemBrowser
   .controller('MainController', ['$scope', 'socket', 'emitter',

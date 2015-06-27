@@ -25,7 +25,7 @@ pre {
 
 #source {
     background-color: #f8ecff;
-    height: 100%;
+    height: calc(100% - 23px);
 }
 
 #bottom-content {
@@ -91,4 +91,9 @@ pre {
 
 .ui-splitbar {
     background-color: #88b5c0;
+}
+
+#main-toolbar {
+    height: 23px;
+    background-color: #b6fff7;
 }

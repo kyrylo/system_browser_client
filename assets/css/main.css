@@ -97,3 +97,7 @@ pre {
     height: 23px;
     background-color: #b6fff7;
 }
+
+.selected {
+    background-color: #ffa0e1;
+}

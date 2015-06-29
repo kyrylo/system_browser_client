@@ -3,7 +3,7 @@
     <div id="{{ pane.name }}-list-box" class="list-box" ng-repeat="pane in panes" ng-controller="pane.controller">
       <div class="list-box-content">
         <ul>
-          <li ng-repeat="item in items track by $index" ng-click="getSublist(item)">{{ item.name }}</li>
+          <li ng-repeat="item in items track by $index" ng-click="getSublist(item); select(item)" ng-class="{selected: item.selected}">{{ item.name }}</li>
         </ul>
       </div>
     </div>

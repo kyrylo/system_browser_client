@@ -108,24 +108,40 @@ systemBrowser.factory('groupFactory', [function() {
   };
 }]);
 
-var GemController = function($scope, emitter, gemFactory) {
+var GemController = function($scope, $rootScope, $element, emitter, gemFactory) {
   emitter.on('get:gem:all', function() {
     gemFactory.getGems();
   });
 
   emitter.on('add:gem:all', function(gems) {
     var ruby_gems = gems.slice(2, gems.length);
-    var core_gems = gems.slice(0, 2);
+    var core_gems = gems.slice(0, 2).map(function(gem) {
+      gem.selected = false;
+      return gem;
+    });
 
     $scope.items = core_gems.concat(_.sortBy(ruby_gems, 'name'));
+  });
+
+  $rootScope.$on('list-box:gem:selected', function(_event) {
+    $scope.items.forEach(function(gem) {
+      gem.selected = false;
+    });
   });
 
   $scope.getSublist = function(gem) {
     emitter.emit('get:behaviour:all', gem);
   };
+
+  $scope.select = function(gem) {
+    $rootScope.$emit('list-box:gem:selected');
+    gem.selected = true;
+  };
 };
 
 var BehaviourController = function($scope, $rootScope, emitter, behaviourFactory) {
+  $scope.items = [];
+
   emitter.on('get:behaviour:all', function(gem) {
     emitter.once('add:behaviour:' + gem.name, function(behaviours) {
       $rootScope.$emit('reset-methods');
@@ -137,7 +153,10 @@ var BehaviourController = function($scope, $rootScope, emitter, behaviourFactory
         });
       } else {
         $scope.$apply(function() {
-          $scope.items = _.sortBy(behaviours, 'name');
+          $scope.items = _.sortBy(behaviours, 'name').map(function(behaviour) {
+            behaviour.selected = false;
+            return behaviour;
+          });
         });
       }
     });
@@ -145,8 +164,19 @@ var BehaviourController = function($scope, $rootScope, emitter, behaviourFactory
     behaviourFactory.getBehaviours(gem.name);
   });
 
+  $rootScope.$on('list-box:behaviour:selected', function() {
+    $scope.items.forEach(function(behaviour) {
+      behaviour.selected = false;
+    });
+  });
+
   $scope.getSublist = function(behaviour) {
     emitter.emit('get:method:all', behaviour);
+  };
+
+  $scope.select = function(behaviour) {
+    $rootScope.$emit('list-box:behaviour:selected');
+    behaviour.selected = true;
   };
 };
 
@@ -175,7 +205,7 @@ var GroupController = function($scope, $rootScope, groupFactory) {
     }
 
     if (groups.length > 0) {
-      groups.unshift({name: groupFactory.getAll()});
+      groups.unshift({name: groupFactory.getAll(), selected: true});
     }
 
     $scope.items = groups;
@@ -185,8 +215,19 @@ var GroupController = function($scope, $rootScope, groupFactory) {
     $scope.items = [];
   });
 
+  $rootScope.$on('list-box:group:selected', function() {
+    $scope.items.forEach(function(group) {
+      group.selected = false;
+    });
+  });
+
   $scope.getSublist = function(group) {
     $rootScope.$emit('filter:method', group);
+  };
+
+  $scope.select = function(group) {
+    $rootScope.$emit('list-box:group:selected');
+    group.selected = true;
   };
 };
 
@@ -246,8 +287,19 @@ var MethodController = function($scope, $rootScope, emitter, methodFactory) {
     }
   });
 
+  $rootScope.$on('list-box:method:selected', function() {
+    $scope.items.forEach(function(method) {
+      method.selected = false;
+    });
+  });
+
   $scope.getSublist = function(method) {
     $rootScope.$emit('get:source', methodGroup.owner, method);
+  };
+
+  $scope.select = function(method) {
+    $rootScope.$emit('list-box:method:selected');
+    method.selected = true;
   };
 };
 
@@ -311,6 +363,8 @@ EventLoop.prototype.init = function() {
 };
 
 var MethodGroup = function(methods, owner) {
+  var injector;
+
   this.owner = owner;
 
   this.publicInstance = methods.public.instance;
@@ -321,6 +375,9 @@ var MethodGroup = function(methods, owner) {
 
   this.protectedInstance = methods.protected.instance;
   this.protectedClass = methods.protected.singleton;
+
+  injector = angular.injector(['systemBrowser']);
+  this.groups = injector.get('groupFactory');
 };
 MethodGroup.prototype.constructor = MethodGroup;
 
@@ -378,23 +435,23 @@ MethodGroup.prototype.anyProtectedMethods = function(ctx) {
 MethodGroup.prototype.classMethodsInGroup = function(group) {
   var methods = [];
 
-  if (group === '-- all --') {
+  if (group === this.groups.getAll()) {
     methods = this.classMethods();
   }
 
-  if (group === 'public') {
+  if (group === this.groups.getPublic()) {
     methods = this.publicClass.map(function(method) {
       return {name: '.' + method};
     });
   }
 
-  if (group === 'private') {
+  if (group === this.groups.getPrivate()) {
     methods = this.privateClass.map(function(method) {
       return {name: '.' + method};
     });
   }
 
-  if (group === 'protected') {
+  if (group === this.groups.getProtected()) {
     methods = this.protectedClass.map(function(method) {
       return {name: '.' + method};
     });
@@ -432,7 +489,7 @@ MethodGroup.prototype.instanceMethodsInGroup = function(group) {
 };
 
 systemBrowser.controller('GemController',
-                         ['$scope', 'emitter', 'gemFactory', GemController]);
+                         ['$scope', '$rootScope', '$element', 'emitter', 'gemFactory', GemController]);
 systemBrowser.controller('BehaviourController',
                          ['$scope', '$rootScope', 'emitter', 'behaviourFactory', BehaviourController]);
 systemBrowser.controller('GroupController',

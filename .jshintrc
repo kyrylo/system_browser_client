@@ -1,3 +1,19 @@
 {
-  "node": true
+  "node": true,
+  "curly": true,
+  "browser": true,
+  "strict": true,
+  "debug": false,
+  "boss": false,
+  "expr": false,
+  "loopfunc": false,
+  "unused": true,
+  "undef": true,
+  "shadow": true,
+  "singleGroups": true,
+  "nonew": true,
+  "nocomma": true,
+  "maxdepth": 4,
+  "es5": true,
+  "bitwise": false
 }

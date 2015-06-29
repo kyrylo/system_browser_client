@@ -502,20 +502,19 @@ systemBrowser.controller('SourceController',
 systemBrowser.controller('MainToolbarController',
                          ['$scope', '$rootScope', MainToolbarController]);
 
-systemBrowser
-  .controller('MainController',
-              ['$scope', 'socket', 'emitter',
-               function ($scope, socket, emitter, gemFactory) {
-                 $scope.panes = [
-                   {name: 'gem', controller: GemController},
-                   {name: 'behaviour', controller: BehaviourController},
-                   {name: 'group', controller: GroupController},
-                   {name: 'method', controller: MethodController}
-                 ];
+var MainController = function ($scope, socket, emitter, gemFactory) {
+  $scope.panes = [
+    {name: 'gem', controller: GemController},
+    {name: 'behaviour', controller: BehaviourController},
+    {name: 'group', controller: GroupController},
+    {name: 'method', controller: MethodController}
+  ];
 
-                 socket.on('data', new EventLoop(socket, emitter).init());
+  socket.on('data', new EventLoop(socket, emitter).init());
 
-                 emitter.on('init', function() {
-                   emitter.emit('get:gem:all');
-                 });
-               }]);
+  emitter.on('init', function() {
+    emitter.emit('get:gem:all');
+  });
+};
+
+systemBrowser.controller('MainController', ['$scope', 'socket', 'emitter', MainController]);

@@ -152,11 +152,42 @@ var BehaviourController = function($scope, $rootScope, emitter, behaviourFactory
 
 var GroupController = function($scope, $rootScope, groupFactory) {
   $rootScope.$on('add:method-group', function(_event, methodGroup) {
+    var ctx;
     var groups = [];
 
-    // if (methodGroup.anyPublicMethods()) {
-    // }
+    if (document.querySelector('#main-toolbar input').checked) {
+      ctx = 'singleton';
+    } else {
+      ctx = 'instance';
+    }
+
+    if (methodGroup.anyPublicMethods(ctx)) {
+      groups.push({name: groupFactory.getPublic()});
+    }
+
+
+    if (methodGroup.anyPrivateMethods(ctx)) {
+      groups.push({name: groupFactory.getPrivate()});
+    }
+
+    if (methodGroup.anyProtectedMethods(ctx)) {
+      groups.push({name: groupFactory.getProtected()});
+    }
+
+    if (groups.length > 0) {
+      groups.unshift({name: groupFactory.getAll()});
+    }
+
+    $scope.items = groups;
   });
+
+  $rootScope.$on('reset-methods', function() {
+    $scope.items = [];
+  });
+
+  $scope.getSublist = function(group) {
+    $rootScope.$emit('filter:method', group);
+  };
 };
 
 var MethodController = function($scope, $rootScope, emitter, methodFactory) {
@@ -203,7 +234,16 @@ var MethodController = function($scope, $rootScope, emitter, methodFactory) {
     if (methodGroup === undefined)
       return;
 
+    $rootScope.$emit('add:method-group', methodGroup);
     retrieveMethods(showClassSide);
+  });
+
+  $rootScope.$on('filter:method', function(_event, group) {
+    if (document.querySelector('#main-toolbar input').checked) {
+      $scope.items = methodGroup.classMethodsInGroup(group.name);
+    } else {
+      $scope.items = methodGroup.instanceMethodsInGroup(group.name);
+    }
   });
 
   $scope.getSublist = function(method) {
@@ -335,6 +375,62 @@ MethodGroup.prototype.anyProtectedMethods = function(ctx) {
     throw new Error('unknown context: ' + ctx);
 };
 
+MethodGroup.prototype.classMethodsInGroup = function(group) {
+  var methods = [];
+
+  if (group === '-- all --') {
+    methods = this.classMethods();
+  }
+
+  if (group === 'public') {
+    methods = this.publicClass.map(function(method) {
+      return {name: '.' + method};
+    });
+  }
+
+  if (group === 'private') {
+    methods = this.privateClass.map(function(method) {
+      return {name: '.' + method};
+    });
+  }
+
+  if (group === 'protected') {
+    methods = this.protectedClass.map(function(method) {
+      return {name: '.' + method};
+    });
+  }
+
+  return methods;
+};
+
+MethodGroup.prototype.instanceMethodsInGroup = function(group) {
+  var methods = [];
+
+  if (group === '-- all --') {
+    methods = this.instanceMethods();
+  }
+
+  if (group === 'public') {
+    methods = this.publicInstance.map(function(method) {
+      return {name: '#' + method};
+    });
+  }
+
+  if (group === 'private') {
+    methods = this.privateInstance.map(function(method) {
+      return {name: '#' + method};
+    });
+  }
+
+  if (group === 'protected') {
+    methods = this.protectedInstance.map(function(method) {
+      return {name: '#' + method};
+    });
+  }
+
+  return methods;
+};
+
 systemBrowser.controller('GemController',
                          ['$scope', 'emitter', 'gemFactory', GemController]);
 systemBrowser.controller('BehaviourController',
@@ -348,7 +444,6 @@ systemBrowser.controller('SourceController',
                          ['$scope', '$rootScope', 'emitter', 'sourceFactory', SourceController]);
 systemBrowser.controller('MainToolbarController',
                          ['$scope', '$rootScope', MainToolbarController]);
-
 
 systemBrowser
   .controller('MainController',

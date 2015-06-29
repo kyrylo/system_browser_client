@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Envy Code R';
-  src: url('../fonts/Envy Code R.ttf')  format('truetype');
+  src: url('Envy Code R.ttf')  format('truetype');
 }
 
 html, body {

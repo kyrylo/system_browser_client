@@ -55,6 +55,9 @@ pre {
     list-style-type: none;
     padding: 0;
     margin: 0;
+    float: left;
+    display: table;
+    width: 100%;
 }
 
 .list-box ul li.highlighted {
@@ -63,6 +66,10 @@ pre {
 
 .list-box ul li {
     cursor: pointer;
+    white-space: nowrap;
+    display: table-row;
+    width: 100%;
+    float: left;
 }
 
 .list-box ul li:hover {

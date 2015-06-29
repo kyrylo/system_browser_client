@@ -8,6 +8,7 @@ module.exports = function(grunt) {
     watch: {
       files: [
         'assets/js/**/*.js',
+        'assets/css/**/*.css',
         'Gruntfile.js'
       ],
       tasks: ['concat']

@@ -14,6 +14,9 @@
   "nonew": true,
   "nocomma": true,
   "maxdepth": 4,
-  "es5": true,
-  "bitwise": false
+  "bitwise": false,
+
+  "globals": {
+    "angular": true
+  }
 }

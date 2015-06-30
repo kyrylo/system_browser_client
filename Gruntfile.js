@@ -7,30 +7,26 @@ module.exports = function(grunt) {
 
     watch: {
       files: [
-        'assets/js/**/*.js',
-        'assets/css/**/*.css',
+        'client/**/*.js',
+        'client/**/*.css',
+        'client/**/*.html',
+        'client/index.html',
         'Gruntfile.js'
       ],
-      tasks: ['concat']
+      tasks: ['concat', 'cssmin', 'copy']
     },
 
     concat: {
-      options: {
-        banner: "'use strict';\n",
-        process: function(src, filepath) {
-          return '// Source: ' + filepath + '\n' +
-            src.replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1');
-        }
-      },
-
       dist: {
         src: [
           'node_modules/angular/angular.js',
           'node_modules/angular-route/angular-route.js',
+          'node_modules/underscore/underscore.js',
+
           'bower_components/raf/index.js',
           'bower_components/angular-ui-layout/ui-layout.js',
-          'node_modules/underscore/underscore.js',
-          'assets/js/main.js'
+
+          'client/app/**/*.js',
         ],
 
         dest: '<%= dist %><%= pkg.name %>.js'
@@ -48,7 +44,7 @@ module.exports = function(grunt) {
           '<%= dist %><%= pkg.name %>.css': [
             'node_modules/normalize.css/normalize.css',
             'bower_components/angular-ui-layout/ui-layout.css',
-            'assets/css/main.css'
+            'client/app/css/main.css'
           ]
         }
       }
@@ -59,7 +55,11 @@ module.exports = function(grunt) {
         files: [
           {expand: true,
            flatten: true,
-           src: ['assets/fonts/*'],
+           src: [
+             'client/app/fonts/*',
+             'client/app/views/*',
+             'client/index.html'
+           ],
            dest: '<%= dist %>',
            filter: 'isFile'},
         ]

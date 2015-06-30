@@ -16,7 +16,6 @@
         groups.push({name: Group.labels.public});
       }
 
-
       if (methodGroup.anyPrivateMethods(ctx)) {
         groups.push({name: Group.labels.private});
       }

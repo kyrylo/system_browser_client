@@ -33,7 +33,7 @@ pre {
 }
 
 .list-box {
-    width: 25vw;
+    width: 25%;
     float: left;
     height: 100%;
 }
@@ -44,6 +44,10 @@ pre {
 
 .list-box-content {
     overflow-y: auto;
+}
+
+#gem-list-box .list-box-content {
+    height: calc(100% - 23px);
 }
 
 .list-box-content {
@@ -107,4 +111,17 @@ pre {
 
 .selected {
     background-color: #ffa0e1;
+}
+
+.filter-input {
+    width: 100%;
+}
+
+.filter-input input {
+    width: calc(100% - 0.5px);
+    border-top: none;
+    border-left: none;
+    border-bottom: none;
+    border-right: 1px solid black;
+    background-color: #c9ecec;
 }

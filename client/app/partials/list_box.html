@@ -1,0 +1,9 @@
+<div class="list-box-content">
+  <ul>
+    <li ng-repeat="item in items track by $index"
+        ng-click="getSublist(item); select(item)"
+        ng-class="{selected: item.selected}">
+      {{ item.name }}
+    </li>
+  </ul>
+</div>

@@ -53,15 +53,26 @@ module.exports = function(grunt) {
     copy: {
       main: {
         files: [
-          {expand: true,
-           flatten: true,
-           src: [
-             'client/app/fonts/*',
-             'client/app/views/*',
-             'client/index.html'
-           ],
-           dest: '<%= dist %>',
-           filter: 'isFile'},
+          {
+            expand: true,
+            flatten: true,
+            filter: 'isFile',
+            src: [
+              'client/app/fonts/*',
+              'client/app/views/*',
+              'client/index.html'
+            ],
+            dest: '<%= dist %>'
+          },
+
+          {
+            expand: true,
+            cwd: 'client/app',
+            src: [
+              'partials/*',
+            ],
+            dest: '<%= dist %>'
+          }
         ]
       }
     }

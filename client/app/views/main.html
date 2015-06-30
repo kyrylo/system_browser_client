@@ -1,37 +1,19 @@
 <div id="layout" ui-layout="{flow : 'row', dividerSize: 5}">
   <div id="top" ui-layout-container min-size="100px">
     <div id="gem-list-box" class="list-box" ng-controller="GemController">
-      <div class="list-box-content">
-        <ul>
-          <li ng-repeat="item in items track by $index" ng-click="getSublist(item); select(item)" ng-class="{selected: item.selected}">{{ item.name }}</li>
-        </ul>
-      </div>
+      <ng-include src="'partials/list_box.html'"></ng-include>
     </div>
 
     <div id="behaviour-list-box" class="list-box" ng-controller="BehaviourController">
-      <div class="list-box-content">
-        <ul>
-          <li ng-repeat="item in items track by $index" ng-click="getSublist(item); select(item)" ng-class="{selected: item.selected}">{{ item.name }}</li>
-        </ul>
-      </div>
+      <ng-include src="'partials/list_box.html'"></ng-include>
     </div>
-
 
     <div id="group-list-box" class="list-box" ng-controller="GroupController">
-      <div class="list-box-content">
-        <ul>
-          <li ng-repeat="item in items track by $index" ng-click="getSublist(item); select(item)" ng-class="{selected: item.selected}">{{ item.name }}</li>
-        </ul>
-      </div>
+      <ng-include src="'partials/list_box.html'"></ng-include>
     </div>
 
-
     <div id="method-list-box" class="list-box" ng-controller="MethodController">
-      <div class="list-box-content">
-        <ul>
-          <li ng-repeat="item in items track by $index" ng-click="getSublist(item); select(item)" ng-class="{selected: item.selected}">{{ item.name }}</li>
-        </ul>
-      </div>
+      <ng-include src="'partials/list_box.html'"></ng-include>
     </div>
   </div>
 

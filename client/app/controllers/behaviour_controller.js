@@ -3,7 +3,7 @@
 
   var _ = require('underscore');
 
-  var controller = function($scope, $rootScope, Behaviour) {
+  var controller = function($scope, Behaviour) {
     $scope.items = [];
 
     $scope.$on('get:behaviour:all', function(_event1, gem) {
@@ -11,8 +11,8 @@
 
       if (!$scope.$$listeners.hasOwnProperty(name)) {
         $scope.$on(name, function(_event2, behaviours) {
-          $rootScope.$emit('reset-methods');
-          $rootScope.$emit('reset-source');
+          $scope.$parent.$broadcast('reset-methods');
+          $scope.$parent.$broadcast('reset-source');
 
           if (behaviours.length === 0) {
             $scope.$apply(function() {
@@ -32,7 +32,7 @@
       Behaviour.getAllFrom(gem.name);
     });
 
-    $rootScope.$on('list-box:behaviour:selected', function() {
+    $scope.$on('list-box:behaviour:selected', function() {
       $scope.items.forEach(function(behaviour) {
         behaviour.selected = false;
       });
@@ -43,14 +43,13 @@
     };
 
     $scope.select = function(behaviour) {
-      $rootScope.$emit('list-box:behaviour:selected');
+      $scope.$emit('list-box:behaviour:selected');
       behaviour.selected = true;
     };
   };
 
   global.app.controller('BehaviourController', [
     '$scope',
-    '$rootScope',
     'Behaviour',
     controller]);
 })(window.global);

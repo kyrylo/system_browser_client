@@ -3,7 +3,7 @@
 
   var _ = require('underscore');
 
-  var controller = function($scope, $rootScope, MethodGroup, Method) {
+  var controller = function($scope, MethodGroup, Method) {
     var methodGroup;
 
     var retrieveMethods = function(showClassSide) {
@@ -23,7 +23,7 @@
 
       if (!$scope.$$listeners.hasOwnProperty(name)) {
         $scope.$on(name, function(_event2, methods) {
-          $rootScope.$emit('reset-source');
+          $scope.$parent.$broadcast('reset-source');
 
           if (methods.length === 0) {
             $scope.$apply(function() {
@@ -32,7 +32,7 @@
           } else {
             $scope.$apply(function() {
               methodGroup = MethodGroup.new(methods, behaviour.name);
-              $rootScope.$emit('add:method-group', methodGroup);
+              $scope.$parent.$broadcast('add:method-group', methodGroup);
 
               retrieveMethods(document.querySelector('#main-toolbar input').checked);
             });
@@ -43,20 +43,20 @@
       Method.getAllFrom(behaviour.name);
     });
 
-    $rootScope.$on('reset-methods', function() {
+    $scope.$on('reset-methods', function() {
       $scope.items = [];
     });
 
-    $rootScope.$on('class-side-checkbox', function(_event, showClassSide) {
+    $scope.$on('class-side-checkbox', function(_event, showClassSide) {
       if (methodGroup === undefined) {
         return;
       }
 
-      $rootScope.$emit('add:method-group', methodGroup);
+      $scope.$parent.$broadcast('add:method-group', methodGroup);
       retrieveMethods(showClassSide);
     });
 
-    $rootScope.$on('filter:method', function(_event, group) {
+    $scope.$on('filter:method', function(_event, group) {
       if (document.querySelector('#main-toolbar input').checked) {
         $scope.items = methodGroup.classMethodsInGroup(group.name);
       } else {
@@ -64,25 +64,24 @@
       }
     });
 
-    $rootScope.$on('list-box:method:selected', function() {
+    $scope.$on('list-box:method:selected', function() {
       $scope.items.forEach(function(method) {
         method.selected = false;
       });
     });
 
     $scope.getSublist = function(method) {
-      $rootScope.$emit('get:source', methodGroup.owner, method);
+      $scope.$parent.$broadcast('get:source', methodGroup.owner, method);
     };
 
     $scope.select = function(method) {
-      $rootScope.$emit('list-box:method:selected');
+      $scope.$emit('list-box:method:selected');
       method.selected = true;
     };
   };
 
   global.app.controller('MethodController', [
     '$scope',
-    '$rootScope',
     'MethodGroup',
     'Method',
     controller]);

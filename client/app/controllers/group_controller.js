@@ -1,8 +1,8 @@
 (function(global) {
   'use strict';
 
-  var controller = function($scope, $rootScope, Group) {
-    $rootScope.$on('add:method-group', function(_event, methodGroup) {
+  var controller = function($scope, Group) {
+    $scope.$on('add:method-group', function(_event, methodGroup) {
       var ctx;
       var groups = [];
 
@@ -32,29 +32,28 @@
       $scope.items = groups;
     });
 
-    $rootScope.$on('reset-methods', function() {
+    $scope.$on('reset-methods', function() {
       $scope.items = [];
     });
 
-    $rootScope.$on('list-box:group:selected', function() {
+    $scope.$on('list-box:group:selected', function() {
       $scope.items.forEach(function(group) {
         group.selected = false;
       });
     });
 
     $scope.getSublist = function(group) {
-      $rootScope.$emit('filter:method', group);
+      $scope.$parent.$broadcast('filter:method', group);
     };
 
     $scope.select = function(group) {
-      $rootScope.$emit('list-box:group:selected');
+      $scope.$emit('list-box:group:selected');
       group.selected = true;
     };
   };
 
   global.app.controller('GroupController', [
     '$scope',
-    '$rootScope',
     'Group',
     controller]);
 })(window.global);

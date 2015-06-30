@@ -3,7 +3,7 @@
 
   var controller = function($scope, $rootScope) {
     $scope.toggleClassSide = function() {
-      $rootScope.$emit('class-side-checkbox', $scope.toolbar.classSide);
+      $rootScope.$broadcast('class-side-checkbox', $scope.toolbar.classSide);
     };
   };
 

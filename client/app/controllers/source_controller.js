@@ -1,8 +1,8 @@
 (function(global) {
   'use strict';
 
-  var controller = function($scope, $rootScope, Source) {
-    $rootScope.$on('get:source', function(_event, owner, method) {
+  var controller = function($scope, Source) {
+    $scope.$on('get:source', function(_event, owner, method) {
       Source.getSource(owner, method);
     });
 
@@ -12,14 +12,13 @@
       });
     });
 
-    $rootScope.$on('reset-source', function() {
+    $scope.$on('reset-source', function() {
       $scope.source = null;
     });
   };
 
   global.app.controller('SourceController', [
     '$scope',
-    '$rootScope',
     'Source',
     controller]);
 })(window.global);

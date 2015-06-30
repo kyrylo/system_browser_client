@@ -19,9 +19,10 @@
   MethodGroup.prototype.instanceMethods = function() {
     var methods = [];
 
-    methods = methods.concat(this.publicInstance);
-    methods = methods.concat(this.privateInstance);
-    methods = methods.concat(this.protectedInstance);
+    methods = methods.
+      concat(this.publicInstance).
+      concat(this.privateInstance).
+      concat(this.protectedInstance);
 
     return methods.map(function(method) {
       return {name: '#' + method};
@@ -31,9 +32,10 @@
   MethodGroup.prototype.classMethods = function() {
     var methods = [];
 
-    methods = methods.concat(this.publicClass);
-    methods = methods.concat(this.privateClass);
-    methods = methods.concat(this.protectedClass);
+    methods = methods.
+      concat(this.publicClass).
+      concat(this.privateClass).
+      concat(this.protectedClass);
 
     return methods.map(function(method) {
       return {name: '.' + method};

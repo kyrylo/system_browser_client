@@ -3,7 +3,7 @@
 
   var Toolbar = function() {
     this.domElement = document.querySelector('#main-toolbar input');
-   };
+  };
 
   Toolbar.prototype.constructor = Toolbar;
 
@@ -11,9 +11,5 @@
     return this.domElement.checked;
   };
 
-  var factory = function() {
-    return new Toolbar();
-  };
-
-  global.app.factory('Toolbar', [factory]);
+  global.app.service('Toolbar', [Toolbar]);
 })(window.global);

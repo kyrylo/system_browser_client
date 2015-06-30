@@ -12,9 +12,5 @@
 
   Group.prototype.constructor = Group;
 
-  var factory = function() {
-    return new Group();
-  };
-
-  global.app.factory('Group', [factory]);
+  global.app.service('Group', [Group]);
 })(window.global);

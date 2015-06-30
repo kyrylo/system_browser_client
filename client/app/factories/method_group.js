@@ -1,7 +1,7 @@
 (function(global) {
   'use strict';
 
-  var MethodGroup = function(methods, owner, Group) {
+  var MethodGroup = function(methods, owner) {
     this.owner = owner;
 
     this.publicInstance = methods.public.instance;
@@ -12,8 +12,6 @@
 
     this.protectedInstance = methods.protected.instance;
     this.protectedClass = methods.protected.singleton;
-
-    this.groups = Group;
   };
 
   MethodGroup.prototype.constructor = MethodGroup;
@@ -75,23 +73,23 @@
   MethodGroup.prototype.classMethodsInGroup = function(group) {
     var methods = [];
 
-    if (group === this.groups.labels.all) {
+    if (group === this.Group.labels.all) {
       methods = this.classMethods();
     }
 
-    if (group === this.groups.labels.public) {
+    if (group === this.Group.labels.public) {
       methods = this.publicClass.map(function(method) {
         return {name: '.' + method};
       });
     }
 
-    if (group === this.groups.labels.private) {
+    if (group === this.Group.labels.private) {
       methods = this.privateClass.map(function(method) {
         return {name: '.' + method};
       });
     }
 
-    if (group === this.groups.labels.protected) {
+    if (group === this.Group.labels.protected) {
       methods = this.protectedClass.map(function(method) {
         return {name: '.' + method};
       });
@@ -103,23 +101,23 @@
   MethodGroup.prototype.instanceMethodsInGroup = function(group) {
     var methods = [];
 
-    if (group === this.groups.labels.all) {
+    if (group === this.Group.labels.all) {
       methods = this.instanceMethods();
     }
 
-    if (group === this.groups.labels.public) {
+    if (group === this.Group.labels.public) {
       methods = this.publicInstance.map(function(method) {
         return {name: '#' + method};
       });
     }
 
-    if (group === this.groups.labels.private) {
+    if (group === this.Group.labels.private) {
       methods = this.privateInstance.map(function(method) {
         return {name: '#' + method};
       });
     }
 
-    if (group === this.groups.labels.protected) {
+    if (group === this.Group.labels.protected) {
       methods = this.protectedInstance.map(function(method) {
         return {name: '#' + method};
       });
@@ -129,11 +127,9 @@
   };
 
   var factory = function(Group) {
-    return {
-      new: function(methods, owner) {
-        return new MethodGroup(methods, owner, Group);
-      }
-    };
+    MethodGroup.prototype.Group = Group;
+
+    return MethodGroup;
   };
 
   global.app.factory('MethodGroup', ['Group', factory]);

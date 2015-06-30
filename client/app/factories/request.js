@@ -19,11 +19,7 @@
   };
 
   var factory = function() {
-    return {
-      new: function(action, resource, scope, other) {
-        return new Request(action, resource, scope, other);
-      }
-    };
+    return Request;
   };
 
   global.app.factory('Request', [factory]);

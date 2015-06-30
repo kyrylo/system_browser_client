@@ -14,6 +14,4 @@
   };
 
   global.app.factory('socket', [factory]);
-
-  return socket;
 })(window.global);

@@ -4,7 +4,7 @@
   var factory = function(Request, socket) {
     return {
       getAllFrom: function(gemName) {
-        var req = Request.new('get', 'behaviour', gemName);
+        var req = new Request('get', 'behaviour', gemName);
         socket.write(req.to_json());
       }
     };

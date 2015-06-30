@@ -31,7 +31,7 @@
             });
           } else {
             $scope.$apply(function() {
-              methodGroup = MethodGroup.new(methods, behaviour.name);
+              methodGroup = new MethodGroup(methods, behaviour.name);
               $scope.$parent.$broadcast('add:method-group', methodGroup);
 
               retrieveMethods(Toolbar.classSideChecked());

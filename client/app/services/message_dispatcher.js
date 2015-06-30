@@ -21,9 +21,5 @@
     });
   };
 
-  var factory = function() {
-    return new MessageDispatcher();
-  };
-
-  global.app.factory('MessageDispatcher', [factory]);
+  global.app.service('MessageDispatcher', [MessageDispatcher]);
 })(window.global);

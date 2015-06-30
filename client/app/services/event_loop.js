@@ -21,13 +21,9 @@
     };
   };
 
-  var factory = function(socket, emitter, MessageDispatcher) {
-    return new EventLoop(socket, emitter, MessageDispatcher);
-  };
-
-  global.app.factory('EventLoop', [
+  global.app.service('EventLoop', [
     '$rootScope',
     'socket',
     'MessageDispatcher',
-    factory]);
+    EventLoop]);
 })(window.global);

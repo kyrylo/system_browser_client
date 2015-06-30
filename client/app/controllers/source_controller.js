@@ -3,7 +3,7 @@
 
   var controller = function($scope, Source) {
     $scope.$on('get:source', function(_event, owner, method) {
-      Source.getSource(owner, method);
+      Source.extract(owner, method);
     });
 
     $scope.$on('add:source:with-comment', function(_event, source) {

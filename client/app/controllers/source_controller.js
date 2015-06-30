@@ -1,15 +1,15 @@
 (function(global) {
   'use strict';
 
-  var controller = function($scope, $rootScope, emitter, Source) {
+  var controller = function($scope, $rootScope, Source) {
     $rootScope.$on('get:source', function(_event, owner, method) {
-      emitter.once('add:source:with-comment', function(source) {
-        $scope.$apply(function() {
-          $scope.source = source;
-        });
-      });
-
       Source.getSource(owner, method);
+    });
+
+    $scope.$on('add:source:with-comment', function(_event, source) {
+      $scope.$apply(function() {
+        $scope.source = source;
+      });
     });
 
     $rootScope.$on('reset-source', function() {
@@ -20,7 +20,6 @@
   global.app.controller('SourceController', [
     '$scope',
     '$rootScope',
-    'emitter',
     'Source',
     controller]);
 })(window.global);

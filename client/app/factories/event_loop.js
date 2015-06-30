@@ -1,9 +1,9 @@
 (function(global) {
   'use strict';
 
-  var EventLoop = function(socket, emitter, MessageDispatcher) {
+  var EventLoop = function($rootScope, socket, MessageDispatcher) {
+    this.$rootScope = $rootScope;
     this.socket = socket;
-    this.emitter = emitter;
     this.dispatcher = MessageDispatcher;
   };
 
@@ -16,8 +16,8 @@
       var messages = that.dispatcher.dispatch(data);
 
       messages.forEach(function(message) {
-        this.emitter.emit(message.action, message.data);
-      }, that);
+        that.$rootScope.$broadcast(message.action, message.data);
+      });
     };
   };
 
@@ -26,8 +26,8 @@
   };
 
   global.app.factory('EventLoop', [
+    '$rootScope',
     'socket',
-    'emitter',
     'MessageDispatcher',
     factory]);
 })(window.global);

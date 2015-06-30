@@ -3,27 +3,31 @@
 
   var _ = require('underscore');
 
-  var controller = function($scope, $rootScope, emitter, Behaviour) {
+  var controller = function($scope, $rootScope, Behaviour) {
     $scope.items = [];
 
-    emitter.on('get:behaviour:all', function(gem) {
-      emitter.once('add:behaviour:' + gem.name, function(behaviours) {
-        $rootScope.$emit('reset-methods');
-        $rootScope.$emit('reset-source');
+    $scope.$on('get:behaviour:all', function(_event1, gem) {
+      var name = 'add:behaviour:' + gem.name;
 
-        if (behaviours.length === 0) {
-          $scope.$apply(function() {
-            $scope.items = [{name: 'No behaviours found'}];
-          });
-        } else {
-          $scope.$apply(function() {
-            $scope.items = _.sortBy(behaviours, 'name').map(function(behaviour) {
-              behaviour.selected = false;
-              return behaviour;
+      if (!$scope.$$listeners.hasOwnProperty(name)) {
+        $scope.$on(name, function(_event2, behaviours) {
+          $rootScope.$emit('reset-methods');
+          $rootScope.$emit('reset-source');
+
+          if (behaviours.length === 0) {
+            $scope.$apply(function() {
+              $scope.items = [{name: 'No behaviours found'}];
             });
-          });
-        }
-      });
+          } else {
+            $scope.$apply(function() {
+              $scope.items = _.sortBy(behaviours, 'name').map(function(behaviour) {
+                behaviour.selected = false;
+                return behaviour;
+              });
+            });
+          }
+        });
+      }
 
       Behaviour.getAllFrom(gem.name);
     });
@@ -35,7 +39,7 @@
     });
 
     $scope.getSublist = function(behaviour) {
-      emitter.emit('get:method:all', behaviour);
+      $scope.$parent.$broadcast('get:method:all', behaviour);
     };
 
     $scope.select = function(behaviour) {
@@ -47,7 +51,6 @@
   global.app.controller('BehaviourController', [
     '$scope',
     '$rootScope',
-    'emitter',
     'Behaviour',
     controller]);
 })(window.global);

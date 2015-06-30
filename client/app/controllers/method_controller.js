@@ -3,7 +3,7 @@
 
   var _ = require('underscore');
 
-  var controller = function($scope, $rootScope, emitter, MethodGroup, Method) {
+  var controller = function($scope, $rootScope, MethodGroup, Method) {
     var methodGroup;
 
     var retrieveMethods = function(showClassSide) {
@@ -18,23 +18,27 @@
       $scope.items = _.sortBy(methods, 'name');
     };
 
-    emitter.on('get:method:all', function(behaviour) {
-      emitter.once('add:method:' + behaviour.name, function(methods) {
-        $rootScope.$emit('reset-source');
+    $scope.$on('get:method:all', function(_event1, behaviour) {
+      var name = 'add:method:' + behaviour.name;
 
-        if (methods.length === 0) {
-          $scope.$apply(function() {
-            $scope.items = ['No methods found'];
-          });
-        } else {
-          $scope.$apply(function() {
-            methodGroup = MethodGroup.new(methods, behaviour.name);
-            $rootScope.$emit('add:method-group', methodGroup);
+      if (!$scope.$$listeners.hasOwnProperty(name)) {
+        $scope.$on(name, function(_event2, methods) {
+          $rootScope.$emit('reset-source');
 
-            retrieveMethods(document.querySelector('#main-toolbar input').checked);
-          });
-        }
-      });
+          if (methods.length === 0) {
+            $scope.$apply(function() {
+              $scope.items = ['No methods found'];
+            });
+          } else {
+            $scope.$apply(function() {
+              methodGroup = MethodGroup.new(methods, behaviour.name);
+              $rootScope.$emit('add:method-group', methodGroup);
+
+              retrieveMethods(document.querySelector('#main-toolbar input').checked);
+            });
+          }
+        });
+      }
 
       Method.getAllFrom(behaviour.name);
     });
@@ -44,8 +48,9 @@
     });
 
     $rootScope.$on('class-side-checkbox', function(_event, showClassSide) {
-      if (methodGroup === undefined)
+      if (methodGroup === undefined) {
         return;
+      }
 
       $rootScope.$emit('add:method-group', methodGroup);
       retrieveMethods(showClassSide);
@@ -78,7 +83,6 @@
   global.app.controller('MethodController', [
     '$scope',
     '$rootScope',
-    'emitter',
     'MethodGroup',
     'Method',
     controller]);

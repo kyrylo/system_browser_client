@@ -3,12 +3,12 @@
 
   var _ = require('underscore');
 
-  var controller = function($scope, $rootScope, emitter, Gem) {
-    emitter.on('get:gem:all', function() {
+  var controller = function($scope, $rootScope, Gem) {
+    $scope.$on('get:gem:all', function() {
       Gem.getAll();
     });
 
-    emitter.on('add:gem:all', function(gems) {
+    $scope.$on('add:gem:all', function(_event, gems) {
       var ruby_gems = gems.slice(2, gems.length);
       var core_gems = gems.slice(0, 2).map(function(gem) {
         gem.selected = false;
@@ -25,7 +25,7 @@
     });
 
     $scope.getSublist = function(gem) {
-      emitter.emit('get:behaviour:all', gem);
+      $scope.$parent.$broadcast('get:behaviour:all', gem);
     };
 
     $scope.select = function(gem) {
@@ -37,7 +37,6 @@
   global.app.controller('GemController', [
     '$scope',
     '$rootScope',
-    'emitter',
     'Gem',
     controller]);
 })(window.global);

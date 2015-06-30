@@ -3,7 +3,7 @@
 
   var _ = require('underscore');
 
-  var controller = function($scope, MethodGroup, Method) {
+  var controller = function($scope, MethodGroup, Method, Toolbar) {
     var methodGroup;
 
     var retrieveMethods = function(showClassSide) {
@@ -34,7 +34,7 @@
               methodGroup = MethodGroup.new(methods, behaviour.name);
               $scope.$parent.$broadcast('add:method-group', methodGroup);
 
-              retrieveMethods(document.querySelector('#main-toolbar input').checked);
+              retrieveMethods(Toolbar.classSideChecked());
             });
           }
         });
@@ -57,7 +57,7 @@
     });
 
     $scope.$on('filter:method', function(_event, group) {
-      if (document.querySelector('#main-toolbar input').checked) {
+      if (Toolbar.classSideChecked()) {
         $scope.items = methodGroup.classMethodsInGroup(group.name);
       } else {
         $scope.items = methodGroup.instanceMethodsInGroup(group.name);
@@ -84,5 +84,6 @@
     '$scope',
     'MethodGroup',
     'Method',
+    'Toolbar',
     controller]);
 })(window.global);

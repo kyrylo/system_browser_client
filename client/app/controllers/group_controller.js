@@ -1,12 +1,12 @@
 (function(global) {
   'use strict';
 
-  var controller = function($scope, Group) {
+  var controller = function($scope, Group, Toolbar) {
     $scope.$on('add:method-group', function(_event, methodGroup) {
       var ctx;
       var groups = [];
 
-      if (document.querySelector('#main-toolbar input').checked) {
+      if (Toolbar.classSideChecked()) {
         ctx = 'singleton';
       } else {
         ctx = 'instance';
@@ -55,5 +55,6 @@
   global.app.controller('GroupController', [
     '$scope',
     'Group',
+    'Toolbar',
     controller]);
 })(window.global);

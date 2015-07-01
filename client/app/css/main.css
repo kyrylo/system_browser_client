@@ -85,15 +85,17 @@ pre {
     display: table-row;
     width: 100%;
     float: left;
+    text-shadow: 1px 1px 1px #e2e2e2;
+}
+
+.list-box ul li.selected {
+    background-color: #9763b0 !important;
+    color: #fff;
+    text-shadow: 1px 1px 0px #373737 !important;
 }
 
 .list-box ul li:nth-child(odd) {
     background: #f5f5f5;
-}
-
-.selected {
-    background-color: #9763b0 !important;
-    color: #fff;
 }
 
 .list-box ul li:hover {

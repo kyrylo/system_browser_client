@@ -6,6 +6,11 @@
       getAll: function() {
         var req = new Request('get', 'gem', 'all');
         socket.write(req.to_json());
+      },
+
+      open: function(gem_name) {
+        var req = new Request('open', 'gem', gem_name);
+        socket.write(req.to_json());
       }
     };
   };

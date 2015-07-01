@@ -37,6 +37,10 @@
       $scope.$emit('list-box:gem:selected');
       gem.selected = true;
     };
+
+    $scope.openGem = function(gem) {
+      Gem.open(gem.name);
+    };
   };
 
   global.app.controller('GemController', [

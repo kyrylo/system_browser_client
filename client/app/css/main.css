@@ -146,4 +146,23 @@ pre {
     float: left;
     position: relative;
     top: 2px;
+    text-align: center;
+}
+
+.icon i {
+    width: 16px;
+    height: 16px;
+    float: left;
+}
+
+.ruby-icon {
+    background: url("ruby-icon.png");
+}
+
+.ruby-icon:hover {
+    background: url("ruby-hover-icon.png");
+}
+
+.package-icon {
+    background: url("package-icon.png");
 }

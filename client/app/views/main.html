@@ -11,7 +11,9 @@
               ng-click="getSublist(item); select(item)"
               ng-class="{selected: item.selected}">
             <span class="icon">
-              <img ng-src="{{ item.icon }}-icon.png" />
+              <i title="Open {{ item.name }} in text editor"
+                 class="{{ item.icon }}-icon"
+                 ng-click="openGem(item);"></i>
             </span>
             {{ item.name }}
           </li>

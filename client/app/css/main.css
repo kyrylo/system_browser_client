@@ -53,6 +53,7 @@ pre {
 
 .list-box-content:hover {
     overflow: auto;
+    width: 100%;
 }
 
 #gem-list-box .list-box-content {

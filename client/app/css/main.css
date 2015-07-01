@@ -53,7 +53,7 @@ pre {
 
 .list-box-content:hover {
     overflow: auto;
-    width: 100%;
+    display: flex; /* Hack for scrollbars */
 }
 
 #gem-list-box .list-box-content {

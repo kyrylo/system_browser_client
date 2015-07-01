@@ -21,7 +21,6 @@ module.exports = function(grunt) {
         src: [
           'node_modules/angular/angular.js',
           'node_modules/angular-route/angular-route.js',
-          'node_modules/underscore/underscore.js',
 
           'bower_components/raf/index.js',
           'bower_components/angular-ui-layout/ui-layout.js',
@@ -44,6 +43,7 @@ module.exports = function(grunt) {
           '<%= dist %><%= pkg.name %>.css': [
             'node_modules/normalize.css/normalize.css',
             'bower_components/angular-ui-layout/ui-layout.css',
+            'node_modules/highlight.js/styles/default.css',
             'client/app/css/main.css'
           ]
         }

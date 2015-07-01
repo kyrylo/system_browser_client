@@ -71,6 +71,7 @@ pre {
     float: left;
     display: table;
     width: 100%;
+    line-height: 160%;
 }
 
 .list-box ul li.highlighted {
@@ -90,12 +91,12 @@ pre {
 }
 
 .selected {
-    background-color: #4a828e !important;
+    background-color: #9763b0 !important;
     color: #fff;
 }
 
 .list-box ul li:hover {
-    background-color: #d3f7ff;
+    background-color: #ead3ff;
 }
 
 #gem-list-box {
@@ -135,4 +136,12 @@ pre {
     border-right: 1px solid #e5e5e5;
     background-color: #f0eaff;
     color: #5830bb;
+}
+
+.icon {
+    height: 18px;
+    width: 18px;
+    float: left;
+    position: relative;
+    top: 2px;
 }

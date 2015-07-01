@@ -9,8 +9,13 @@
     });
 
     $scope.$on('add:gem:all', function(_event, gems) {
-      var ruby_gems = gems.slice(2, gems.length);
+      var ruby_gems = gems.slice(2, gems.length).map(function(gem) {
+        gem.icon = 'ruby';
+        return gem;
+      });
+
       var core_gems = gems.slice(0, 2).map(function(gem) {
+        gem.icon = 'package';
         gem.selected = false;
         return gem;
       });

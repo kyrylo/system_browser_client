@@ -10,6 +10,9 @@
           <li ng-repeat="item in items | filter:searchText"
               ng-click="getSublist(item); select(item)"
               ng-class="{selected: item.selected}">
+            <span class="icon">
+              <img src="{{ item.icon }}-icon.png" />
+            </span>
             {{ item.name }}
           </li>
         </ul>

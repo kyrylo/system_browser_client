@@ -43,7 +43,6 @@ module.exports = function(grunt) {
           '<%= dist %><%= pkg.name %>.css': [
             'node_modules/normalize.css/normalize.css',
             'bower_components/angular-ui-layout/ui-layout.css',
-            'node_modules/highlight.js/styles/default.css',
             'client/app/css/main.css'
           ]
         }

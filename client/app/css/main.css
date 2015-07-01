@@ -15,6 +15,8 @@ body {
 pre {
     margin: 0;
     height: 100%;
+    padding: 2px 5px;
+    font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
 }
 
 #top, #bottom {
@@ -24,7 +26,11 @@ pre {
 }
 
 #source {
-    height: calc(100% - 23px);
+    height: calc(100% - 27px);
+}
+
+#source div {
+    height: 100%;
 }
 
 #bottom-content {

@@ -3,7 +3,7 @@
 
   var _ = require('underscore');
 
-  var controller = function($scope, MethodGroup, Method, GroupBar) {
+  var controller = function($scope, MethodGroup, Method, GroupBar, Redrawer) {
     var methodGroup;
 
     var retrieveMethods = function(showClassSide) {
@@ -82,6 +82,10 @@
     $scope.classSideChecked = function() {
       return GroupBar.classSideChecked();
     };
+
+    $scope.forceRedraw = function($event) {
+      Redrawer.redraw($event.currentTarget);
+    };
   };
 
   global.app.controller('MethodController', [
@@ -89,5 +93,6 @@
     'MethodGroup',
     'Method',
     'GroupBar',
+    'Redrawer',
     controller]);
 })(window.global);

@@ -5,7 +5,7 @@
         <input type="text" ng-model="searchText" placeholder="Search gems...">
       </div>
 
-      <div class="list-box-content">
+      <div class="list-box-content" ng-mouseout="forceRedraw($event)">
         <ul>
           <li ng-repeat="item in items | filter:searchText"
               ng-click="getSublist(item); select(item)"
@@ -65,7 +65,7 @@
     </div>
 
     <div id="method-list-box" class="list-box" ng-controller="MethodController">
-      <div class="list-box-content">
+      <div class="list-box-content" ng-mouseout="forceRedraw($event)">
         <ul ng-class="{classSide: classSideChecked()}">
           <li ng-repeat="item in items track by $index"
               ng-click="getSublist(item); select(item)"

@@ -3,7 +3,7 @@
 
   var _ = require('underscore');
 
-  var controller = function($scope, Gem) {
+  var controller = function($scope, Gem, Redrawer) {
     $scope.$on('get:gem:all', function() {
       Gem.getAll();
     });
@@ -41,10 +41,15 @@
     $scope.openGem = function(gem) {
       Gem.open(gem.name);
     };
+
+    $scope.forceRedraw = function($event) {
+      Redrawer.redraw($event.currentTarget);
+    };
   };
 
   global.app.controller('GemController', [
     '$scope',
     'Gem',
+    'Redrawer',
     controller]);
 })(window.global);

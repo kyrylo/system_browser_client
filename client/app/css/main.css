@@ -99,7 +99,6 @@ pre {
 
 .list-box ul li:hover {
     background-color: #ead3ff;
-    transition: background-color 0.12s ease-in;
 }
 
 .list-box-content .indent {

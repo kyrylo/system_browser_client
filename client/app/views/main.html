@@ -26,7 +26,7 @@
         <ul>
           <li ng-repeat="item in items track by $index"
               ng-click="getSublist(item); select($event, item)"
-              ng-class="{selected: item.selected}",
+              ng-class="{selected: item.selected}"
               ng-mouseover="showIndent(item)"
               ng-mouseout="hideIndent(item)">
 
@@ -42,7 +42,26 @@
     </div>
 
     <div id="group-list-box" class="list-box" ng-controller="GroupController">
-      <ng-include src="'partials/list_box.html'"></ng-include>
+      <div class="list-box-content">
+        <div id="group-bar">
+          <div id="group-bar-content" ng-show="showGroupBar || items.length > 0">
+            <label class="switch">
+	          <input class="switch-input" type="checkbox" ng-model="groupbar.classSide" ng-change="toggleClassSide()" />
+	          <span class="switch-label" data-on="Class Side" data-off="Instance Side"></span>
+	          <span class="switch-handle"></span>
+            </label>
+          </div>
+        </div>
+        <ul>
+          <li ng-repeat="item in items track by $index"
+              ng-click="getSublist(item); select(item)"
+              ng-class="{selected: item.selected}">
+            <span class="item">
+              {{ item.name }}
+            </span>
+          </li>
+        </ul>
+      </div>
     </div>
 
     <div id="method-list-box" class="list-box" ng-controller="MethodController">
@@ -53,9 +72,6 @@
   <div id="bottom" ui-layout-container min-size="100px">
     <div id="bottom-content">
       <div id="main-toolbar" ng-controller="ToolbarController">
-        <label>
-          <input type="checkbox" ng-model="toolbar.classSide" ng-change="toggleClassSide()"/> Class side
-        </label>
       </div>
 
       <div id="source" ng-controller="SourceController">

@@ -1,12 +1,12 @@
 (function(global) {
   'use strict';
 
-  var controller = function($scope, Group, Toolbar) {
+  var controller = function($scope, Group, GroupBar) {
     $scope.$on('add:method-group', function(_event, methodGroup) {
       var ctx;
       var groups = [];
 
-      if (Toolbar.classSideChecked()) {
+      if (GroupBar.classSideChecked()) {
         ctx = 'singleton';
       } else {
         ctx = 'instance';
@@ -33,12 +33,15 @@
 
     $scope.$on('reset-methods', function() {
       $scope.items = [];
+      $scope.showGroupBar = false;
+      GroupBar.setInstanceSide();
     });
 
     $scope.$on('list-box:group:selected', function() {
       $scope.items.forEach(function(group) {
         group.selected = false;
       });
+      $scope.showGroupBar = true;
     });
 
     $scope.getSublist = function(group) {
@@ -49,11 +52,19 @@
       $scope.$emit('list-box:group:selected');
       group.selected = true;
     };
+
+    $scope.toggleClassSide = function() {
+      $scope.$parent.$broadcast('class-side-checkbox', $scope.groupbar.classSide);
+    };
+
+    $scope.classSideChecked = function() {
+      return GroupBar.classSideChecked();
+    };
   };
 
   global.app.controller('GroupController', [
     '$scope',
     'Group',
-    'Toolbar',
+    'GroupBar',
     controller]);
 })(window.global);

@@ -115,23 +115,17 @@ pre {
     visibility: hidden;
 }
 
-
 .list-box-content .display-name,
 .list-box-content .indent,
 .list-box-content .no-indent {
     white-space: pre;
 }
 
-#gem-list-box {
+.list-box-content ul li .superclass {
+    color: #c5bec7;
 }
-
-#behaviour-list-box {
-}
-
-#group-list-box {
-}
-
-#method-list-box {
+.list-box-content .selected .superclass {
+    color: #ff95f2;
 }
 
 #method-list-box .list-box-content {

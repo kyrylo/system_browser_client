@@ -35,6 +35,7 @@
             </span>
             <span ng-class="{indent: item.visibleIndent, 'no-indent': !item.visibleIndent}" ng-bind-html="item.indent"></span>
             <span class="display-name">{{ item.displayName }}</span>
+            <span class="superclass" ng-if="item.superclass">< {{ item.superclass }}</span>
           </li>
         </ul>
       </div>

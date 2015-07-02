@@ -85,7 +85,6 @@ pre {
     display: table-row;
     width: 100%;
     float: left;
-    text-shadow: 1px 1px 1px #e2e2e2;
 }
 
 .list-box ul li.selected {
@@ -100,6 +99,27 @@ pre {
 
 .list-box ul li:hover {
     background-color: #ead3ff;
+}
+
+.list-box-content .indent {
+    visibility: visible;
+    color: #ce93d0;
+}
+
+.list-box-content .selected .indent {
+    visibility: visible;
+    color: #d3b6d3;
+}
+
+.list-box-content .no-indent {
+    visibility: hidden;
+}
+
+
+.list-box-content .display-name,
+.list-box-content .indent,
+.list-box-content .no-indent {
+    white-space: pre;
 }
 
 #gem-list-box {

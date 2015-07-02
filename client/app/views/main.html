@@ -22,7 +22,19 @@
     </div>
 
     <div id="behaviour-list-box" class="list-box" ng-controller="BehaviourController">
-      <ng-include src="'partials/list_box.html'"></ng-include>
+      <div class="list-box-content">
+        <ul>
+          <li ng-repeat="item in items track by $index"
+              ng-click="getSublist(item); select($event, item)"
+              ng-class="{selected: item.selected}",
+              ng-mouseover="showIndent(item)"
+              ng-mouseout="hideIndent(item)">
+
+            <span ng-class="{indent: item.visibleIndent, 'no-indent': !item.visibleIndent}" ng-bind-html="item.indent"></span>
+            <span class="display-name">{{ item.displayName }}</span>
+          </li>
+        </ul>
+      </div>
     </div>
 
     <div id="group-list-box" class="list-box" ng-controller="GroupController">

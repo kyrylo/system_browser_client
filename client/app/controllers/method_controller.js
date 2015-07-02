@@ -78,6 +78,10 @@
       $scope.$emit('list-box:method:selected');
       method.selected = true;
     };
+
+    $scope.classSideChecked = function() {
+      return GroupBar.classSideChecked();
+    };
   };
 
   global.app.controller('MethodController', [

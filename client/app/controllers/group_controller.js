@@ -55,10 +55,7 @@
 
     $scope.toggleClassSide = function() {
       $scope.$parent.$broadcast('class-side-checkbox', $scope.groupbar.classSide);
-    };
-
-    $scope.classSideChecked = function() {
-      return GroupBar.classSideChecked();
+      $scope.showGroupBar = true;
     };
   };
 

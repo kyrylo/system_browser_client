@@ -188,3 +188,15 @@ pre {
 .package-icon {
     background: url("package-icon.png");
 }
+
+.class-icon {
+    background: url("class-icon.png");
+}
+
+.module-icon {
+    background: url("module-icon.png");
+}
+
+.exception-icon {
+    background: url("exception-icon.png");
+}

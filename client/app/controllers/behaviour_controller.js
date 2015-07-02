@@ -16,7 +16,7 @@
 
           if (behaviours.length === 0) {
             $scope.$apply(function() {
-              $scope.items = [{name: 'No behaviours found'}];
+              $scope.items = [{displayName: 'No behaviours found'}];
             });
           } else {
             $scope.$apply(function() {
@@ -26,6 +26,14 @@
               });
 
               var behaviourTree = sortedBehaviours.map(function(behaviour) {
+                if (behaviour.isModule) {
+                  behaviour.icon = 'module';
+                } else if (behaviour.isException) {
+                  behaviour.icon = 'exception';
+                } else {
+                  behaviour.icon = 'class';
+                }
+
                 if (behaviour.name) {
                   // A feeble attempt at supporting behaviours
                   // with redefined #name

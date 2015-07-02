@@ -30,6 +30,9 @@
               ng-mouseover="showIndent(item)"
               ng-mouseout="hideIndent(item)">
 
+            <span class="icon">
+              <i class="{{ item.icon }}-icon"></i>
+            </span>
             <span ng-class="{indent: item.visibleIndent, 'no-indent': !item.visibleIndent}" ng-bind-html="item.indent"></span>
             <span class="display-name">{{ item.displayName }}</span>
           </li>

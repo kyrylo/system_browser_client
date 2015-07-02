@@ -70,6 +70,7 @@
 
     $scope.getSublist = function(behaviour) {
       $scope.$parent.$broadcast('get:method:all', behaviour);
+      $scope.$parent.$broadcast('show:groupbar');
     };
 
     $scope.select = function($event, behaviour) {

@@ -44,6 +44,10 @@
       $scope.showGroupBar = true;
     });
 
+    $scope.$on('show:groupbar', function() {
+      $scope.showGroupBar = true;
+    });
+
     $scope.getSublist = function(group) {
       $scope.$parent.$broadcast('filter:method', group);
     };

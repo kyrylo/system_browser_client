@@ -135,12 +135,25 @@ pre {
 }
 
 .ui-splitbar {
-    background-color: #88b5c0;
+    box-shadow: 0px -2px 2px rgba(0, 0, 0, 0.16);
+    overflow: hidden;
+}
+
+.ui-splitbar:hover {
+    box-shadow: 0 -3px 3px rgba(77, 11, 79, 0.25);
+    transition: box-shadow 0.3s linear;
+}
+
+.ui-splitbar::before {
+    content: "=";
+    font-size: 125%;
+    margin-top: 1px;
+    font-family: "PT Mono";
+    color: #8b8b8b;
 }
 
 #main-toolbar {
     height: 23px;
-    background-color: #b6fff7;
 }
 
 .filter-input {
@@ -196,7 +209,6 @@ pre {
 .exception-icon {
     background: url("exception-icon.png");
 }
-
 
 #group-list-box ul li .item {
     padding-left: 18px;

@@ -85,6 +85,7 @@ pre {
     display: table-row;
     width: calc(100% + 18px);
     float: left;
+    transition: text-shadow 0.1s ease;
 }
 
 .list-box ul li.selected {
@@ -99,6 +100,7 @@ pre {
 
 .list-box ul li:hover {
     background-color: #ead3ff;
+    transition: background-color 0.12s ease-in;
 }
 
 .list-box-content .indent {

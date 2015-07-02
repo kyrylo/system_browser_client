@@ -71,7 +71,7 @@ pre {
     margin: 0;
     float: left;
     display: table;
-    width: 100%;
+    width: calc(100% - 18px);
     line-height: 160%;
 }
 
@@ -195,4 +195,9 @@ pre {
 
 .exception-icon {
     background: url("exception-icon.png");
+}
+
+
+#group-list-box ul li .item {
+    padding-left: 18px;
 }

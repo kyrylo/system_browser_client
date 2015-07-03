@@ -36,7 +36,7 @@
             <span ng-class="{indent: item.visibleIndent, 'no-indent': !item.visibleIndent}" ng-bind-html="item.indent"></span>
             <span class="display-name">{{ item.displayName }}</span>
             <span class="superclass" ng-if="item.superclass">< {{ item.superclass }}</span>
-                                                               </li>
+          </li>
         </ul>
       </div>
     </div>
@@ -54,11 +54,11 @@
             <div class="counters">
               <div id="cm-count" class="method-count"
                    ng-class="{'class-side': classSideChecked()}">
-                class methods: <span class="num">{{ classMethodCount }}</span>
+                class: <span class="num">{{ classMethodCount }}</span>
               </div>
               <div id="im-count" class="method-count"
                    ng-class="{'instance-side': !classSideChecked()}">
-                instance methods: <span class="num">{{ instanceMethodCount }}</span>
+                instance: <span class="num">{{ instanceMethodCount }}</span>
               </div>
             </div>
           </div>

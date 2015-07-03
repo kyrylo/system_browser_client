@@ -1,7 +1,11 @@
 (function(global) {
   'use strict';
 
-  var controller = function($scope, Group, GroupBar) {
+  var controller = function($scope, $element, Group, GroupBar) {
+    var showGroupBar = function() {
+      $scope.showGroupBar = true;
+    };
+
     $scope.$on('add:method-group', function(_event, methodGroup) {
       var ctx;
       var groups = [];
@@ -34,18 +38,25 @@
     $scope.$on('reset-methods', function() {
       $scope.items = [];
       $scope.showGroupBar = false;
-      GroupBar.setInstanceSide();
+      if ($scope.groupbar) {
+        $scope.groupbar.classSide = false;
+      }
     });
 
     $scope.$on('list-box:group:selected', function() {
       $scope.items.forEach(function(group) {
         group.selected = false;
       });
-      $scope.showGroupBar = true;
+      showGroupBar();
     });
 
     $scope.$on('show:groupbar', function() {
-      $scope.showGroupBar = true;
+      showGroupBar();
+    });
+
+    $scope.$on('method-count:method', function(_event, count) {
+      $scope.classMethodCount = count.classMethods;
+      $scope.instanceMethodCount = count.instanceMethods;
     });
 
     $scope.getSublist = function(group) {
@@ -59,12 +70,25 @@
 
     $scope.toggleClassSide = function() {
       $scope.$parent.$broadcast('class-side-checkbox', $scope.groupbar.classSide);
-      $scope.showGroupBar = true;
+      showGroupBar();
+    };
+
+    $scope.classSideChecked = function() {
+      return GroupBar.classSideChecked();
+    };
+
+    $scope.shouldShowGroupBar = function() {
+      if (!$scope.items) {
+        return false;
+      }
+
+      return $scope.showGroupBar || $scope.items.length > 0;
     };
   };
 
   global.app.controller('GroupController', [
     '$scope',
+    '$element',
     'Group',
     'GroupBar',
     controller]);

@@ -132,10 +132,6 @@ pre {
     border-right: none;
 }
 
-#method-list-box .classSide {
-    color: #420949;
-}
-
 .ui-splitbar {
     box-shadow: 0px -2px 2px rgba(0, 0, 0, 0.16);
     overflow: hidden;
@@ -218,108 +214,80 @@ pre {
 }
 
 #group-bar {
+    display: none;
+}
+
+#group-bar.visible {
+    display: block;
     width: 100%;
+    float: left;
+    border-bottom: 1px solid #e5e5e5;
+    margin-top: 4px;
 }
 
 #group-bar-content {
-    margin-top: 6px;
+    margin-top: 5px;
     margin-left: 15px;
 }
 
-.switch {
-	position: relative;
-	display: block;
-	vertical-align: top;
-	width: 100px;
-	height: 18px;
-	padding: 3px;
-	margin: 0 10px 10px 0;
-	background: linear-gradient(to bottom, #eeeeee, #FFFFFF 25px);
-	background-image: -webkit-linear-gradient(top, #eeeeee, #FFFFFF 25px);
-	border-radius: 18px;
-	box-shadow: inset 0 -1px white, inset 0 1px 1px rgba(0, 0, 0, 0.05);
-	cursor: pointer;
+#group-bar .counters {
+    float: left;
+    text-transform: uppercase;
+    font-size: 85%;
+    margin: -2px;
 }
 
-.switch-input {
-	position: absolute;
-	top: 0;
-	left: 0;
-	opacity: 0;
+#group-bar .counters .method-count.class-side,
+#group-bar .counters .method-count.instance-side {
+    font-weight: 700;
 }
 
-.switch-label {
-	position: relative;
-	display: block;
-	height: inherit;
-	font-size: 10px;
-	text-transform: uppercase;
-	background: #eceeef;
-	border-radius: inherit;
-	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.12), inset 0 0 2px rgba(0, 0, 0, 0.15);
-}
-.switch-label:before, .switch-label:after {
-	position: absolute;
-	top: 50%;
-	margin-top: -.5em;
-	line-height: 1;
-	transition: inherit;
-}
-.switch-label:before {
-	content: attr(data-off);
-	right: 11px;
-	color: #aaaaaa;
-	text-shadow: 0 1px rgba(255, 255, 255, 0.5);
-}
-.switch-label:after {
-	content: attr(data-on);
-	left: 11px;
-	color: #FFFFFF;
-	text-shadow: 0 1px rgba(0, 0, 0, 0.2);
-	opacity: 0;
+#group-bar .counters .num {
+    float: right;
+    padding-left: 10px;
 }
 
-.switch-input:checked ~ .switch-label {
-	background: #9763b0;
-	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15), inset 0 0 3px rgba(0, 0, 0, 0.2);
-}
-.switch-input:checked ~ .switch-label:before {
-	opacity: 0;
-}
-.switch-input:checked ~ .switch-label:after {
-	opacity: 1;
+.squared-checkbox {
+    width: 20px;
+    position: relative;
+    float: left;
+    margin-top: 3px;
+    margin-right: 6px;
+    padding-bottom: 10px;
 }
 
-.switch-handle {
-	position: absolute;
-	top: 4px;
-	left: 4px;
-	width: 16px;
-	height: 16px;
-	background: linear-gradient(to bottom, #FFFFFF 40%, #f0f0f0);
-	background-image: -webkit-linear-gradient(top, #FFFFFF 40%, #f0f0f0);
-	border-radius: 100%;
-	box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+.squared-checkbox label {
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #fff4ff;
+    background: linear-gradient(to bottom,#fff4ff 0,#e5d7e3 40%,#bcadbe 100%);
+    border-radius: 4px;
+    box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0, 0, 0, 0.5);
 }
-
-.switch-handle:before {
-	content: "";
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	margin: -4px 0 0 -4px;
-	width: 8px;
-	height: 8px;
-	background: linear-gradient(to bottom, #eeeeee, #FFFFFF);
-	background-image: -webkit-linear-gradient(top, #eeeeee, #FFFFFF);
-	border-radius: 6px;
-	box-shadow: inset 0 1px rgba(0, 0, 0, 0.02);
+.squared-checkbox label:after {
+    content: '';
+    width: 5px;
+    height: 3px;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    border: 3px solid #722b86;
+    border-top: none;
+    border-right: none;
+    background: transparent;
+    opacity: 0;
+    transform: rotate(-45deg);
 }
-.switch-input:checked ~ .switch-handle {
-	left: 86px;
-	box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.2);
+.squared-checkbox label:hover::after {
+    opacity: 0.5;
 }
-
-.switch-label, .switch-handle {
-	transition: All 0.3s ease;
+.squared-checkbox input[type=checkbox] {
+    visibility: hidden;
+}
+.squared-checkbox input[type=checkbox]:checked + label:after {
+    opacity: 1;
 }

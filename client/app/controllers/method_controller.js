@@ -34,6 +34,12 @@
               methodGroup = new MethodGroup(methods, behaviour.name);
               $scope.$parent.$broadcast('add:method-group', methodGroup);
 
+              var count = {
+                instanceMethods: methodGroup.instanceMethods().length,
+                classMethods: methodGroup.classMethods().length
+              };
+              $scope.$parent.$broadcast('method-count:method', count);
+
               retrieveMethods(GroupBar.classSideChecked());
             });
           }
@@ -77,10 +83,6 @@
     $scope.select = function(method) {
       $scope.$emit('list-box:method:selected');
       method.selected = true;
-    };
-
-    $scope.classSideChecked = function() {
-      return GroupBar.classSideChecked();
     };
 
     $scope.forceRedraw = function($event) {

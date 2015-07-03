@@ -223,6 +223,7 @@ pre {
     float: left;
     border-bottom: 1px solid #e5e5e5;
     margin-top: 4px;
+    white-space: nowrap;
 }
 
 #group-bar-content {
@@ -240,6 +241,7 @@ pre {
 #group-bar .counters .method-count.class-side,
 #group-bar .counters .method-count.instance-side {
     font-weight: 700;
+    clear: both;
 }
 
 #group-bar .counters .num {

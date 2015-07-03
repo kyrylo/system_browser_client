@@ -209,7 +209,8 @@ pre {
     background: url("exception-icon.png");
 }
 
-#group-list-box ul li .item {
+#group-list-box ul li .item,
+#method-list-box ul li .item{
     padding-left: 18px;
 }
 

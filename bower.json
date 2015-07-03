@@ -13,6 +13,7 @@
     "tests"
   ],
   "dependencies": {
-    "angular-ui-layout": "bower"
+    "angular-ui-layout": "bower",
+    "ng-scrollbars": "~0.0.5"
   }
 }

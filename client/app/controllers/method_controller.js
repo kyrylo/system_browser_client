@@ -3,7 +3,7 @@
 
   var _ = require('underscore');
 
-  var controller = function($scope, MethodGroup, Method, GroupBar, Redrawer) {
+  var controller = function($scope, MethodGroup, Method, GroupBar) {
     var methodGroup;
 
     var retrieveMethods = function(showClassSide) {
@@ -84,10 +84,6 @@
       $scope.$emit('list-box:method:selected');
       method.selected = true;
     };
-
-    $scope.forceRedraw = function($event) {
-      Redrawer.redraw($event.currentTarget);
-    };
   };
 
   global.app.controller('MethodController', [
@@ -95,6 +91,5 @@
     'MethodGroup',
     'Method',
     'GroupBar',
-    'Redrawer',
     controller]);
 })(window.global);

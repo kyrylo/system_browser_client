@@ -46,7 +46,7 @@ module.exports = function(grunt) {
           '<%= dist %><%= pkg.name %>.css': [
             'node_modules/normalize.css/normalize.css',
             'bower_components/angular-ui-layout/ui-layout.css',
-            'client/app/css/main.css'
+            'client/app/assets/css/main.css'
           ]
         }
       }
@@ -60,9 +60,8 @@ module.exports = function(grunt) {
             flatten: true,
             filter: 'isFile',
             src: [
-              'client/app/fonts/*',
               'client/app/views/*',
-              'client/app/img/*',
+              'client/app/assets/**/*',
               'client/index.html'
             ],
             dest: '<%= dist %>'

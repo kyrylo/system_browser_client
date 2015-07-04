@@ -46,11 +46,6 @@
     this.icon = icon;
   };
 
-  Behaviour.prototype.getAllFrom = function(gemName) {
-    var req = new this.Request('get', 'behaviour', gemName);
-    this.socket.write(req.to_json());
-  };
-
   Behaviour.prototype.indent = function($sce) {
     var indent = new Array(this.namespacesLen).join(' &bull; ');
     this.indentation = $sce.trustAsHtml(indent);

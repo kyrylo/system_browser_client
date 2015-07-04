@@ -3,7 +3,6 @@
 
   global.app = angular.module('systemBrowser', [
     'ngRoute',
-    'ui.layout',
-    'ngScrollbars'
+    'ui.layout'
   ]);
 })(window.global);

@@ -19,14 +19,11 @@ module.exports = function(grunt) {
     concat: {
       dist: {
         src: [
-          'bower_components/jquery/dist/jquery.js',
           'node_modules/angular/angular.js',
           'node_modules/angular-route/angular-route.js',
 
           'bower_components/raf/index.js',
           'bower_components/angular-ui-layout/ui-layout.js',
-          'bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js',
-          'bower_components/ng-scrollbars/dist/scrollbars.min.js',
 
           'client/app/app.module.js',
           'client/app/app.routes.js',
@@ -49,7 +46,6 @@ module.exports = function(grunt) {
           '<%= dist %><%= pkg.name %>.css': [
             'node_modules/normalize.css/normalize.css',
             'bower_components/angular-ui-layout/ui-layout.css',
-            'bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css',
             'client/app/css/main.css'
           ]
         }

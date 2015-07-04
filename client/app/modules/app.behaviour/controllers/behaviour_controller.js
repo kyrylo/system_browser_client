@@ -45,7 +45,7 @@
                       className = nestedClasses[nestedClassesCount - 1],
                       indent = new Array(nestedClassesCount).join(' &bull; ');
 
-                  behaviour.indent = $sce.trustAsHtml(indent);
+                  behaviour.indentation = $sce.trustAsHtml(indent);
                   behaviour.displayName = className;
                 }
                 return behaviour;
@@ -76,21 +76,22 @@
       behaviour.selected = true;
 
       $scope.behaviours.forEach(function(behaviour) {
-        $scope.hideIndent(behaviour);
+        $scope.hideIndentation(behaviour);
       });
 
-      $scope.showIndent(behaviour);
+      $scope.showIndentation(behaviour);
     };
 
-    $scope.showIndent = function(behaviour) {
-      behaviour.visibleIndent = true;
+    $scope.showIndentation = function(behaviour) {
+      behaviour.visibleIndentation = true;
     };
 
-    $scope.hideIndent = function(behaviour) {
+    $scope.hideIndentation = function(behaviour) {
       if (behaviour.selected) {
         return;
       }
-      behaviour.visibleIndent = false;
+
+      behaviour.visibleIndentation = false;
     };
   };
 

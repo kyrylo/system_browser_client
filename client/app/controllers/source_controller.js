@@ -1,9 +1,9 @@
 (function(global) {
   'use strict';
 
-  var controller = function($scope, $element, $sce, Source) {
+  var controller = function($scope, $element, $sce, source) {
     $scope.$on('get:source', function(_event, owner, method) {
-      Source.extract(owner, method);
+      source.extract(owner, method);
     });
 
     $scope.$on('add:source:with-comment', function(_event, source) {
@@ -21,6 +21,6 @@
     '$scope',
     '$element',
     '$sce',
-    'Source',
+    'source',
     controller]);
 })(window.global);

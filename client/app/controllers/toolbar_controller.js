@@ -1,12 +1,12 @@
 (function(global) {
   'use strict';
 
-  var controller = function($scope, $rootScope, Toolbar) {
+  var controller = function($scope, $rootScope, toolbar) {
   };
 
   global.app.controller('ToolbarController', [
     '$scope',
     '$rootScope',
-    'Toolbar',
+    'toolbar',
     controller]);
 })(window.global);

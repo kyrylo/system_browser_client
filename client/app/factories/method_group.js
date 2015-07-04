@@ -75,23 +75,23 @@
   MethodGroup.prototype.classMethodsInGroup = function(group) {
     var methods = [];
 
-    if (group === this.Group.labels.all) {
+    if (group === this.group.labels.all) {
       methods = this.classMethods();
     }
 
-    if (group === this.Group.labels.public) {
+    if (group === this.group.labels.public) {
       methods = this.publicClass.map(function(method) {
         return {name: '.' + method};
       });
     }
 
-    if (group === this.Group.labels.private) {
+    if (group === this.group.labels.private) {
       methods = this.privateClass.map(function(method) {
         return {name: '.' + method};
       });
     }
 
-    if (group === this.Group.labels.protected) {
+    if (group === this.group.labels.protected) {
       methods = this.protectedClass.map(function(method) {
         return {name: '.' + method};
       });
@@ -103,23 +103,23 @@
   MethodGroup.prototype.instanceMethodsInGroup = function(group) {
     var methods = [];
 
-    if (group === this.Group.labels.all) {
+    if (group === this.group.labels.all) {
       methods = this.instanceMethods();
     }
 
-    if (group === this.Group.labels.public) {
+    if (group === this.group.labels.public) {
       methods = this.publicInstance.map(function(method) {
         return {name: '#' + method};
       });
     }
 
-    if (group === this.Group.labels.private) {
+    if (group === this.group.labels.private) {
       methods = this.privateInstance.map(function(method) {
         return {name: '#' + method};
       });
     }
 
-    if (group === this.Group.labels.protected) {
+    if (group === this.group.labels.protected) {
       methods = this.protectedInstance.map(function(method) {
         return {name: '#' + method};
       });
@@ -128,11 +128,11 @@
     return methods;
   };
 
-  var factory = function(Group) {
-    MethodGroup.prototype.Group = Group;
+  var factory = function(group) {
+    MethodGroup.prototype.group = group;
 
     return MethodGroup;
   };
 
-  global.app.factory('MethodGroup', ['Group', factory]);
+  global.app.factory('MethodGroup', ['group', factory]);
 })(window.global);

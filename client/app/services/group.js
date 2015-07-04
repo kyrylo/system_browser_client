@@ -12,5 +12,5 @@
 
   Group.prototype.constructor = Group;
 
-  global.app.service('Group', [Group]);
+  global.app.service('group', [Group]);
 })(window.global);

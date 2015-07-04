@@ -1,7 +1,7 @@
 (function(global) {
   'use strict';
 
-  var controller = function($scope, $element, Group, GroupBar) {
+  var controller = function($scope, $element, group, groupBar) {
     var showGroupBar = function() {
       $scope.showGroupBar = true;
     };
@@ -10,26 +10,26 @@
       var ctx;
       var groups = [];
 
-      if (GroupBar.classSideChecked()) {
+      if (groupBar.classSideChecked()) {
         ctx = 'singleton';
       } else {
         ctx = 'instance';
       }
 
       if (methodGroup.anyPublicMethods(ctx)) {
-        groups.push({name: Group.labels.public});
+        groups.push({name: group.labels.public});
       }
 
       if (methodGroup.anyPrivateMethods(ctx)) {
-        groups.push({name: Group.labels.private});
+        groups.push({name: group.labels.private});
       }
 
       if (methodGroup.anyProtectedMethods(ctx)) {
-        groups.push({name: Group.labels.protected});
+        groups.push({name: group.labels.protected});
       }
 
       if (groups.length > 0) {
-        groups.unshift({name: Group.labels.all, selected: true});
+        groups.unshift({name: group.labels.all, selected: true});
       }
 
       $scope.items = groups;
@@ -74,7 +74,7 @@
     };
 
     $scope.classSideChecked = function() {
-      return GroupBar.classSideChecked();
+      return groupBar.classSideChecked();
     };
 
     $scope.shouldShowGroupBar = function() {
@@ -89,7 +89,7 @@
   global.app.controller('GroupController', [
     '$scope',
     '$element',
-    'Group',
-    'GroupBar',
+    'group',
+    'groupBar',
     controller]);
 })(window.global);

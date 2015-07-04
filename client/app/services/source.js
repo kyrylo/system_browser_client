@@ -18,5 +18,5 @@
     this.socket.write(req.to_json());
   };
 
-  global.app.service('Source', ['Request', 'socket', Source]);
+  global.app.service('source', ['Request', 'socket', Source]);
 })(window.global);

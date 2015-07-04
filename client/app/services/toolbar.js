@@ -6,5 +6,5 @@
 
   Toolbar.prototype.constructor = Toolbar;
 
-  global.app.service('Toolbar', [Toolbar]);
+  global.app.service('toolbar', [Toolbar]);
 })(window.global);

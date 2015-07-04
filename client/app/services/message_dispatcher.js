@@ -21,5 +21,5 @@
     });
   };
 
-  global.app.service('MessageDispatcher', [MessageDispatcher]);
+  global.app.service('messageDispatcher', [MessageDispatcher]);
 })(window.global);

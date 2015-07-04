@@ -11,5 +11,5 @@
     return this.domElement.checked;
   };
 
-  global.app.service('GroupBar', [GroupBar]);
+  global.app.service('groupBar', [GroupBar]);
 })(window.global);

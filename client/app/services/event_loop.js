@@ -1,10 +1,10 @@
 (function(global) {
   'use strict';
 
-  var EventLoop = function($rootScope, socket, MessageDispatcher) {
+  var EventLoop = function($rootScope, socket, messageDispatcher) {
     this.$rootScope = $rootScope;
     this.socket = socket;
-    this.dispatcher = MessageDispatcher;
+    this.dispatcher = messageDispatcher;
   };
 
   EventLoop.prototype.constructor = EventLoop;
@@ -21,9 +21,9 @@
     };
   };
 
-  global.app.service('EventLoop', [
+  global.app.service('eventLoop', [
     '$rootScope',
     'socket',
-    'MessageDispatcher',
+    'messageDispatcher',
     EventLoop]);
 })(window.global);

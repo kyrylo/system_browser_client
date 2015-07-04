@@ -1,8 +1,8 @@
 (function(global) {
   'use strict';
 
-  var controller = function($scope, $rootScope, socket, EventLoop) {
-    socket.on('data', EventLoop.init());
+  var controller = function($scope, $rootScope, socket, eventLoop) {
+    socket.on('data', eventLoop.init());
 
     $rootScope.$on('init', function() {
       $scope.$broadcast('get:gem:all');
@@ -13,6 +13,6 @@
     '$scope',
     '$rootScope',
     'socket',
-    'EventLoop',
+    'eventLoop',
     controller]);
 })(window.global);

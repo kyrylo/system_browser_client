@@ -1,14 +1,64 @@
 (function(global) {
   'use strict';
 
-  var factory = function(socket, Request) {
-    return {
-      getAllFrom: function(gemName) {
-        var req = new Request('get', 'behaviour', gemName);
-        socket.write(req.to_json());
-      }
-    };
+  var Behaviour = function(behaviour) {
+    this.selected = false;
+    this.name = behaviour.name;
+    this.isModule = behaviour.isModule;
+    this.isException = behaviour.isException;
+    this.name = behaviour.name;
+    this.namespacesLen = 0;
+
+    this.setIcon();
+
+    if (this.name) {
+      this.setDisplayName();
+    }
   };
 
-  global.app.factory('Behaviour', ['socket', 'Request', factory]);
+  Behaviour.prototype.constructor = Behaviour;
+
+  Behaviour.prototype.setDisplayName = function() {
+    var namespaces;
+
+    if (/^[^A-Z]/.test(this.name)) {
+      // A feeble attempt at supporting behaviours
+      // with redefined #name
+      this.displayName = this.name;
+    } else {
+      namespaces = this.name.split('::');
+      this.namespacesLen = namespaces.length;
+      this.displayName = namespaces[this.namespacesLen - 1];
+    }
+  };
+
+  Behaviour.prototype.setIcon = function() {
+    var icon;
+
+    if (this.isModule) {
+      icon = 'module';
+    } else if (this.isException) {
+      icon = 'exception';
+    } else {
+      icon = 'class';
+    }
+
+    this.icon = icon;
+  };
+
+  Behaviour.prototype.getAllFrom = function(gemName) {
+    var req = new this.Request('get', 'behaviour', gemName);
+    this.socket.write(req.to_json());
+  };
+
+  Behaviour.prototype.indent = function($sce) {
+    var indent = new Array(this.namespacesLen).join(' &bull; ');
+    this.indentation = $sce.trustAsHtml(indent);
+  };
+
+  var factory = function() {
+    return Behaviour;
+  };
+
+  global.app.factory('Behaviour', [factory]);
 })(window.global);

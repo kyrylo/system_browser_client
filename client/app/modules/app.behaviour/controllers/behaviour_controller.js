@@ -1,78 +1,46 @@
 (function(global) {
   'use strict';
 
-  var controller = function($scope, $rootScope, $sce, Behaviour, _) {
-    // --------------------------- Public variables ----------------------------
+  var controller = function($scope, $rootScope, $sce, behaviourService,
+                            Behaviour, _) {
+    // --- Public variables ----------------------------------------------------
+
     $scope.behaviours = [];
 
-    // --------------------------- Events --------------------------------------
+    // --- Private variables ---------------------------------------------------
 
-    $scope.$on('get:behaviour:all', function(_e, gem) {
-      var event = 'add:behaviour:' + gem.name;
+    var noBehavioursMsg = 'No behaviours found';
 
-      if (!$scope.$$listeners.hasOwnProperty(event)) {
-        listenTo(event);
-      }
-
-      Behaviour.getAllFrom(gem.name);
-    });
-
-    $scope.$on('list-box:behaviour:selected', function() {
-      $scope.behaviours.forEach(deselectBehaviour);
-    });
-
-    // --------------------------- Private methods -----------------------------
+    // --- Private methods -----------------------------------------------------
 
     var resetMethodState = function() {
       $rootScope.$broadcast('reset-methods');
       $rootScope.$broadcast('reset-source');
     };
 
-    var callbackForGem = function(_event2, behaviours) {
+    var emptyBehaviour = function() {
+      $scope.behaviours = [{displayName: noBehavioursMsg}];
+    };
+
+    var callbackForGem = function(_event2, rawBehaviours) {
+      var behaviours;
+
       resetMethodState();
 
-      if (behaviours.length === 0) {
-        $scope.$apply(function() {
-          $scope.behaviours = [{displayName: 'No behaviours found'}];
-        });
+      if (rawBehaviours.length === 0) {
+        behaviours = emptyBehaviour;
       } else {
-        $scope.$apply(function() {
-          var sortedBehaviours = _.sortBy(behaviours, 'name').map(function(behaviour) {
-            behaviour.selected = false;
+          behaviours = _.sortBy(rawBehaviours, 'name').map(function(rawB) {
+            var behaviour = new Behaviour(rawB);
+            behaviour.indent($sce);
+
             return behaviour;
           });
-
-          var behaviourTree = sortedBehaviours.map(function(behaviour) {
-            if (behaviour.isModule) {
-              behaviour.icon = 'module';
-            } else if (behaviour.isException) {
-              behaviour.icon = 'exception';
-            } else {
-              behaviour.icon = 'class';
-            }
-
-            if (behaviour.name) {
-              // A feeble attempt at supporting behaviours
-              // with redefined #name
-              if (/^[^A-Z]/.test(behaviour.name)) {
-                behaviour.displayName = behaviour.name;
-                return behaviour;
-              }
-
-              var nestedClasses = behaviour.name.split('::'),
-                  nestedClassesCount = nestedClasses.length,
-                  className = nestedClasses[nestedClassesCount - 1],
-                  indent = new Array(nestedClassesCount).join(' &bull; ');
-
-              behaviour.indentation = $sce.trustAsHtml(indent);
-              behaviour.displayName = className;
-            }
-            return behaviour;
-          });
-
-          $scope.behaviours = behaviourTree;
-        });
       }
+
+      $scope.$apply(function() {
+        $scope.behaviours = behaviours;
+      });
     };
 
     var listenTo = function(event) {
@@ -99,7 +67,23 @@
       behaviour.visibleIndentation = true;
     };
 
-    // --------------------------- Public methods ------------------------------
+    // --- Events --------------------------------------------------------------
+
+    $scope.$on('get:behaviour:all', function(_e, gem) {
+      var event = 'add:behaviour:' + gem.name;
+
+      if (!$scope.$$listeners.hasOwnProperty(event)) {
+        listenTo(event);
+      }
+
+      behaviourService.getAllFrom(gem.name);
+    });
+
+    $scope.$on('list-box:behaviour:selected', function() {
+      $scope.behaviours.forEach(deselectBehaviour);
+    });
+
+    // --- Public methods ------------------------------------------------------
 
     $scope.showGroups = function(behaviour) {
       $rootScope.$broadcast('get:method:all', behaviour);
@@ -123,6 +107,7 @@
     '$scope',
     '$rootScope',
     '$sce',
+    'behaviourService',
     'Behaviour',
     '_',
     controller]);

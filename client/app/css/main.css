@@ -48,20 +48,16 @@ pre {
 }
 
 .list-box-content {
-    overflow: hidden;
-}
-
-.list-box-content:hover {
     overflow: auto;
 }
 
 #gem-list-box .list-box-content {
-    height: calc(100% - 19px);
+    height: calc(100% - 22px);
 }
 
 .list-box-content {
     border-right: 1px solid #e5e5e5;
-    height: 100%;
+    height: calc(100% - 3px);
 }
 
 .list-box ul {

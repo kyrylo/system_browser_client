@@ -7,7 +7,7 @@
 
     // --------------------------- Events --------------------------------------
 
-    $scope.$on('get:behaviour:all', function(_event1, gem) {
+    $scope.$on('get:behaviour:all', function(_e, gem) {
       var event = 'add:behaviour:' + gem.name;
 
       if (!$scope.$$listeners.hasOwnProperty(event)) {
@@ -28,53 +28,55 @@
       $scope.$parent.$broadcast('reset-source');
     };
 
+    var callbackForGem = function(_event2, behaviours) {
+      resetMethodState();
+
+      if (behaviours.length === 0) {
+        $scope.$apply(function() {
+          $scope.behaviours = [{displayName: 'No behaviours found'}];
+        });
+      } else {
+        $scope.$apply(function() {
+          var sortedBehaviours = _.sortBy(behaviours, 'name').map(function(behaviour) {
+            behaviour.selected = false;
+            return behaviour;
+          });
+
+          var behaviourTree = sortedBehaviours.map(function(behaviour) {
+            if (behaviour.isModule) {
+              behaviour.icon = 'module';
+            } else if (behaviour.isException) {
+              behaviour.icon = 'exception';
+            } else {
+              behaviour.icon = 'class';
+            }
+
+            if (behaviour.name) {
+              // A feeble attempt at supporting behaviours
+              // with redefined #name
+              if (/^[^A-Z]/.test(behaviour.name)) {
+                behaviour.displayName = behaviour.name;
+                return behaviour;
+              }
+
+              var nestedClasses = behaviour.name.split('::'),
+                  nestedClassesCount = nestedClasses.length,
+                  className = nestedClasses[nestedClassesCount - 1],
+                  indent = new Array(nestedClassesCount).join(' &bull; ');
+
+              behaviour.indentation = $sce.trustAsHtml(indent);
+              behaviour.displayName = className;
+            }
+            return behaviour;
+          });
+
+          $scope.behaviours = behaviourTree;
+        });
+      }
+    };
+
     var listenTo = function(event) {
-      $scope.$on(event, function(_event2, behaviours) {
-        resetMethodState();
-
-        if (behaviours.length === 0) {
-          $scope.$apply(function() {
-            $scope.behaviours = [{displayName: 'No behaviours found'}];
-          });
-        } else {
-          $scope.$apply(function() {
-            var sortedBehaviours = _.sortBy(behaviours, 'name').map(function(behaviour) {
-              behaviour.selected = false;
-              return behaviour;
-            });
-
-            var behaviourTree = sortedBehaviours.map(function(behaviour) {
-              if (behaviour.isModule) {
-                behaviour.icon = 'module';
-              } else if (behaviour.isException) {
-                behaviour.icon = 'exception';
-              } else {
-                behaviour.icon = 'class';
-              }
-
-              if (behaviour.name) {
-                // A feeble attempt at supporting behaviours
-                // with redefined #name
-                if (/^[^A-Z]/.test(behaviour.name)) {
-                  behaviour.displayName = behaviour.name;
-                  return behaviour;
-                }
-
-                var nestedClasses = behaviour.name.split('::'),
-                    nestedClassesCount = nestedClasses.length,
-                    className = nestedClasses[nestedClassesCount - 1],
-                    indent = new Array(nestedClassesCount).join(' &bull; ');
-
-                behaviour.indentation = $sce.trustAsHtml(indent);
-                behaviour.displayName = className;
-              }
-              return behaviour;
-            });
-
-            $scope.behaviours = behaviourTree;
-          });
-        }
-      });
+      $scope.$on(event, callbackForGem);
     };
 
     var selectBehaviour = function(behaviour) {

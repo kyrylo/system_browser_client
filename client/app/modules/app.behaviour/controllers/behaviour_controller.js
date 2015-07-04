@@ -24,8 +24,8 @@
     // --------------------------- Private methods -----------------------------
 
     var resetMethodState = function() {
-      $scope.$parent.$broadcast('reset-methods');
-      $scope.$parent.$broadcast('reset-source');
+      $rootScope.$broadcast('reset-methods');
+      $rootScope.$broadcast('reset-source');
     };
 
     var callbackForGem = function(_event2, behaviours) {

@@ -1,9 +1,17 @@
 (function(global, angular) {
   'use strict';
 
-  global.app = angular.module('systemBrowser', [
+  var applicationModules = [
+    'app.behaviour'
+  ];
+
+  var vendorModules = [
     'underscore',
     'ngRoute',
     'ui.layout'
-  ]);
+  ];
+
+  var appModules = applicationModules.concat(vendorModules);
+
+  global.app = angular.module('systemBrowser', appModules);
 })(window.global, window.angular);

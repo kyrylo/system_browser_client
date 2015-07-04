@@ -21,25 +21,7 @@
       </div>
     </div>
 
-    <div id="behaviour-list-box" class="list-box" ng-controller="BehaviourController">
-      <div class="list-box-content">
-        <ul>
-          <li ng-repeat="item in items track by $index"
-              ng-click="getSublist(item); select($event, item)"
-              ng-class="{selected: item.selected}"
-              ng-mouseover="showIndent(item)"
-              ng-mouseout="hideIndent(item)">
-
-            <span class="icon">
-              <i class="{{ item.icon }}-icon"></i>
-            </span>
-            <span ng-class="{indent: item.visibleIndent, 'no-indent': !item.visibleIndent}" ng-bind-html="item.indent"></span>
-            <span class="display-name">{{ item.displayName }}</span>
-            <span class="superclass" ng-if="item.superclass">< {{ item.superclass }}</span>
-          </li>
-        </ul>
-      </div>
-    </div>
+    <ng-include src="'modules/app.behaviour/partials/_behaviour_list_box.html'"></ng-include>
 
     <div id="group-list-box" class="list-box" ng-controller="GroupController">
       <div class="list-box-content">

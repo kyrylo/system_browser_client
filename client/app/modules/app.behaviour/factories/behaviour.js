@@ -1,7 +1,7 @@
 (function(global) {
   'use strict';
 
-  var factory = function(Request, socket) {
+  var factory = function(socket, Request) {
     return {
       getAllFrom: function(gemName) {
         var req = new Request('get', 'behaviour', gemName);
@@ -10,5 +10,5 @@
     };
   };
 
-  global.app.factory('Behaviour', ['Request', 'socket', factory]);
+  global.app.factory('Behaviour', ['socket', 'Request', factory]);
 })(window.global);

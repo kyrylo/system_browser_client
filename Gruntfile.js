@@ -72,6 +72,7 @@ module.exports = function(grunt) {
             cwd: 'client/app',
             src: [
               'partials/*',
+              'modules/**/partials/*'
             ],
             dest: '<%= dist %>'
           }

@@ -1,0 +1,8 @@
+<li ng-repeat="behaviour in behaviours track by $index"
+    ng-click="showGroups(behaviour); selectBehaviour($event, behaviour)"
+    ng-class="{selected: behaviour.selected}"
+    ng-mouseover="showIndent(behaviour)"
+    ng-mouseout="hideIndent(behaviour)">
+
+  <ng-include src="'modules/app.behaviour/partials/_item.html'"></ng-include>
+</li>

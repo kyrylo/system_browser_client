@@ -1,0 +1,13 @@
+<span class="icon">
+  <i class="{{ behaviour.icon }}-icon"></i>
+</span>
+
+<span ng-class="{indent: behaviour.visibleIndent, 'no-indent': !behaviour.visibleIndent}"
+      ng-bind-html="behaviour.indent">
+</span>
+
+<span class="display-name">{{ behaviour.displayName }}</span>
+
+<span class="superclass" ng-if="behaviour.superclass">
+  &lt; {{ behaviour.superclass }}
+</span>

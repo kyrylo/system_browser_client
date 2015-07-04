@@ -2,7 +2,7 @@
   'use strict';
 
   var controller = function($scope, $sce, Behaviour, _) {
-    $scope.items = [];
+    $scope.behaviours = [];
 
     $scope.$on('get:behaviour:all', function(_event1, gem) {
       var name = 'add:behaviour:' + gem.name;
@@ -14,7 +14,7 @@
 
           if (behaviours.length === 0) {
             $scope.$apply(function() {
-              $scope.items = [{displayName: 'No behaviours found'}];
+              $scope.behaviours = [{displayName: 'No behaviours found'}];
             });
           } else {
             $scope.$apply(function() {
@@ -51,7 +51,7 @@
                 return behaviour;
               });
 
-              $scope.items = behaviourTree;
+              $scope.behaviours = behaviourTree;
             });
           }
         });
@@ -61,21 +61,21 @@
     });
 
     $scope.$on('list-box:behaviour:selected', function() {
-      $scope.items.forEach(function(behaviour) {
+      $scope.behaviours.forEach(function(behaviour) {
         behaviour.selected = false;
       });
     });
 
-    $scope.getSublist = function(behaviour) {
+    $scope.showGroups = function(behaviour) {
       $scope.$parent.$broadcast('get:method:all', behaviour);
       $scope.$parent.$broadcast('show:groupbar');
     };
 
-    $scope.select = function($event, behaviour) {
+    $scope.selectBehaviour = function($event, behaviour) {
       $scope.$emit('list-box:behaviour:selected');
       behaviour.selected = true;
 
-      $scope.items.forEach(function(behaviour) {
+      $scope.behaviours.forEach(function(behaviour) {
         $scope.hideIndent(behaviour);
       });
 

@@ -1,9 +1,7 @@
 (function(global) {
   'use strict';
 
-  var _ = require('underscore');
-
-  var controller = function($scope, $sce, Behaviour) {
+  var controller = function($scope, $sce, Behaviour, _) {
     $scope.items = [];
 
     $scope.$on('get:behaviour:all', function(_event1, gem) {
@@ -100,5 +98,6 @@
     '$scope',
     '$sce',
     'Behaviour',
+    '_',
     controller]);
 })(window.global);

@@ -1,9 +1,7 @@
 (function(global) {
   'use strict';
 
-  var _ = require('underscore');
-
-  var controller = function($scope, MethodGroup, Method, groupBar) {
+  var controller = function($scope, MethodGroup, Method, groupBar, _) {
     var methodGroup;
 
     var retrieveMethods = function(showClassSide) {
@@ -91,5 +89,6 @@
     'MethodGroup',
     'Method',
     'groupBar',
+    '_',
     controller]);
 })(window.global);

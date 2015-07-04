@@ -1,9 +1,7 @@
 (function(global) {
   'use strict';
 
-  var _ = require('underscore');
-
-  var controller = function($scope, Gem) {
+  var controller = function($scope, Gem, _) {
     $scope.$on('get:gem:all', function() {
       Gem.getAll();
     });
@@ -46,5 +44,6 @@
   global.app.controller('GemController', [
     '$scope',
     'Gem',
+    '_',
     controller]);
 })(window.global);

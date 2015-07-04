@@ -1,7 +1,7 @@
 (function(global) {
   'use strict';
 
-  var controller = function($scope, $sce, Behaviour, _) {
+  var controller = function($scope, $rootScope, $sce, Behaviour, _) {
     $scope.behaviours = [];
 
     $scope.$on('get:behaviour:all', function(_event1, gem) {
@@ -67,8 +67,8 @@
     });
 
     $scope.showGroups = function(behaviour) {
-      $scope.$parent.$broadcast('get:method:all', behaviour);
-      $scope.$parent.$broadcast('show:groupbar');
+      $rootScope.$broadcast('get:method:all', behaviour);
+      $rootScope.$broadcast('show:groupbar');
     };
 
     $scope.selectBehaviour = function($event, behaviour) {
@@ -96,6 +96,7 @@
 
   global.app.controller('BehaviourController', [
     '$scope',
+    '$rootScope',
     '$sce',
     'Behaviour',
     '_',

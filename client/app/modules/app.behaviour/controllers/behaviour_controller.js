@@ -19,7 +19,7 @@
     };
 
     var emptyBehaviour = function() {
-      $scope.behaviours = [{displayName: noBehavioursMsg}];
+      return [{displayName: noBehavioursMsg}];
     };
 
     var callbackForGem = function(_event2, rawBehaviours) {
@@ -28,7 +28,7 @@
       resetMethodState();
 
       if (rawBehaviours.length === 0) {
-        behaviours = emptyBehaviour;
+        behaviours = emptyBehaviour();
       } else {
           behaviours = _.sortBy(rawBehaviours, 'name').map(function(rawB) {
             var behaviour = new Behaviour(rawB);
@@ -103,7 +103,7 @@
     $scope.hideIndentation = hideIndentation;
   };
 
-  global.app.controller('BehaviourController', [
+  global.app.behaviour.controller('BehaviourController', [
     '$scope',
     '$rootScope',
     '$sce',

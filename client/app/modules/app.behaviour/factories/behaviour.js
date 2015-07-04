@@ -55,5 +55,5 @@
     return Behaviour;
   };
 
-  global.app.factory('Behaviour', [factory]);
+  global.app.behaviour.factory('Behaviour', [factory]);
 })(window.global);

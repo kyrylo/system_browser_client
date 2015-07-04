@@ -13,7 +13,7 @@
     this.socket.write(req.to_json());
   };
 
-  global.app.service('behaviourService', [
+  global.app.behaviour.service('behaviourService', [
     'socket',
     'Request',
     BehaviourService]);

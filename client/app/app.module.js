@@ -2,6 +2,7 @@
   'use strict';
 
   var applicationModules = [
+    'app.gem',
     'app.behaviour'
   ];
 

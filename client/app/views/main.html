@@ -1,26 +1,6 @@
 <div id="layout" ui-layout="{flow : 'row', dividerSize: 8}">
   <div id="top" ui-layout-container min-size="100px">
-    <div id="gem-list-box" class="list-box" ng-controller="GemController">
-      <div class="filter-input">
-        <input type="text" ng-model="searchText" placeholder="Search gems...">
-      </div>
-
-      <div class="list-box-content">
-        <ul>
-          <li ng-repeat="item in items | filter:searchText"
-              ng-click="getSublist(item); select(item)"
-              ng-class="{selected: item.selected}">
-            <span class="icon">
-              <i title="Open {{ item.name }} in text editor"
-                 class="{{ item.icon }}-icon"
-                 ng-click="openGem(item);"></i>
-            </span>
-            {{ item.name }}
-          </li>
-        </ul>
-      </div>
-    </div>
-
+    <ng-include src="'modules/app.gem/partials/_gem_list_box.html'"></ng-include>
     <ng-include src="'modules/app.behaviour/partials/_behaviour_list_box.html'"></ng-include>
 
     <div id="group-list-box" class="list-box" ng-controller="GroupController">

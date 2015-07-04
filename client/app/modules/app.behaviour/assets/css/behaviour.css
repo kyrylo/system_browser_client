@@ -1,0 +1,11 @@
+.class-icon {
+    background: url("class-icon.svg");
+}
+
+.module-icon {
+    background: url("module-icon.svg");
+}
+
+.exception-icon {
+    background: url("exception-icon.svg");
+}

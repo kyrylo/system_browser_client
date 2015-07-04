@@ -166,45 +166,6 @@ pre {
     box-shadow: inset -2px -2px 2px rgba(0, 0, 0, 0.16);
 }
 
-.icon {
-    height: 18px;
-    width: 18px;
-    float: left;
-    position: relative;
-    top: 2px;
-    text-align: center;
-    margin-left: 3px;
-}
-
-.icon i {
-    width: 16px;
-    height: 16px;
-    float: left;
-}
-
-.ruby-icon {
-    background: url("ruby-icon.png");
-}
-
-.ruby-icon:hover {
-    background: url("ruby-hover-icon.png");
-}
-
-.package-icon {
-    background: url("package-icon.png");
-}
-
-.class-icon {
-    background: url("class-icon.svg");
-}
-
-.module-icon {
-    background: url("module-icon.svg");
-}
-
-.exception-icon {
-    background: url("exception-icon.svg");
-}
 
 #group-list-box ul li .item,
 #method-list-box ul li .item{
@@ -290,4 +251,32 @@ pre {
 }
 .squared-checkbox input[type=checkbox]:checked + label:after {
     opacity: 1;
+}
+
+.icon {
+    height: 18px;
+    width: 18px;
+    float: left;
+    position: relative;
+    top: 2px;
+    text-align: center;
+    margin-left: 3px;
+}
+
+.icon i {
+    width: 16px;
+    height: 16px;
+    float: left;
+}
+
+.ruby-icon {
+    background: url("ruby-icon.png");
+}
+
+.ruby-icon:hover {
+    background: url("ruby-hover-icon.png");
+}
+
+.package-icon {
+    background: url("package-icon.png");
 }

@@ -194,15 +194,15 @@ pre {
 }
 
 .class-icon {
-    background: url("class-icon.png");
+    background: url("class-icon.svg");
 }
 
 .module-icon {
-    background: url("module-icon.png");
+    background: url("module-icon.svg");
 }
 
 .exception-icon {
-    background: url("exception-icon.png");
+    background: url("exception-icon.svg");
 }
 
 #group-list-box ul li .item,

@@ -86,7 +86,7 @@ pre {
 .list-box ul li.selected {
     background-color: #9763b0 !important;
     color: #fff;
-    text-shadow: 1px 1px 0px #373737 !important;
+    text-shadow: -1px -1px 0 rgba(55, 55, 55, 0.59) !important;
 }
 
 .list-box ul li:nth-child(odd) {

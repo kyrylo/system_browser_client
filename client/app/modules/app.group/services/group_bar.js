@@ -7,7 +7,7 @@
 
   GroupBar.prototype.constructor = GroupBar;
 
-  GroupBar.prototype.classSideChecked = function() {
+  GroupBar.prototype.isClassSide = function() {
     return document.querySelector(this.selName).checked;
   };
 

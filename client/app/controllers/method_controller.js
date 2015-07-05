@@ -38,7 +38,7 @@
               };
               $scope.$parent.$broadcast('method-count:method', count);
 
-              retrieveMethods(groupBar.classSideChecked());
+              retrieveMethods(groupBar.isClassSide());
             });
           }
         });
@@ -61,7 +61,7 @@
     });
 
     $scope.$on('filter:method', function(_event, group) {
-      if (groupBar.classSideChecked()) {
+      if (groupBar.isClassSide()) {
         $scope.items = methodGroup.classMethodsInGroup(group.name);
       } else {
         $scope.items = methodGroup.instanceMethodsInGroup(group.name);

@@ -10,11 +10,11 @@
 
         <div class="counters">
           <div id="cm-count" class="method-count"
-               ng-class="{'class-side': classSideChecked()}">
+               ng-class="{'class-side': isClassSide()}">
             class: <span class="num">{{ classMethodCount }}</span>
           </div>
           <div id="im-count" class="method-count"
-               ng-class="{'instance-side': !classSideChecked()}">
+               ng-class="{'instance-side': !isClassSide()}">
             instance: <span class="num">{{ instanceMethodCount }}</span>
           </div>
         </div>

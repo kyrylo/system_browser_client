@@ -17,7 +17,7 @@
     $scope.$on('add:method-group', function(_event, methodGroup) {
       var ctx;
 
-      if (groupBar.classSideChecked()) {
+      if (groupBar.isClassSide()) {
         ctx = 'singleton';
       } else {
         ctx = 'instance';
@@ -80,8 +80,8 @@
       showGroupBar();
     };
 
-    $scope.classSideChecked = function() {
-      return groupBar.classSideChecked();
+    $scope.isClassSide = function() {
+      return groupBar.isClassSide();
     };
 
     $scope.shouldShowGroupBar = function() {

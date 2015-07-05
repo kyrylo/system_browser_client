@@ -1,0 +1,33 @@
+<div id="group-list-box" class="list-box" ng-controller="GroupController">
+  <div class="list-box-content">
+    <div id="group-bar" ng-class="{visible: shouldShowGroupBar()}">
+      <div id="group-bar-content" ng-show="shouldShowGroupBar()">
+
+        <div class="squared-checkbox">
+          <input type="checkbox" id="squared" ng-model="groupbar.classSide" ng-change="toggleClassSide()"/>
+          <label for="squared"></label>
+        </div>
+
+        <div class="counters">
+          <div id="cm-count" class="method-count"
+               ng-class="{'class-side': classSideChecked()}">
+            class: <span class="num">{{ classMethodCount }}</span>
+          </div>
+          <div id="im-count" class="method-count"
+               ng-class="{'instance-side': !classSideChecked()}">
+            instance: <span class="num">{{ instanceMethodCount }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ul>
+      <li ng-repeat="item in items track by $index"
+          ng-click="getSublist(item); select(item)"
+          ng-class="{selected: item.selected}">
+        <span class="item">
+          {{ item.name }}
+        </span>
+      </li>
+    </ul>
+  </div>
+</div>

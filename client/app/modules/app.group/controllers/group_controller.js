@@ -2,13 +2,20 @@
   'use strict';
 
   var controller = function($scope, $element, group, groupBar) {
+    // --- Public variables ----------------------------------------------------
+
+    $scope.groups = [];
+
+    // --- Private methods -----------------------------------------------------
+
     var showGroupBar = function() {
       $scope.showGroupBar = true;
     };
 
+    // --- Events --------------------------------------------------------------
+
     $scope.$on('add:method-group', function(_event, methodGroup) {
       var ctx;
-      var groups = [];
 
       if (groupBar.classSideChecked()) {
         ctx = 'singleton';
@@ -17,22 +24,20 @@
       }
 
       if (methodGroup.anyPublicMethods(ctx)) {
-        groups.push({name: group.labels.public});
+        $scope.groups.push({name: group.labels.public});
       }
 
       if (methodGroup.anyPrivateMethods(ctx)) {
-        groups.push({name: group.labels.private});
+        $scope.groups.push({name: group.labels.private});
       }
 
       if (methodGroup.anyProtectedMethods(ctx)) {
-        groups.push({name: group.labels.protected});
+        $scope.groups.push({name: group.labels.protected});
       }
 
-      if (groups.length > 0) {
-        groups.unshift({name: group.labels.all, selected: true});
+      if ($scope.groups.length > 0) {
+        $scope.groups.unshift({name: group.labels.all, selected: true});
       }
-
-      $scope.items = groups;
     });
 
     $scope.$on('reset-methods', function() {
@@ -58,6 +63,8 @@
       $scope.classMethodCount = count.classMethods;
       $scope.instanceMethodCount = count.instanceMethods;
     });
+
+    // --- Public methods ------------------------------------------------------
 
     $scope.getSublist = function(group) {
       $scope.$parent.$broadcast('filter:method', group);
@@ -86,7 +93,7 @@
     };
   };
 
-  global.app.controller('GroupController', [
+  global.app.group.controller('GroupController', [
     '$scope',
     '$element',
     'group',

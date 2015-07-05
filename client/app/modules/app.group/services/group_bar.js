@@ -2,14 +2,14 @@
   'use strict';
 
   var GroupBar = function() {
-    this.domElement = document.querySelector('#group-bar .squared-checkbox input');
+    this.selName = '#group-bar .squared-checkbox input';
   };
 
   GroupBar.prototype.constructor = GroupBar;
 
   GroupBar.prototype.classSideChecked = function() {
-    return this.domElement.checked;
+    return document.querySelector(this.selName).checked;
   };
 
-  global.app.service('groupBar', [GroupBar]);
+  global.app.group.service('groupBar', [GroupBar]);
 })(window.global);

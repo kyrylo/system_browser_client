@@ -28,6 +28,9 @@ module.exports = function(grunt) {
           'client/app/app.module.js',
           'client/app/app.routes.js',
           'client/app/app.config.js',
+
+          'client/app/modules/vendor/underscore/underscore.module.js',
+
           'client/app/**/*.js',
         ],
 

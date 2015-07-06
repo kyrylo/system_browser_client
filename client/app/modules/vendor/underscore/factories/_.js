@@ -7,5 +7,5 @@
     return _;
   };
 
-  global.app.factory('_', [factory]);
+  global.underscore.factory('_', [factory]);
 })(window.global);

@@ -6,6 +6,9 @@
     "width": 800,
     "height": 600
   },
+ "scripts": {
+    "test": "karma start test/config/karma.conf.js"
+  },
   "dependencies": {
     "angular": "~1.4.1",
     "angular-route": "^1.4.1",
@@ -14,10 +17,15 @@
     "underscore": "^1.8.3"
   },
   "devDependencies": {
+    "angular-mocks": "^1.4.1",
     "grunt": "^0.4.5",
     "grunt-contrib-concat": "^0.5.1",
     "grunt-contrib-copy": "^0.8.0",
     "grunt-contrib-cssmin": "^0.12.3",
-    "grunt-contrib-watch": "^0.6.1"
+    "grunt-contrib-watch": "^0.6.1",
+    "jasmine-core": "^2.3.4",
+    "karma": "^0.12.37",
+    "karma-jasmine": "^0.3.6",
+    "karma-nodewebkit-launcher": "0.0.12"
   }
 }

@@ -1,0 +1,7 @@
+#method-list-box .list-box-content {
+    border-right: none;
+}
+
+#method-list-box ul li .item {
+    padding-left: 18px;
+}

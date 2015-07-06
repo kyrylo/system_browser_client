@@ -1,0 +1,17 @@
+#bottom {
+    width: 100vw;
+    height: 50vh;
+    overflow: auto;
+}
+
+#source {
+    height: calc(100% - 27px);
+}
+
+#source div {
+    height: 100%;
+}
+
+#bottom-content {
+    height: 100%;
+}

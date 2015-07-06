@@ -47,7 +47,9 @@ module.exports = function(grunt) {
             'node_modules/normalize.css/normalize.css',
             'bower_components/angular-ui-layout/ui-layout.css',
 
-            'client/app/modules/app.behaviour/assets/css/behaviour.css',
+            'client/app/modules/**/assets/css/*',
+            'client/app/assets/css/top.css',
+            'client/app/assets/css/bottom.css',
             'client/app/assets/css/main.css'
           ]
         }

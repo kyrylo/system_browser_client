@@ -3,20 +3,7 @@
     <ng-include src="'modules/app.gem/partials/_gem_list_box.html'"></ng-include>
     <ng-include src="'modules/app.behaviour/partials/_behaviour_list_box.html'"></ng-include>
     <ng-include src="'modules/app.group/partials/_group_list_box.html'"></ng-include>
-
-    <div id="method-list-box" class="list-box" ng-controller="MethodController">
-      <div class="list-box-content">
-        <ul>
-          <li ng-repeat="item in items track by $index"
-              ng-click="getSublist(item); select(item)"
-              ng-class="{selected: item.selected}">
-            <span class="item">
-              {{ item.name }}
-            </span>
-          </li>
-        </ul>
-      </div>
-    </div>
+    <ng-include src="'modules/app.method/partials/_method_list_box.html'"></ng-include>
   </div>
 
   <div id="bottom" ui-layout-container min-size="100px">

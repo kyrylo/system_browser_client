@@ -4,7 +4,8 @@
   var applicationModules = [
     'app.gem',
     'app.behaviour',
-    'app.group'
+    'app.group',
+    'app.method'
   ];
 
   var vendorModules = [

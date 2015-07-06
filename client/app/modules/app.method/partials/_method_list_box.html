@@ -1,0 +1,13 @@
+<div id="method-list-box" class="list-box" ng-controller="MethodController">
+  <div class="list-box-content">
+    <ul>
+      <li ng-repeat="method in methods track by $index"
+          ng-click="getMethodSource(method); selectMethod(method)"
+          ng-class="{selected: method.selected}">
+        <span class="item">
+          {{ method.name }}
+        </span>
+      </li>
+    </ul>
+  </div>
+</div>

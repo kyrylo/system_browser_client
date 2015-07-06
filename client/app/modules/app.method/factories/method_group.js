@@ -134,5 +134,8 @@
     return MethodGroup;
   };
 
-  global.app.factory('MethodGroup', ['group', factory]);
+  global.app.method.factory('MethodGroup', [
+    'group',
+    factory
+  ]);
 })(window.global);

@@ -1,7 +1,7 @@
 (function(global) {
   'use strict';
 
-  var controller = function($scope, $rootScope, MethodGroup, Method, groupBar, _) {
+  var controller = function($scope, $rootScope, MethodGroup, MethodService, groupBar, _) {
     // --- Private variables ---------------------------------------------------
 
     var methodGroup = null;
@@ -13,7 +13,7 @@
     // --- Private methods -----------------------------------------------------
 
     var sortMethods = function(methods) {
-      _.sortBy(methods, 'name');
+      return _.sortBy(methods, 'name');
     };
 
     var selectMethod = function(method) {
@@ -64,12 +64,13 @@
             instanceMethods: methodGroup.instanceMethods().length,
             classMethods: methodGroup.classMethods().length
           };
+
           $rootScope.$broadcast('method-count:method', count);
           $scope.$apply(collectAllMethods);
         });
       }
 
-      Method.getAllFrom(behaviour.name);
+      MethodService.getAllFrom(behaviour.name);
     });
 
     $scope.$on('reset-methods', function() {
@@ -109,7 +110,7 @@
     '$scope',
     '$rootScope',
     'MethodGroup',
-    'Method',
+    'MethodService',
     'groupBar',
     '_',
     controller]);

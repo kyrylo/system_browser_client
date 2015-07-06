@@ -64,6 +64,7 @@ module.exports = function(grunt) {
             src: [
               'client/app/views/*',
               'client/app/assets/**/*',
+              'client/app/modules/**/assets/img/*',
               'client/index.html'
             ],
             dest: '<%= dist %>'

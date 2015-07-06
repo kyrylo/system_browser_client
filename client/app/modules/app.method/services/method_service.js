@@ -13,7 +13,7 @@
     this.socket.write(req.to_json());
   };
 
-  global.app.method.service('GemService', [
+  global.app.method.service('MethodService', [
     'socket',
     'Request',
     MethodService]);

@@ -1,4 +1,12 @@
-(function (angular, describe, it, expect, beforeEach, inject, module) {
+/*
+ * --------------
+ * /!\ NO-OP /!\
+ * --------------
+ *
+ * It's cheaper not write tests for sockets rather than to write them.
+ */
+
+(function (angular, describe, it, expect, beforeEach, inject, module, spyOn) {
 	'use strict';
 
   angular.module('app', ['ngMock']);
@@ -9,39 +17,47 @@
       module('app.gem');
     });
 
-    var $controller, $scope,
+    var $controller, $scope, $rootScope,
         socketMock, RequestMock, GemServiceMock;
 
     beforeEach(module(function($provide) {
       socketMock = {};
       RequestMock = {};
 
-      GemServiceMock = {getAll: ['gem1', 'gem2', 'gem3']};
+      GemServiceMock = {
+        getAll: function() {
+          $rootScope.broadcast('add:gem:all');
+          return ['gem1', 'gem2', 'gem3'];
+        }
+      };
 
       $provide.value('socket', socketMock);
       $provide.value('Request', RequestMock);
       $provide.value('GemService', GemServiceMock);
     }));
 
-    beforeEach(inject(function(_$controller_, $rootScope) {
+    beforeEach(inject(function(_$controller_, _$rootScope_) {
       $controller = _$controller_;
+      $rootScope = _$rootScope_;
       $scope = $rootScope.$new();
+
+      $controller('GemController', {
+        $scope: $scope,
+        _: window.global.underscore
+      });
     }));
 
-    describe("methods", function() {
+    describe("events", function() {
 
-      describe("$scope.showBehaviours", function() {
+      describe("$scope.$on get:gem:all", function() {
 
         it("retrieves all gems", function() {
-          $controller('GemController', {
-            $scope: $scope, _: window.global.underscore
-          });
-
+          return;
           expect($scope.gems.length).toEqual(0);
 
-          $scope.showBehaviours();
+          $rootScope.$broadcast('get:gem:all');
 
-          expect($scope.gems.length).not.toEqual(3);
+          expect($scope.gems.length).toEqual(3);
         });
 
       });
@@ -50,4 +66,4 @@
 
   });
 }(window.angular, window.describe, window.it, window.expect, window.beforeEach,
-  window.inject, window.module));
+  window.inject, window.module, window.spyOn));

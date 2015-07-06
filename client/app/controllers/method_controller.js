@@ -4,10 +4,10 @@
   var controller = function($scope, MethodGroup, Method, groupBar, _) {
     var methodGroup;
 
-    var retrieveMethods = function(showClassSide) {
+    var retrieveMethods = function() {
       var methods;
 
-      if (showClassSide) {
+      if (groupBar.classSide) {
         methods = methodGroup.classMethods();
       } else {
         methods = methodGroup.instanceMethods();
@@ -38,7 +38,7 @@
               };
               $scope.$parent.$broadcast('method-count:method', count);
 
-              retrieveMethods(groupBar.isClassSide());
+              retrieveMethods();
             });
           }
         });
@@ -51,17 +51,17 @@
       $scope.items = [];
     });
 
-    $scope.$on('class-side-checkbox', function(_event, showClassSide) {
+    $scope.$on('update-method-side', function() {
       if (methodGroup === undefined) {
         return;
       }
 
       $scope.$parent.$broadcast('add:method-group', methodGroup);
-      retrieveMethods(showClassSide);
+      retrieveMethods();
     });
 
     $scope.$on('filter:method', function(_event, group) {
-      if (groupBar.isClassSide()) {
+      if (groupBar.classSide) {
         $scope.items = methodGroup.classMethodsInGroup(group.name);
       } else {
         $scope.items = methodGroup.instanceMethodsInGroup(group.name);

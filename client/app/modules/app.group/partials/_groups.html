@@ -1,0 +1,7 @@
+<ul>
+  <li ng-repeat="group in groups track by $index"
+      ng-click="filterMethodsBy(group); selectGroup(group)"
+      ng-class="{selected: group.selected}">
+    <span class="group">{{ group.name }}</span>
+  </li>
+</ul>

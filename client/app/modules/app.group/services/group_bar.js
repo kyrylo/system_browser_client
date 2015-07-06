@@ -2,14 +2,31 @@
   'use strict';
 
   var GroupBar = function() {
-    this.selName = '#group-bar .squared-checkbox input';
+    this.reset();
   };
 
   GroupBar.prototype.constructor = GroupBar;
 
-  GroupBar.prototype.isClassSide = function() {
-    return document.querySelector(this.selName).checked;
+  GroupBar.prototype.reset = function() {
+    this.visible = false;
+    this.classSide = false;
   };
 
-  global.app.group.service('groupBar', [GroupBar]);
+  GroupBar.prototype.hide = function() {
+    this.visible = false;
+  };
+
+  GroupBar.prototype.show = function() {
+    this.visible = true;
+  };
+
+  GroupBar.prototype.setInstanceSide = function() {
+    this.classSide = false;
+  };
+
+  GroupBar.prototype.setClassSide = function() {
+    this.classSide = true;
+  };
+
+  global.app.service('groupBar', [GroupBar]);
 })(window.global);

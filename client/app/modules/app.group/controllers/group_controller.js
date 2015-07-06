@@ -1,101 +1,74 @@
 (function(global) {
   'use strict';
 
-  var controller = function($scope, $element, group, groupBar) {
+  var controller = function($scope, $rootScope, group, groupBar) {
     // --- Public variables ----------------------------------------------------
 
     $scope.groups = [];
 
     // --- Private methods -----------------------------------------------------
 
-    var showGroupBar = function() {
-      $scope.showGroupBar = true;
+    var selectGroup = function(group) {
+      group.selected = true;
+    };
+
+    var deselectGroup = function(group) {
+      group.selected = false;
     };
 
     // --- Events --------------------------------------------------------------
 
     $scope.$on('add:method-group', function(_event, methodGroup) {
+      var groups = [];
       var ctx;
 
-      if (groupBar.isClassSide()) {
+      if (groupBar.classSide) {
         ctx = 'singleton';
       } else {
         ctx = 'instance';
       }
 
       if (methodGroup.anyPublicMethods(ctx)) {
-        $scope.groups.push({name: group.labels.public});
+        groups.push({name: group.labels.public});
       }
 
       if (methodGroup.anyPrivateMethods(ctx)) {
-        $scope.groups.push({name: group.labels.private});
+        groups.push({name: group.labels.private});
       }
 
       if (methodGroup.anyProtectedMethods(ctx)) {
-        $scope.groups.push({name: group.labels.protected});
+        groups.push({name: group.labels.protected});
       }
 
-      if ($scope.groups.length > 0) {
-        $scope.groups.unshift({name: group.labels.all, selected: true});
+      if (groups.length > 0) {
+        groups.unshift({name: group.labels.all, selected: true});
       }
+
+      $rootScope.$emit('group_bar:show');
+
+      $scope.groups = groups;
     });
 
     $scope.$on('reset-methods', function() {
-      $scope.items = [];
-      $scope.showGroupBar = false;
-      if ($scope.groupbar) {
-        $scope.groupbar.classSide = false;
-      }
-    });
-
-    $scope.$on('list-box:group:selected', function() {
-      $scope.items.forEach(function(group) {
-        group.selected = false;
-      });
-      showGroupBar();
-    });
-
-    $scope.$on('show:groupbar', function() {
-      showGroupBar();
-    });
-
-    $scope.$on('method-count:method', function(_event, count) {
-      $scope.classMethodCount = count.classMethods;
-      $scope.instanceMethodCount = count.instanceMethods;
+      $scope.groups = [];
+      $rootScope.$broadcast('reset-groupbar');
     });
 
     // --- Public methods ------------------------------------------------------
 
-    $scope.getSublist = function(group) {
-      $scope.$parent.$broadcast('filter:method', group);
+    $scope.filterMethodsBy = function(group) {
+      $rootScope.$broadcast('filter:method', group);
     };
 
-    $scope.select = function(group) {
-      $scope.$emit('list-box:group:selected');
-      group.selected = true;
-    };
-
-    $scope.toggleClassSide = function() {
-      $scope.$parent.$broadcast('class-side-checkbox', $scope.groupbar.classSide);
-      showGroupBar();
-    };
-
-    $scope.isClassSide = function() {
-      return groupBar.isClassSide();
-    };
-
-    $scope.shouldShowGroupBar = function() {
-      if (!$scope.items) {
-        return false;
-      }
-
-      return $scope.showGroupBar || $scope.items.length > 0;
+    $scope.selectGroup = function(group) {
+      $scope.groups.forEach(deselectGroup);
+      selectGroup(group);
     };
   };
 
   global.app.group.controller('GroupController', [
     '$scope',
-    '$element',
+    '$rootScope',
     'group',
     'groupBar',
     controller]);

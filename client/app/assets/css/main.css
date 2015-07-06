@@ -173,10 +173,6 @@ pre {
 }
 
 #group-bar {
-    display: none;
-}
-
-#group-bar.visible {
     display: block;
     width: 100%;
     float: left;

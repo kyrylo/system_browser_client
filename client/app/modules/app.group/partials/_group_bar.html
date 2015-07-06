@@ -1,0 +1,22 @@
+<div ng-controller="GroupBarController" id="group-bar" ng-show="isVisible()">
+  <div id="group-bar-content">
+    <div class="squared-checkbox">
+      <input type="checkbox" id="squared" ng-model="classSide" />
+      <label for="squared"></label>
+    </div>
+
+    <div class="counters">
+      <div id="cm-count"
+           class="method-count"
+           ng-class="{'class-side': isClassSide()}">
+        class: <span class="num">{{ classMethods }}</span>
+      </div>
+
+      <div id="im-count"
+           class="method-count"
+           ng-class="{'instance-side': !isClassSide()}">
+        instance: <span class="num">{{ instanceMethods }}</span>
+      </div>
+    </div>
+  </div>
+</div>

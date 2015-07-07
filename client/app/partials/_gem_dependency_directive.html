@@ -3,7 +3,7 @@
 
   <p du-scroll-container="container">
     <ul ng-show="runtime_deps" ng-repeat="dep in runtime_deps">
-      <li li class="dependency" ng-click="selectGem(dep.name)" id="#{{dep.name}}"
+      <li class="dependency" ng-click="selectGem(dep.name)" id="#{{dep.name}}"
           du-smooth-scroll du-scrollspy>
         {{ dep.full_name }}
       </li>

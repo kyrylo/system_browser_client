@@ -33,6 +33,10 @@
       GemService.getDescription(gemName);
     };
 
+    var resetBehaviourState = function() {
+      $rootScope.$broadcast('reset-behaviour');
+    };
+
     // --- Events --------------------------------------------------------------
 
     $scope.$on('get:gem:all', function() {
@@ -58,6 +62,19 @@
       $scope.gems.forEach(deselectGem);
     });
 
+    $scope.$on('select-gem-from-source', function(_event, gemName) {
+      var gem = $scope.gems.filter(function(gem) {
+        if (gem.name === gemName) {
+          return gem;
+        } else {
+          return false;
+        }
+      });
+
+      $scope.showBehaviours(gem[0]);
+      $scope.selectGem(gem[0]);
+    });
+
     // --- Public methods ------------------------------------------------------
 
     $scope.showBehaviours = function(gem) {
@@ -65,6 +82,8 @@
     };
 
     $scope.selectGem = function(gem) {
+      resetBehaviourState();
+
       $scope.$emit('list-box:gem:selected');
 
       getDescription(gem.name);

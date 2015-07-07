@@ -1,0 +1,19 @@
+<div ng-hide="runtime_deps == null">
+  <h2>Runtime Dependencies</h2>
+
+  <p>
+    <ul ng-show="runtime_deps" ng-repeat="dep in runtime_deps">
+      <li class="dependency" ng-click="selectGem(dep)">{{ dep }}</li>
+    </ul>
+  </p>
+</div>
+
+<div ng-hide="development_deps == null">
+  <h2>Development Dependencies</h2>
+
+  <p>
+    <ul ng-repeat="dep in development_deps">
+      <li class="dependency" ng-click="selectGem(dep)">{{ dep }}</li>
+    </ul>
+  </p>
+</div>

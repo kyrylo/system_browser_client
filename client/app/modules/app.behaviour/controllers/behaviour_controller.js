@@ -83,6 +83,10 @@
       $scope.behaviours.forEach(deselectBehaviour);
     });
 
+    $scope.$on('reset-behaviour', function() {
+      $scope.behaviours = [];
+    });
+
     // --- Public methods ------------------------------------------------------
 
     $scope.showGroups = function(behaviour) {

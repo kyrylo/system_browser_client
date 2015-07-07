@@ -3,11 +3,13 @@
 
   var Behaviour = function(behaviour) {
     this.selected = false;
+    this.namespacesLen = 0;
+
     this.name = behaviour.name;
     this.isModule = behaviour.isModule;
     this.isException = behaviour.isException;
     this.name = behaviour.name;
-    this.namespacesLen = 0;
+    this.superclass = behaviour.superclass;
 
     this.setIcon();
 

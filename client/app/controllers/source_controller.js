@@ -23,8 +23,17 @@
     $scope.$on('show:source', function(_event, gemspec) {
       var desc = gemspec.description;
 
-      $scope.runtime_deps = gemspec.runtime_deps;
-      $scope.development_deps = gemspec.development_deps;
+      if (gemspec.runtime_deps) {
+        $scope.runtime_deps = gemspec.runtime_deps.map(function(dep) {
+          return {full_name: dep, name: dep.split(' ')[0]};
+        });
+      }
+
+      if (gemspec.development_deps) {
+        $scope.development_deps = gemspec.development_deps.map(function(dep) {
+          return {full_name: dep, name: dep.split(' ')[0]};
+        });
+      }
 
       var depsElem = $compile('<gem-dependency>')($scope);
 
@@ -35,7 +44,7 @@
     });
 
     $scope.selectGem = function(dep) {
-      $rootScope.$broadcast('select-gem-from-source', dep.split(' ')[0]);
+      $rootScope.$broadcast('select-gem-from-source', dep);
     };
   };
 

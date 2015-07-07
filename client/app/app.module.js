@@ -10,6 +10,7 @@
 
   var vendorModules = [
     'underscore',
+    'marked',
     'ngRoute',
     'ui.layout'
   ];

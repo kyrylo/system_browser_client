@@ -17,6 +17,11 @@
     this.socket.write(req.to_json());
   };
 
+  GemService.prototype.getDescription = function(gemName) {
+    var req = new this.Request('description', 'gem', gemName);
+    this.socket.write(req.to_json());
+  };
+
   global.app.gem.service('GemService', [
     'socket',
     'Request',

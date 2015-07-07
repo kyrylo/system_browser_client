@@ -22,6 +22,17 @@
       gem.icon = iconName;
     };
 
+    var getDescription = function(gemName) {
+      var eventName = 'add:gem:' + gemName;
+
+      $scope.$on(eventName, function(_event, description) {
+        $scope.$$listeners[eventName] = [];
+        $rootScope.$broadcast('show:source', description);
+      });
+
+      GemService.getDescription(gemName);
+    };
+
     // --- Events --------------------------------------------------------------
 
     $scope.$on('get:gem:all', function() {
@@ -55,6 +66,9 @@
 
     $scope.selectGem = function(gem) {
       $scope.$emit('list-box:gem:selected');
+
+      getDescription(gem.name);
+
       selectGem(gem);
     };
 

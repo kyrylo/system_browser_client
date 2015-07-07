@@ -1,18 +1,31 @@
 #bottom {
     width: 100vw;
     height: 50vh;
-    overflow: auto;
-}
-
-#source {
-    height: calc(100% - 27px);
-}
-
-#source div {
-    height: 100%;
-    overflow: auto;
+    overflow: hidden;
 }
 
 #bottom-content {
     height: 100%;
+    overflow: hidden;
+}
+
+#source {
+    height: calc(100% - 27px);
+    overflow: auto;
+}
+
+#source div {
+    height: 100%;
+}
+
+#bottom-content {
+    height: 100%;
+}
+
+#source h1 {
+    margin: 0;
+}
+
+#source .CodeRay .code {
+    overflow: auto;
 }

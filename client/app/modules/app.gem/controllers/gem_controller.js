@@ -6,6 +6,8 @@
 
     $scope.gems = [];
 
+    $scope.search = { searchText: '' };
+
     // --- Private methods -----------------------------------------------------
 
     var selectGem = function(gem) {

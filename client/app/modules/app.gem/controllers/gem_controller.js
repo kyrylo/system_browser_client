@@ -1,4 +1,4 @@
-(function(global) {
+(function(global, angular) {
   'use strict';
 
   var controller = function($scope, $rootScope, GemService, _) {
@@ -11,6 +11,10 @@
     // --- Private methods -----------------------------------------------------
 
     var selectGem = function(gem) {
+      var container = angular.element(document.getElementById('container'));
+      var li = angular.element(document.getElementById(gem.name));
+      container.scrollTo(li, 50, 300);
+
       gem.selected = true;
     };
 
@@ -102,4 +106,4 @@
     'GemService',
     '_',
     controller]);
-})(window.global);
+})(window.global, window.angular);

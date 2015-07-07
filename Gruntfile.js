@@ -21,6 +21,7 @@ module.exports = function(grunt) {
         src: [
           'node_modules/angular/angular.js',
           'node_modules/angular-route/angular-route.js',
+          'node_modules/angular-scroll/angular-scroll.js',
 
           'bower_components/raf/index.js',
           'bower_components/angular-ui-layout/ui-layout.js',

@@ -12,7 +12,8 @@
     'underscore',
     'marked',
     'ngRoute',
-    'ui.layout'
+    'ui.layout',
+    'duScroll'
   ];
 
   var appModules = applicationModules.concat(vendorModules);

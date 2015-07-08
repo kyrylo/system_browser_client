@@ -11,7 +11,7 @@
     // --- Private methods -----------------------------------------------------
 
     var selectGem = function(gem) {
-      var container = angular.element(document.getElementById('container'));
+      var container = angular.element(document.getElementById('gem-container'));
       var li = angular.element(document.getElementById(gem.name));
       container.scrollTo(li, 50, 300);
 
@@ -41,6 +41,19 @@
       $rootScope.$broadcast('reset-behaviour');
     };
 
+    var autoSelectGem = function(gemName, behaviourToSelect) {
+      var gem = $scope.gems.filter(function(gem) {
+        if (gem.name === gemName) {
+          return gem;
+        } else {
+          return false;
+        }
+      });
+
+      $scope.showBehaviours(gem[0], behaviourToSelect);
+      $scope.selectGem(gem[0]);
+    };
+
     // --- Events --------------------------------------------------------------
 
     $scope.$on('get:gem:all', function() {
@@ -67,22 +80,17 @@
     });
 
     $scope.$on('select-gem-from-source', function(_event, gemName) {
-      var gem = $scope.gems.filter(function(gem) {
-        if (gem.name === gemName) {
-          return gem;
-        } else {
-          return false;
-        }
-      });
+      autoSelectGem(gemName);
+    });
 
-      $scope.showBehaviours(gem[0]);
-      $scope.selectGem(gem[0]);
+    $scope.$on('autoadd:behaviour:', function(_event, selectables) {
+      autoSelectGem(selectables.gem, selectables.behaviour);
     });
 
     // --- Public methods ------------------------------------------------------
 
-    $scope.showBehaviours = function(gem) {
-      $rootScope.$broadcast('get:behaviour:all', gem);
+    $scope.showBehaviours = function(gem, behaviourToSelect) {
+      $rootScope.$broadcast('get:behaviour:all', gem, behaviourToSelect);
     };
 
     $scope.selectGem = function(gem) {

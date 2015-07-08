@@ -13,6 +13,11 @@
     this.socket.write(req.to_json());
   };
 
+  BehaviourService.prototype.openClass = function(behaviour) {
+    var req = new this.Request('autoget', 'behaviour', behaviour);
+    this.socket.write(req.to_json());
+  };
+
   global.app.behaviour.service('behaviourService', [
     'socket',
     'Request',

@@ -1,7 +1,7 @@
 <span ng-hide="runtime_deps.length == 0">
   <h2>Runtime Dependencies</h2>
 
-  <div du-scroll-container="container" class="deps">
+  <div du-scroll-container="gem-container" class="deps">
     <ul ng-show="runtime_deps" ng-repeat="dep in runtime_deps">
       <li class="dependency" ng-click="selectGem(dep.name)" id="#{{dep.name}}"
           du-smooth-scroll du-scrollspy>
@@ -14,7 +14,7 @@
 <span ng-hide="development_deps.length == 0" class="deps">
   <h2>Development Dependencies</h2>
 
-  <div du-scroll-container="container">
+  <div du-scroll-container="gem-container">
     <ul ng-repeat="dep in development_deps">
       <li class="dependency" ng-click="selectGem(dep.name)" id="#{{dep.name}}"
           du-smooth-scroll du-scrollspy>

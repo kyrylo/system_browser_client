@@ -9,5 +9,5 @@
 <span class="display-name">{{ behaviour.displayName }}</span>
 
 <span class="superclass" ng-if="behaviour.superclass">
-  &lt; {{ behaviour.superclass }}
+  &lt; <span class="classname" ng-click="openSuperclass($event, behaviour.superclass)">{{ behaviour.superclass }}</span>
 </span>

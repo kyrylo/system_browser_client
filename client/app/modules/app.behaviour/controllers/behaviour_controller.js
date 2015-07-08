@@ -1,7 +1,7 @@
-(function(global) {
+(function(global, angular) {
   'use strict';
 
-  var controller = function($scope, $rootScope, $sce, behaviourService,
+  var controller = function($scope, $rootScope, $sce, $timeout, behaviourService,
                             Behaviour, _) {
     // --- Public variables ----------------------------------------------------
 
@@ -10,6 +10,8 @@
     // --- Private variables ---------------------------------------------------
 
     var noBehavioursMsg = 'No behaviours found';
+
+    var behaviourToSelect;
 
     // --- Private methods -----------------------------------------------------
 
@@ -30,16 +32,19 @@
       if (rawBehaviours.length === 0) {
         behaviours = emptyBehaviour();
       } else {
-          behaviours = _.sortBy(rawBehaviours, 'name').map(function(rawB) {
-            var behaviour = new Behaviour(rawB);
-            behaviour.indent($sce);
+        behaviours = _.sortBy(rawBehaviours, 'name').map(function(rawB) {
+          var behaviour = new Behaviour(rawB);
+          behaviour.indent($sce);
 
-            return behaviour;
-          });
+          return behaviour;
+        });
       }
 
       $scope.$apply(function() {
         $scope.behaviours = behaviours;
+        if (behaviourToSelect) {
+          autoSelectBehaviour(behaviourToSelect);
+        }
       });
     };
 
@@ -47,7 +52,19 @@
       $scope.$on(event, callbackForGem);
     };
 
+    var scrollTo = function(behaviour) {
+      var container = angular.element(document.getElementById('behaviour-container'));
+      var li = angular.element(document.getElementById(behaviour.name));
+
+      if (li.length === 0) {
+        return;
+      } else {
+        container.scrollTo(li, 50, 300);
+      }
+    };
+
     var selectBehaviour = function(behaviour) {
+      scrollTo(behaviour);
       behaviour.selected = true;
     };
 
@@ -67,15 +84,45 @@
       behaviour.visibleIndentation = true;
     };
 
+    var autoSelectBehaviour = function(behaviourName) {
+      var behaviour = $scope.behaviours.filter(function(behaviour) {
+        if (behaviour.name === behaviourName) {
+          return behaviour;
+        } else {
+          return false;
+        }
+      });
+
+      $scope.showGroups(behaviour[0]);
+      $scope.selectBehaviour({}, behaviour[0]);
+    };
+
+    // --- Watchers ------------------------------------------------------------
+
+    $scope.$watch("behaviours", function (behs) {
+      if (behs && behs.length !== 0) {
+        var selected = _.find(behs, function(behaviour) {
+          return behaviour.selected;
+        });
+
+        if (selected) {
+          $timeout(function() {
+            scrollTo(selected);
+          });
+        }
+      }
+    });
+
     // --- Events --------------------------------------------------------------
 
-    $scope.$on('get:behaviour:all', function(_e, gem) {
+    $scope.$on('get:behaviour:all', function(_e, gem, _behaviourToSelect) {
       var event = 'add:behaviour:' + gem.name;
 
       if (!$scope.$$listeners.hasOwnProperty(event)) {
         listenTo(event);
       }
 
+      behaviourToSelect = _behaviourToSelect;
       behaviourService.getAllFrom(gem.name);
     });
 
@@ -102,6 +149,11 @@
       showIndentation(behaviour);
     };
 
+    $scope.openSuperclass = function($event, superclass) {
+      $event.stopPropagation();
+      behaviourService.openClass(superclass);
+    };
+
     $scope.showIndentation = showIndentation;
 
     $scope.hideIndentation = hideIndentation;
@@ -111,8 +163,10 @@
     '$scope',
     '$rootScope',
     '$sce',
+    '$timeout',
     'behaviourService',
     'Behaviour',
     '_',
-    controller]);
-})(window.global);
+    controller
+  ]);
+})(window.global, window.angular);

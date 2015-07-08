@@ -9,3 +9,12 @@
 .exception-icon {
     background: url("exception-icon.svg");
 }
+
+.superclass .classname {
+    text-decoration: underline;
+}
+
+.superclass .classname:hover {
+    text-decoration: underline;
+    color: #619DA1;
+}

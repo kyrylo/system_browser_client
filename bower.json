@@ -14,7 +14,6 @@
   ],
   "dependencies": {
     "angular-ui-layout": "bower",
-    "ng-scrollbars": "~0.0.5",
-    "angular-material": "~0.10.0"
+    "ng-scrollbars": "~0.0.5"
   }
 }

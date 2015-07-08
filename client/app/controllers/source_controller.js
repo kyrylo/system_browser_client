@@ -2,6 +2,9 @@
   'use strict';
 
   var controller = function($scope, $rootScope, $element, $sce, $compile, source, marked) {
+    $scope.runtime_deps = [];
+    $scope.development_deps = [];
+
     var setSource = function(source) {
       $scope.$apply(function() {
         $scope.source = $sce.trustAsHtml(source);
@@ -21,6 +24,9 @@
     });
 
     $scope.$on('show:source', function(_event, gemspec) {
+            $scope.runtime_deps = [];
+      $scope.development_deps = [];
+
       var desc = gemspec.description;
 
       if (gemspec.runtime_deps) {
@@ -44,6 +50,9 @@
     });
 
     $scope.selectGem = function(dep) {
+      $scope.runtime_deps = [];
+      $scope.development_deps = [];
+
       $rootScope.$broadcast('select-gem-from-source', dep);
     };
   };

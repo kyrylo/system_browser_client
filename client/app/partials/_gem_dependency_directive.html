@@ -1,25 +1,25 @@
-<span ng-hide="runtime_deps == null">
+<span ng-hide="runtime_deps.length == 0">
   <h2>Runtime Dependencies</h2>
 
-  <p du-scroll-container="container">
+  <div du-scroll-container="container" class="deps">
     <ul ng-show="runtime_deps" ng-repeat="dep in runtime_deps">
       <li class="dependency" ng-click="selectGem(dep.name)" id="#{{dep.name}}"
           du-smooth-scroll du-scrollspy>
         {{ dep.full_name }}
       </li>
     </ul>
-  </p>
+  </div>
 </span>
 
-<span ng-hide="development_deps == null">
+<span ng-hide="development_deps.length == 0" class="deps">
   <h2>Development Dependencies</h2>
 
-  <p du-scroll-container="container">
+  <div du-scroll-container="container">
     <ul ng-repeat="dep in development_deps">
       <li class="dependency" ng-click="selectGem(dep.name)" id="#{{dep.name}}"
           du-smooth-scroll du-scrollspy>
         {{ dep.full_name }}
       </li>
     </ul>
-  </p>
+  </div>
 </span>

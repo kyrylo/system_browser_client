@@ -25,6 +25,10 @@ module.exports = function(grunt) {
 
           'bower_components/raf/index.js',
           'bower_components/angular-ui-layout/ui-layout.js',
+          'bower_components/angular-animate/angular-animate.js',
+          'bower_components/angular-aria/angular-aria.js',
+          'bower_components/angular-material/angular-material.js',
+
 
           'client/app/app.module.js',
           'client/app/app.routes.js',
@@ -50,6 +54,7 @@ module.exports = function(grunt) {
           '<%= dist %><%= pkg.name %>.css': [
             'node_modules/normalize.css/normalize.css',
             'bower_components/angular-ui-layout/ui-layout.css',
+            'bower_components/angular-material/angular-material.css',
 
             'client/app/modules/**/assets/css/*',
             'client/app/assets/css/top.css',

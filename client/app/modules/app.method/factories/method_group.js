@@ -32,10 +32,7 @@
       concat(this.privateInstance).
       concat(this.protectedInstance);
 
-    return methods.map(function(method) {
-      method.displayName = this.methodToInstanceMethod(method);
-      return method;
-    });
+    return this.prepForDisplay(methods, this.methodToInstanceMethod);
   };
 
   MethodGroup.prototype.classMethods = function() {
@@ -46,191 +43,133 @@
       concat(this.privateClass).
       concat(this.protectedClass);
 
-    return methods.map(function(method) {
-      method.displayName = this.methodToClassMethod(method);
-      return method;
-    });
+    return this.prepForDisplay(methods, this.methodToClassMethod);
+  };
+
+  MethodGroup.prototype.execInCtx = function(ctx, collection1, collection2) {
+    if (ctx == 'instance') {
+      return collection1;
+    } else if (ctx == 'singleton') {
+      return collection2;
+    } else {
+      throw new Error('unknown context: ' + ctx);
+    }
+  };
+
+  MethodGroup.prototype.onlyCMethods = function(collection) {
+    return collection.filter(function(method) { return method.c_method; });
+  };
+
+  MethodGroup.prototype.onlyRbMethods = function(collection) {
+    return collection.filter(function(method) { return !method.c_method; });
   };
 
   MethodGroup.prototype.anyPublicMethods = function(ctx) {
-    if (ctx == 'instance') {
-      return this.publicInstance.length !== 0;
-    } else if (ctx == 'singleton') {
-      return this.publicClass.length !== 0;
-    } else {
-      throw new Error('unknown context: ' + ctx);
-    }
+    var collection = this.execInCtx(ctx, this.publicInstance, this.publicClass);
+
+    return collection.length > 0;
   };
 
   MethodGroup.prototype.anyPrivateMethods = function(ctx) {
-    if (ctx == 'instance') {
-      return this.privateInstance.length !== 0;
-    } else if (ctx == 'singleton') {
-      return this.privateClass.length !== 0;
-    } else {
-      throw new Error('unknown context: ' + ctx);
-    }
+    var collection = this.execInCtx(ctx, this.privateInstance, this.privateClass);
+
+    return collection.length > 0;
   };
 
   MethodGroup.prototype.anyProtectedMethods = function(ctx) {
-    if (ctx == 'instance') {
-      return this.protectedInstance.length !== 0;
-    } else if (ctx == 'singleton') {
-      return this.protectedClass.length !== 0;
-    } else {
-      throw new Error('unknown context: ' + ctx);
-    }
+    var collection = this.execInCtx(ctx, this.protectedInstance, this.protectedClass);
+
+    return collection.length > 0;
   };
 
   MethodGroup.prototype.cInstanceMethods = function() {
-    var methods = this.instanceMethods().filter(function(method) {
-      return method.c_method;
-    });
-
-    return methods;
+    return this.onlyCMethods(this.instanceMethods());
   };
 
-
   MethodGroup.prototype.cClassMethods = function() {
-    var methods = this.classMethods().filter(function(method) {
-      return method.c_method;
-    });
-
-    return methods;
+    return this.onlyCMethods(this.classMethods());
   };
 
   MethodGroup.prototype.rbInstanceMethods = function() {
-    var methods = this.instanceMethods().filter(function(method) {
-      return !method.c_method;
-    });
-
-    return methods;
+    return this.onlyRbMethods(this.instanceMethods());
   };
 
 
   MethodGroup.prototype.rbClassMethods = function() {
-    var methods = this.classMethods().filter(function(method) {
-      return !method.c_method;
-    });
-
-    return methods;
+    return this.onlyRbMethods(this.classMethods());
   };
 
   MethodGroup.prototype.anyRubyMethods = function(ctx) {
-    if (ctx == 'instance') {
-      return this.rbInstanceMethods().length > 0;
-    } else if (ctx == 'singleton') {
-      return this.rbClassMethods().length > 0;
-    } else {
-      throw new Error('unknown context: ' + ctx);
-    }
+    var collection = this.execInCtx(
+      ctx,
+      this.rbInstanceMethods(),
+      this.rbClassMethods()
+    );
+
+    return collection.length > 0;
   };
 
   MethodGroup.prototype.anyCMethods = function(ctx) {
-    if (ctx == 'instance') {
-      return this.cInstanceMethods().length > 0;
-    } else if (ctx == 'singleton') {
-      return this.cClassMethods().length > 0;
-    } else {
-      throw new Error('unknown context: ' + ctx);
+    var collection = this.execInCtx(
+      ctx,
+      this.cInstanceMethods(),
+      this.cClassMethods()
+    );
+
+    return collection.length > 0;
+  };
+
+  MethodGroup.prototype.prepForDisplay = function(methods, prepFunc) {
+    return methods.map(function(method) {
+      method.displayName = prepFunc(method);
+      return method;
+    }, this);
+  };
+
+  MethodGroup.prototype.methodsInGroup = function(group, ctx) {
+    var allFunc, pub, priv, prot, cMethFunc, rbMethFunc, prepFunc;
+
+    var methods = [];
+    var labels = this.group.labels;
+
+    allFunc = this[ctx.toLowerCase() + 'Methods'];
+    pub = this[labels.public + ctx];
+    priv = this[labels.private + ctx];
+    prot = this[labels.protected + ctx];
+    cMethFunc = this['c' + ctx + 'Methods'];
+    rbMethFunc = this['rb' + ctx + 'Methods'];
+    prepFunc = this['methodTo' + ctx + 'Method'];
+
+    switch(group) {
+    case labels.all:
+      methods = allFunc.bind(this)();
+      break;
+    case labels.public:
+      methods = pub;
+      break;
+    case labels.private:
+      methods = priv;
+      break;
+    case labels.protected:
+      methods = prot;
+      break;
+    case labels.c:
+      methods = cMethFunc.bind(this)();
+      break;
+    case labels.rb:
+      methods = rbMethFunc.bind(this)();
+      break;
     }
+
+    return this.prepForDisplay(methods, prepFunc);
   };
 
   MethodGroup.prototype.classMethodsInGroup = function(group) {
-    var methods = [];
-
-    if (group === this.group.labels.all) {
-      methods = this.classMethods();
-    }
-
-    if (group === this.group.labels.public) {
-      methods = this.publicClass.map(function(method) {
-        method.displayName = this.methodToClassMethod(method);
-        return method;
-      });
-    }
-
-    if (group === this.group.labels.private) {
-      methods = this.privateClass.map(function(method) {
-        method.displayName = this.methodToClassMethod(method);
-        return method;
-      });
-    }
-
-    if (group === this.group.labels.protected) {
-      methods = this.protectedClass.map(function(method) {
-        method.displayName = this.methodToClassMethod(method);
-        return method;
-      });
-    }
-
-    if (group === this.group.labels.cmethods) {
-      methods = this.protectedClass.map(function(method) {
-        method.displayName = this.methodToClassMethod(method);
-        return method;
-      });
-    }
-
-    if (group === this.group.labels.cmethods) {
-      methods = this.cClassMethods().map(function(method) {
-        method.displayName = this.methodToClassMethod(method);
-        return method;
-      });
-    }
-
-    if (group === this.group.labels.rbmethods) {
-      methods = this.rbClassMethods().map(function(method) {
-        method.displayName = this.methodToClassMethod(method);
-        return method;
-      });
-    }
-
-    return methods;
+    return this.methodsInGroup.bind(this)(group, 'Class');
   };
 
   MethodGroup.prototype.instanceMethodsInGroup = function(group) {
-    var methods = [];
-
-    if (group === this.group.labels.all) {
-      methods = this.instanceMethods();
-    }
-
-    if (group === this.group.labels.public) {
-      methods = this.publicInstance.map(function(method) {
-        method.displayName = this.methodToInstanceMethod(method);
-        return method;
-      });
-    }
-
-    if (group === this.group.labels.private) {
-      methods = this.privateInstance.map(function(method) {
-        method.displayName = this.methodToInstanceMethod(method);
-        return method;
-      });
-    }
-
-    if (group === this.group.labels.protected) {
-      methods = this.protectedInstance.map(function(method) {
-        method.displayName = this.methodToInstanceMethod(method);
-        return method;
-      });
-    }
-
-    if (group === this.group.labels.cmethods) {
-      methods = this.cInstanceMethods().map(function(method) {
-        method.displayName = this.methodToInstanceMethod(method);
-        return method;
-      });
-    }
-
-    if (group === this.group.labels.rbmethods) {
-      return this.rbInstanceMethods().map(function(method) {
-        method.displayName = this.methodToInstanceMethod(method);
-        return method;
-      });
-    }
-
-    return methods;
+    return this.methodsInGroup.bind(this)(group, 'Instance');
   };
 
   var factory = function(group, _) {

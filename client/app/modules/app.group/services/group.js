@@ -7,8 +7,8 @@
       public: 'public',
       private: 'private',
       protected: 'protected',
-      cmethods: 'C methods',
-      rbmethods: 'Ruby methods'
+      c: 'C methods',
+      rb: 'Ruby methods'
     };
   };
 

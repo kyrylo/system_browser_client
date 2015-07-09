@@ -5,5 +5,17 @@
     ng-mouseout="hideIndentation(behaviour)"
     id="{{ behaviour.name }}" du-smooth-scroll>
 
-  <ng-include src="'modules/app.behaviour/partials/_item.html'"></ng-include>
+  <span class="icon">
+    <i class="{{ behaviour.icon }}-icon"></i>
+  </span>
+
+  <span ng-class="{indent: behaviour.visibleIndentation, 'no-indent': !behaviour.visibleIndentation}"
+        ng-bind-html="behaviour.indentation">
+  </span>
+
+  <span class="display-name">{{ behaviour.displayName }}</span>
+
+  <span class="superclass" ng-if="behaviour.superclass">
+    &lt; <span class="classname" ng-click="openSuperclass($event, behaviour.superclass)">{{ behaviour.superclass }}</span>
+  </span>
 </li>

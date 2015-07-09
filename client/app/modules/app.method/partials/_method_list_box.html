@@ -1,13 +1,7 @@
 <div id="method-list-box" class="list-box" ng-controller="MethodController">
   <div class="list-box-content">
     <ul>
-      <li ng-repeat="method in methods track by $index"
-          ng-click="!method.c_method && getMethodSource(method) && selectMethod(method)"
-          ng-class="{selected: method.selected, 'c-method': method.c_method}">
-        <span class="item">
-          {{ method.displayName }}
-        </span>
-      </li>
+      <ng-include src="'modules/app.method/partials/_method_item.html'"></ng-include>
     </ul>
   </div>
 </div>

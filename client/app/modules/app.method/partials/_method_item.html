@@ -1,0 +1,7 @@
+<li ng-repeat="method in methods track by $index"
+    ng-click="!method.c_method && getMethodSource(method) && selectMethod(method)"
+    ng-class="{selected: method.selected, 'c-method': method.c_method}">
+  <span class="item">
+    {{ method.displayName }}
+  </span>
+</li>

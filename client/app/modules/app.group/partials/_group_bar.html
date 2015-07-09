@@ -1,7 +1,7 @@
 <div ng-controller="GroupBarController" id="group-bar" ng-show="isVisible()">
   <div id="group-bar-content">
     <div class="squared-checkbox">
-      <input type="checkbox" id="squared" ng-model="classSide" />
+      <input type="checkbox" id="squared" ng-model="classSide" ng-checked="isClassSide()"/>
       <label for="squared"></label>
     </div>
 

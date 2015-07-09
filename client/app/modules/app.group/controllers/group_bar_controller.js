@@ -10,7 +10,7 @@
     });
 
     $scope.$on('reset-groupbar', function() {
-      groupBar.hide();
+      groupBar.reset();
       groupBar.setInstanceSide();
     });
 

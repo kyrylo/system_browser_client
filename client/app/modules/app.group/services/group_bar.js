@@ -8,8 +8,8 @@
   GroupBar.prototype.constructor = GroupBar;
 
   GroupBar.prototype.reset = function() {
-    this.visible = false;
-    this.classSide = false;
+    this.hide();
+    this.setInstanceSide();
   };
 
   GroupBar.prototype.hide = function() {

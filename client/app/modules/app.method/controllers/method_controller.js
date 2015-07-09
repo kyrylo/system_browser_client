@@ -48,6 +48,10 @@
       $scope.methods = sortMethods(methods);
     };
 
+    var getMethodSource = function(method) {
+      $rootScope.$broadcast('get:source', methodGroup.owner, method);
+    };
+
     // --- Events --------------------------------------------------------------
 
     $scope.$on('get:method:all', function(_event1, behaviour) {
@@ -96,13 +100,12 @@
 
     // --- Public methods ------------------------------------------------------
 
-    $scope.getMethodSource = function(method) {
-      $rootScope.$broadcast('get:source', methodGroup.owner, method);
-    };
-
     $scope.selectMethod = function(method) {
-      $rootScope.$broadcast('list-box:method:selected');
-      selectMethod(method);
+      if (!method.c_method) {
+        getMethodSource(method);
+        $rootScope.$broadcast('list-box:method:selected');
+        selectMethod(method);
+      }
     };
   };
 

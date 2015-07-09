@@ -41,11 +41,11 @@
       }
 
       if (methodGroup.anyCMethods(ctx)) {
-        groups.push({name: group.labels.cmethods});
+        groups.push({name: group.labels.cmethods, icon: 'c-group'});
       }
 
       if (methodGroup.anyRubyMethods(ctx)) {
-        groups.push({name: group.labels.rbmethods});
+        groups.push({name: group.labels.rbmethods, icon: 'ruby-group'});
       }
 
       if (groups.length > 0) {

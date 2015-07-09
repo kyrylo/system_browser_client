@@ -1,3 +1,7 @@
-#group-list-box ul li span {
-    padding-left: 18px;
+.ruby-group-icon {
+    background: url("ruby-group-icon.svg");
+}
+
+.c-group-icon {
+    background: url("c-group-icon.svg");
 }

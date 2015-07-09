@@ -3,15 +3,15 @@
 }
 
 .ruby-icon {
-    background: url("ruby-icon.png");
+    background: url("gem-icon.svg");
 }
 
 .ruby-icon:hover {
-    background: url("ruby-hover-icon.png");
+    background: url("gem-hover-icon.svg");
 }
 
 .package-icon {
-    background: url("package-icon.png");
+    background: url("package-icon.svg");
 }
 
 .filter-input {

@@ -7,11 +7,16 @@
 }
 
 #method-list-box ul li.c-method {
-    background-color: #d8d8d8;
+    color: #99869d;
+    cursor: default;
 }
 
-#method-list-box ul li {
-    background-color: #f5dde1;
+#method-list-box ul li.c-method:hover {
+    background-color: transparent;
+}
+
+#method-list-box ul li:hover:nth-child(odd) {
+    background-color: #f5f5f5;
 }
 
 #method-list-box ul li:hover {

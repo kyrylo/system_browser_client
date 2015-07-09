@@ -16,6 +16,14 @@
 
   MethodGroup.prototype.constructor = MethodGroup;
 
+  MethodGroup.prototype.methodToClassMethod = function(method) {
+    return '.' + method.name;
+  };
+
+  MethodGroup.prototype.methodToInstanceMethod = function(method) {
+    return '#' + method.name;
+  };
+
   MethodGroup.prototype.instanceMethods = function() {
     var methods = [];
 
@@ -25,7 +33,7 @@
       concat(this.protectedInstance);
 
     return methods.map(function(method) {
-      method.displayName = '#' + method.name;
+      method.displayName = this.methodToInstanceMethod(method);
       return method;
     });
   };
@@ -39,7 +47,7 @@
       concat(this.protectedClass);
 
     return methods.map(function(method) {
-      method.displayName = '.' + method.name;
+      method.displayName = this.methodToClassMethod(method);
       return method;
     });
   };
@@ -137,42 +145,42 @@
 
     if (group === this.group.labels.public) {
       methods = this.publicClass.map(function(method) {
-        method.displayName = '.' + method.name;
+        method.displayName = this.methodToClassMethod(method);
         return method;
       });
     }
 
     if (group === this.group.labels.private) {
       methods = this.privateClass.map(function(method) {
-        method.displayName = '.' + method.name;
+        method.displayName = this.methodToClassMethod(method);
         return method;
       });
     }
 
     if (group === this.group.labels.protected) {
       methods = this.protectedClass.map(function(method) {
-        method.displayName = '.' + method.name;
+        method.displayName = this.methodToClassMethod(method);
         return method;
       });
     }
 
     if (group === this.group.labels.cmethods) {
       methods = this.protectedClass.map(function(method) {
-        method.displayName = '.' + method.name;
+        method.displayName = this.methodToClassMethod(method);
         return method;
       });
     }
 
     if (group === this.group.labels.cmethods) {
       methods = this.cClassMethods().map(function(method) {
-        method.displayName = '.' + method.name;
+        method.displayName = this.methodToClassMethod(method);
         return method;
       });
     }
 
     if (group === this.group.labels.rbmethods) {
       methods = this.rbClassMethods().map(function(method) {
-        method.displayName = '.' + method.name;
+        method.displayName = this.methodToClassMethod(method);
         return method;
       });
     }
@@ -189,35 +197,35 @@
 
     if (group === this.group.labels.public) {
       methods = this.publicInstance.map(function(method) {
-        method.displayName = '#' + method.name;
+        method.displayName = this.methodToInstanceMethod(method);
         return method;
       });
     }
 
     if (group === this.group.labels.private) {
       methods = this.privateInstance.map(function(method) {
-        method.displayName = '#' + method.name;
+        method.displayName = this.methodToInstanceMethod(method);
         return method;
       });
     }
 
     if (group === this.group.labels.protected) {
       methods = this.protectedInstance.map(function(method) {
-        method.displayName = '#' + method.name;
+        method.displayName = this.methodToInstanceMethod(method);
         return method;
       });
     }
 
     if (group === this.group.labels.cmethods) {
       methods = this.cInstanceMethods().map(function(method) {
-        method.displayName = '#' + method.name;
+        method.displayName = this.methodToInstanceMethod(method);
         return method;
       });
     }
 
     if (group === this.group.labels.rbmethods) {
       return this.rbInstanceMethods().map(function(method) {
-        method.displayName = '#' + method.name;
+        method.displayName = this.methodToInstanceMethod(method);
         return method;
       });
     }

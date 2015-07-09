@@ -6,7 +6,9 @@
       all: '-- all --',
       public: 'public',
       private: 'private',
-      protected: 'protected'
+      protected: 'protected',
+      cmethods: 'C methods',
+      rbmethods: 'Ruby methods'
     };
   };
 

@@ -40,6 +40,14 @@
         groups.push({name: group.labels.protected});
       }
 
+      if (methodGroup.anyCMethods(ctx)) {
+        groups.push({name: group.labels.cmethods});
+      }
+
+      if (methodGroup.anyRubyMethods(ctx)) {
+        groups.push({name: group.labels.rbmethods});
+      }
+
       if (groups.length > 0) {
         groups.unshift({name: group.labels.all, selected: true});
       }

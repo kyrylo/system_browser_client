@@ -25,7 +25,8 @@
       concat(this.protectedInstance);
 
     return methods.map(function(method) {
-      return {name: '#' + method};
+      method.displayName = '#' + method.name;
+      return method;
     });
   };
 
@@ -38,7 +39,8 @@
       concat(this.protectedClass);
 
     return methods.map(function(method) {
-      return {name: '.' + method};
+      method.displayName = '.' + method.name;
+      return method;
     });
   };
 
@@ -72,6 +74,60 @@
     }
   };
 
+  MethodGroup.prototype.cInstanceMethods = function() {
+    var methods = this.instanceMethods().filter(function(method) {
+      return method.c_method;
+    });
+
+    return methods;
+  };
+
+
+  MethodGroup.prototype.cClassMethods = function() {
+    var methods = this.classMethods().filter(function(method) {
+      return method.c_method;
+    });
+
+    return methods;
+  };
+
+  MethodGroup.prototype.rbInstanceMethods = function() {
+    var methods = this.instanceMethods().filter(function(method) {
+      return !method.c_method;
+    });
+
+    return methods;
+  };
+
+
+  MethodGroup.prototype.rbClassMethods = function() {
+    var methods = this.classMethods().filter(function(method) {
+      return !method.c_method;
+    });
+
+    return methods;
+  };
+
+  MethodGroup.prototype.anyRubyMethods = function(ctx) {
+    if (ctx == 'instance') {
+      return this.rbInstanceMethods().length > 0;
+    } else if (ctx == 'singleton') {
+      return this.rbClassMethods().length > 0;
+    } else {
+      throw new Error('unknown context: ' + ctx);
+    }
+  };
+
+  MethodGroup.prototype.anyCMethods = function(ctx) {
+    if (ctx == 'instance') {
+      return this.cInstanceMethods().length > 0;
+    } else if (ctx == 'singleton') {
+      return this.cClassMethods().length > 0;
+    } else {
+      throw new Error('unknown context: ' + ctx);
+    }
+  };
+
   MethodGroup.prototype.classMethodsInGroup = function(group) {
     var methods = [];
 
@@ -81,19 +137,43 @@
 
     if (group === this.group.labels.public) {
       methods = this.publicClass.map(function(method) {
-        return {name: '.' + method};
+        method.displayName = '.' + method.name;
+        return method;
       });
     }
 
     if (group === this.group.labels.private) {
       methods = this.privateClass.map(function(method) {
-        return {name: '.' + method};
+        method.displayName = '.' + method.name;
+        return method;
       });
     }
 
     if (group === this.group.labels.protected) {
       methods = this.protectedClass.map(function(method) {
-        return {name: '.' + method};
+        method.displayName = '.' + method.name;
+        return method;
+      });
+    }
+
+    if (group === this.group.labels.cmethods) {
+      methods = this.protectedClass.map(function(method) {
+        method.displayName = '.' + method.name;
+        return method;
+      });
+    }
+
+    if (group === this.group.labels.cmethods) {
+      methods = this.cClassMethods().map(function(method) {
+        method.displayName = '.' + method.name;
+        return method;
+      });
+    }
+
+    if (group === this.group.labels.rbmethods) {
+      methods = this.rbClassMethods().map(function(method) {
+        method.displayName = '.' + method.name;
+        return method;
       });
     }
 
@@ -109,33 +189,52 @@
 
     if (group === this.group.labels.public) {
       methods = this.publicInstance.map(function(method) {
-        return {name: '#' + method};
+        method.displayName = '#' + method.name;
+        return method;
       });
     }
 
     if (group === this.group.labels.private) {
       methods = this.privateInstance.map(function(method) {
-        return {name: '#' + method};
+        method.displayName = '#' + method.name;
+        return method;
       });
     }
 
     if (group === this.group.labels.protected) {
       methods = this.protectedInstance.map(function(method) {
-        return {name: '#' + method};
+        method.displayName = '#' + method.name;
+        return method;
+      });
+    }
+
+    if (group === this.group.labels.cmethods) {
+      methods = this.cInstanceMethods().map(function(method) {
+        method.displayName = '#' + method.name;
+        return method;
+      });
+    }
+
+    if (group === this.group.labels.rbmethods) {
+      return this.rbInstanceMethods().map(function(method) {
+        method.displayName = '#' + method.name;
+        return method;
       });
     }
 
     return methods;
   };
 
-  var factory = function(group) {
+  var factory = function(group, _) {
     MethodGroup.prototype.group = group;
+    MethodGroup.prototype._ = _;
 
     return MethodGroup;
   };
 
   global.app.method.factory('MethodGroup', [
     'group',
+    '_',
     factory
   ]);
 })(window.global);

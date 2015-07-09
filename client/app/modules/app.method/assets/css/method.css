@@ -5,3 +5,15 @@
 #method-list-box ul li .item {
     padding-left: 18px;
 }
+
+#method-list-box ul li.c-method {
+    background-color: #d8d8d8;
+}
+
+#method-list-box ul li {
+    background-color: #f5dde1;
+}
+
+#method-list-box ul li:hover {
+    background-color: #ead3ff;
+}

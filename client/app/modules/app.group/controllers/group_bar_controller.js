@@ -2,6 +2,10 @@
   'use strict';
 
   var controller = function($scope, $rootScope, groupBar) {
+    // --- Public variables ----------------------------------------------------
+
+    $scope.isClassSide = groupBar.classSide;
+
     // --- Events --------------------------------------------------------------
 
     $scope.$on('method-count:method', function(_event, count) {
@@ -11,22 +15,11 @@
 
     $scope.$on('reset-groupbar', function() {
       groupBar.reset();
-      groupBar.setInstanceSide();
+      $scope.isClassSide = groupBar.classSide;
     });
 
     $rootScope.$on('group_bar:show', function() {
       groupBar.show();
-    });
-
-    // --- Watches -------------------------------------------------------------
-
-    $scope.$watch('classSide', function(newVal, oldVal) {
-      if (newVal === oldVal) {
-        return;
-      }
-
-      groupBar.classSide = newVal;
-      $rootScope.$broadcast('update-method-side');
     });
 
     // --- Public methods ------------------------------------------------------
@@ -35,8 +28,12 @@
       return groupBar.visible;
     };
 
-    $scope.isClassSide = function() {
-      return groupBar.classSide;
+    $scope.toggleMethodSide = function() {
+      groupBar.toggleSide();
+
+      $scope.isClassSide = groupBar.classSide;
+
+      $rootScope.$broadcast('update-method-side');
     };
   };
 

@@ -20,6 +20,14 @@
     this.visible = true;
   };
 
+  GroupBar.prototype.toggleSide = function() {
+    if (this.classSide) {
+      this.setInstanceSide();
+    } else {
+      this.setClassSide();
+    }
+  };
+
   GroupBar.prototype.setInstanceSide = function() {
     this.classSide = false;
   };
@@ -28,5 +36,7 @@
     this.classSide = true;
   };
 
-  global.app.service('groupBar', [GroupBar]);
+  global.app.service('groupBar', [
+    GroupBar
+  ]);
 })(window.global);

@@ -1,4 +1,4 @@
-<li ng-repeat="gem in gems | filter:search.searchText"
+<li ng-repeat="gem in gems | filter:searchText"
     ng-click="showBehaviours(gem); selectGem(gem)"
     ng-class="{selected: gem.selected}"
     id="{{ gem.name }}" du-smooth-scroll>

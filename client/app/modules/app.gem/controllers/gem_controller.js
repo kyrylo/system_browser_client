@@ -6,7 +6,7 @@
 
     $scope.gems = [];
 
-    $scope.search = { searchText: '', hoverX: false };
+    $scope.searchText = '';
 
     // --- Private methods -----------------------------------------------------
 
@@ -76,6 +76,10 @@
       }
     });
 
+    $scope.$on('search-change', function(_event, val) {
+      $scope.searchText = val;
+    });
+
     // --- Public methods ------------------------------------------------------
 
     $scope.showBehaviours = function(gem, behaviourToSelect) {
@@ -95,31 +99,6 @@
     $scope.openGem = function(gem) {
       GemService.open(gem.name);
     };
-
-    $scope.searching = function() {
-      return $scope.search.searchText.length > 0;
-    };
-
-    $scope.onMouseMove = function($event) {
-      if (!$scope.searching()) {
-        return;
-      }
-
-      var el = $event.toElement,
-          inputWidth = el.offsetWidth - 18,
-          searchBarWidth = el.getBoundingClientRect().left;
-
-      $scope.search.hoverX = inputWidth < $event.clientX - searchBarWidth;
-    };
-
-    $scope.clearSearch = function($event) {
-      if (!$scope.search.hoverX) {
-        return;
-      }
-
-      $event.preventDefault();
-      $scope.search.searchText = '';
-    };
   };
 
   global.app.gem.controller('GemController', [
@@ -128,5 +107,6 @@
     '$timeout',
     'GemService',
     '_',
-    controller]);
+    controller
+  ]);
 })(window.global, window.angular);

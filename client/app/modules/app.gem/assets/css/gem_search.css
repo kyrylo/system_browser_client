@@ -1,0 +1,28 @@
+.filter-input {
+    width: 100%;
+}
+
+.filter-input input {
+    width: calc(100% - 22.5px);
+    border-top: none;
+    border-left: none;
+    border-bottom: none;
+    border-right: 1px solid #e5e5e5;
+    background-color: #f0eaff;
+    color: #5830bb;
+    box-shadow: inset -2px -2px 2px rgba(0, 0, 0, 0.16);
+}
+
+.clearable {
+  background: #fff url("search_x.gif") no-repeat right -10px center;
+  border: 1px solid #999;
+  padding: 3px 18px 3px 4px;
+  transition: background 0.18s;
+}
+.clearable.x {
+    background-position: right 5px center;
+}
+
+.clearable.on-x {
+    cursor: pointer;
+}

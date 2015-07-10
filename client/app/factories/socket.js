@@ -10,7 +10,7 @@
   });
 
   socket.send = function(request) {
-    this.socket.write(request.to_json());
+    socket.write(request.to_json());
   };
 
   var factory = function() {

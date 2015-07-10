@@ -18,7 +18,7 @@
       $scope.isClassSide = groupBar.classSide;
     });
 
-    $rootScope.$on('group_bar:show', function() {
+    $scope.$on('group_bar:show', function() {
       groupBar.show();
     });
 

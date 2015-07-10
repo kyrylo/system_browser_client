@@ -52,7 +52,7 @@
         groups.unshift({name: group.labels.all, selected: true});
       }
 
-      $rootScope.$emit('group_bar:show');
+      $rootScope.$broadcast('group_bar:show');
 
       $scope.groups = groups;
     });

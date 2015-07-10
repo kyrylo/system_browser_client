@@ -2,7 +2,7 @@
   'use strict';
 
   var controller = function($scope, $rootScope, $sce, $timeout, behaviourService,
-                            Behaviour, _) {
+                            GemService, Behaviour, _) {
     // --- Public variables ----------------------------------------------------
 
     $scope.behaviours = [];
@@ -22,34 +22,6 @@
 
     var emptyBehaviour = function() {
       return [{displayName: noBehavioursMsg}];
-    };
-
-    var callbackForGem = function(_event2, rawBehaviours) {
-      var behaviours;
-
-      resetMethodState();
-
-      if (rawBehaviours.length === 0) {
-        behaviours = emptyBehaviour();
-      } else {
-        behaviours = _.sortBy(rawBehaviours, 'name').map(function(rawB) {
-          var behaviour = new Behaviour(rawB);
-          behaviour.indent($sce);
-
-          return behaviour;
-        });
-      }
-
-      $scope.$apply(function() {
-        $scope.behaviours = behaviours;
-        if (behaviourToSelect) {
-          autoSelectBehaviour(behaviourToSelect);
-        }
-      });
-    };
-
-    var listenTo = function(event) {
-      $scope.$on(event, callbackForGem);
     };
 
     var scrollTo = function(behaviour) {
@@ -97,6 +69,18 @@
       $scope.selectBehaviour({}, behaviour[0]);
     };
 
+    var findBehaviourByName = function(behaviourName) {
+      var behaviour = _.find($scope.behaviours, function(behaviour) {
+        if (behaviour.name === behaviourName) {
+          return behaviour;
+        } else {
+          return false;
+        }
+      });
+
+      return behaviour;
+    };
+
     // --- Watchers ------------------------------------------------------------
 
     $scope.$watch("behaviours", function (behs) {
@@ -116,14 +100,26 @@
     // --- Events --------------------------------------------------------------
 
     $scope.$on('get:behaviour:all', function(_e, gem, _behaviourToSelect) {
-      var event = 'add:behaviour:' + gem.name;
-
-      if (!$scope.$$listeners.hasOwnProperty(event)) {
-        listenTo(event);
-      }
-
       behaviourToSelect = _behaviourToSelect;
-      behaviourService.getAllFrom(gem.name);
+      behaviourService.getAllFrom(gem.name).then(function(behaviours) {
+        resetMethodState();
+
+        if (behaviours.length === 0) {
+          behaviours = emptyBehaviour();
+        } else {
+          behaviours = _.sortBy(behaviours, 'name').map(function(rawB) {
+            var behaviour = new Behaviour(rawB);
+            behaviour.indent($sce);
+
+            return behaviour;
+          });
+        }
+
+        $scope.behaviours = behaviours;
+        if (behaviourToSelect) {
+          autoSelectBehaviour(behaviourToSelect);
+        }
+      });
     });
 
     $scope.$on('list-box:behaviour:selected', function() {
@@ -151,7 +147,17 @@
 
     $scope.openSuperclass = function($event, superclass) {
       $event.stopPropagation();
-      behaviourService.openClass(superclass);
+
+      behaviourService.openClass(superclass).then(function(selectables) {
+        GemService.selectGem(selectables.gem).then(function() {
+          $timeout(function() {
+            var behaviour = findBehaviourByName(selectables.behaviour);
+
+            $scope.showGroups(behaviour);
+            $scope.selectBehaviour({}, behaviour);
+          });
+        });
+      });
     };
 
     $scope.showIndentation = showIndentation;
@@ -165,6 +171,7 @@
     '$sce',
     '$timeout',
     'behaviourService',
+    'GemService',
     'Behaviour',
     '_',
     controller

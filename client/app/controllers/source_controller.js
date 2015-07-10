@@ -1,7 +1,8 @@
 (function(global, angular) {
   'use strict';
 
-  var controller = function($scope, $rootScope, $element, $sce, $compile, source, marked) {
+  var controller = function($scope, $rootScope, $element, $sce, $compile,
+                            source, GemService, marked) {
     $scope.runtime_deps = [];
     $scope.development_deps = [];
 
@@ -24,7 +25,7 @@
     });
 
     $scope.$on('show:source', function(_event, gemspec) {
-            $scope.runtime_deps = [];
+      $scope.runtime_deps = [];
       $scope.development_deps = [];
 
       var desc = gemspec.description;
@@ -53,7 +54,7 @@
       $scope.runtime_deps = [];
       $scope.development_deps = [];
 
-      $rootScope.$broadcast('select-gem-from-source', dep);
+      GemService.selectGem(dep);
     };
   };
 
@@ -64,6 +65,7 @@
     '$sce',
     '$compile',
     'source',
+    'GemService',
     'marked',
     controller]);
 })(window.global, window.angular);

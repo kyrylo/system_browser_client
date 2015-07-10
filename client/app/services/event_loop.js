@@ -25,7 +25,7 @@
           that.$rootScope.$broadcast(data.action, data.data);
           return cb;
         } else {
-          return that.$rootScope.$apply(cb.callback.resolve(data));
+          return that.$rootScope.$apply(cb.callback.resolve(data.data));
         }
       });
     };

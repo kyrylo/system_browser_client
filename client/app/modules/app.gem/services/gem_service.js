@@ -1,6 +1,9 @@
 (function(global) {
   'use strict';
-  var GemService = function(socket, Request) {
+
+  var GemService = function($rootScope, $q, socket, Request) {
+    this.$rootScope = $rootScope;
+    this.$q = $q;
     this.socket = socket;
     this.Request = Request;
   };
@@ -19,10 +22,20 @@
 
   GemService.prototype.getDescription = function(gemName) {
     var req = new this.Request('description', 'gem', gemName);
-    this.socket.send(req);
+    return this.socket.send(req);
+  };
+
+  GemService.prototype.selectGem = function(gemName) {
+    var deferred = this.$q.defer();
+
+    this.$rootScope.$broadcast('select-gem', deferred, gemName);
+
+    return deferred.promise;
   };
 
   global.app.gem.service('GemService', [
+    '$rootScope',
+    '$q',
     'socket',
     'Request',
     GemService]);

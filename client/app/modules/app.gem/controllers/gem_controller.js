@@ -1,7 +1,7 @@
 (function(global, angular) {
   'use strict';
 
-  var controller = function($scope, $rootScope, GemService, _) {
+  var controller = function($scope, $rootScope, $timeout, GemService, _) {
     // --- Public variables ----------------------------------------------------
 
     $scope.gems = [];
@@ -29,22 +29,15 @@
     };
 
     var getDescription = function(gemName) {
-      var eventName = 'add:gem:' + gemName;
-
-      $scope.$on(eventName, function(_event, description) {
-        $scope.$$listeners[eventName] = [];
-        $rootScope.$broadcast('show:source', description);
+      GemService.getDescription(gemName).then(function(gemspec) {
+        $timeout(function() {
+          $rootScope.$broadcast('show:source', gemspec);
+        });
       });
-
-      GemService.getDescription(gemName);
     };
 
-    var resetBehaviourState = function() {
-      $rootScope.$broadcast('reset-behaviour');
-    };
-
-    var autoSelectGem = function(gemName, behaviourToSelect) {
-      var gem = $scope.gems.filter(function(gem) {
+    var findGemByName = function(gemName) {
+      var gem = _.find($scope.gems, function(gem) {
         if (gem.name === gemName) {
           return gem;
         } else {
@@ -52,41 +45,37 @@
         }
       });
 
-      $scope.showBehaviours(gem[0], behaviourToSelect);
-      $scope.selectGem(gem[0]);
+      return gem;
     };
 
     // --- Events --------------------------------------------------------------
 
     $scope.$on('get:gem:all', function() {
-      GemService.getAll();
-    });
+      GemService.getAll().then(function(gems) {
+        var ruby_gems = gems.slice(2, gems.length).map(function(gem) {
+          setIcon(gem, 'ruby');
+          return gem;
+        });
 
-    $scope.$on('add:gem:all', function(_event, gems) {
-      var ruby_gems = gems.slice(2, gems.length).map(function(gem) {
-        setIcon(gem, 'ruby');
-        return gem;
+        var core_gems = gems.slice(0, 2).map(function(gem) {
+          setIcon(gem, 'package');
+          deselectGem(gem);
+          return gem;
+        });
+
+        $scope.gems = core_gems.concat(_.sortBy(ruby_gems, 'name'));
       });
-
-      var core_gems = gems.slice(0, 2).map(function(gem) {
-        setIcon(gem, 'package');
-        deselectGem(gem);
-        return gem;
-      });
-
-      $scope.gems = core_gems.concat(_.sortBy(ruby_gems, 'name'));
     });
 
-    $scope.$on('list-box:gem:selected', function() {
-      $scope.gems.forEach(deselectGem);
-    });
+    $scope.$on('select-gem', function(_event, deferred, gemName) {
+      var gem = findGemByName(gemName);
 
-    $scope.$on('select-gem-from-source', function(_event, gemName) {
-      autoSelectGem(gemName);
-    });
-
-    $scope.$on('autoadd:behaviour:', function(_event, selectables) {
-      autoSelectGem(selectables.gem, selectables.behaviour);
+      if (gem) {
+        $scope.selectGem(gem, deferred);
+        deferred.resolve();
+      } else {
+        throw new Error('gem not found: ' + gemName);
+      }
     });
 
     // --- Public methods ------------------------------------------------------
@@ -96,12 +85,12 @@
     };
 
     $scope.selectGem = function(gem) {
-      resetBehaviourState();
+      $rootScope.$broadcast('reset-behaviour');
 
-      $scope.$emit('list-box:gem:selected');
-
+      $scope.showBehaviours(gem);
       getDescription(gem.name);
 
+      $scope.gems.forEach(deselectGem);
       selectGem(gem);
     };
 
@@ -119,7 +108,7 @@
       }
 
       var el = $event.toElement,
-          inputWidth = el.offsetWidth-18,
+          inputWidth = el.offsetWidth - 18,
           searchBarWidth = el.getBoundingClientRect().left;
 
       $scope.isOnX = inputWidth < $event.clientX - searchBarWidth;
@@ -138,6 +127,7 @@
   global.app.gem.controller('GemController', [
     '$scope',
     '$rootScope',
+    '$timeout',
     'GemService',
     '_',
     controller]);

@@ -3,7 +3,7 @@
          ng-model="search.searchText"
          placeholder="Search gems..."
          class="clearable"
-         ng-class="{x: searching(), 'on-x': isOnX}"
+         ng-class="{x: searching(), 'on-x': search.hoverX}"
          ng-click="clearSearch($event)"
          ng-mousemove="onMouseMove($event)">
 </div>

@@ -6,9 +6,7 @@
 
     $scope.gems = [];
 
-    $scope.search = { searchText: '' };
-
-    $scope.isOnX = false;
+    $scope.search = { searchText: '', hoverX: false };
 
     // --- Private methods -----------------------------------------------------
 
@@ -111,11 +109,11 @@
           inputWidth = el.offsetWidth - 18,
           searchBarWidth = el.getBoundingClientRect().left;
 
-      $scope.isOnX = inputWidth < $event.clientX - searchBarWidth;
+      $scope.search.hoverX = inputWidth < $event.clientX - searchBarWidth;
     };
 
     $scope.clearSearch = function($event) {
-      if (!$scope.isOnX) {
+      if (!$scope.search.hoverX) {
         return;
       }
 

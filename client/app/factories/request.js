@@ -2,6 +2,8 @@
   'use strict';
 
   var Request = function(action, resource, scope, other) {
+    this.$q = null;
+
     this.body = {
       system_browser_server: {
         action: action,
@@ -18,9 +20,14 @@
     return JSON.stringify(this.body) + '\n';
   };
 
-  var factory = function() {
+  var factory = function($q) {
+    Request.prototype.$q = $q;
+
     return Request;
   };
 
-  global.app.factory('Request', [factory]);
+  global.app.factory('Request', [
+    '$q',
+    factory
+  ]);
 })(window.global);

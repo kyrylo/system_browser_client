@@ -10,12 +10,12 @@
 
   BehaviourService.prototype.getAllFrom = function(gemName) {
     var req = new this.Request('get', 'behaviour', gemName);
-    this.socket.write(req.to_json());
+    this.socket.send(req);
   };
 
   BehaviourService.prototype.openClass = function(behaviour) {
     var req = new this.Request('autoget', 'behaviour', behaviour);
-    this.socket.write(req.to_json());
+    this.socket.send(req);
   };
 
   global.app.behaviour.service('behaviourService', [

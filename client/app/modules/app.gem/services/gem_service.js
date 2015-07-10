@@ -9,17 +9,17 @@
 
   GemService.prototype.getAll = function() {
     var req = new this.Request('get', 'gem', 'all');
-    this.socket.write(req.to_json());
+    this.socket.send(req);
   };
 
   GemService.prototype.open = function(gemName) {
     var req = new this.Request('open', 'gem', gemName);
-    this.socket.write(req.to_json());
+    this.socket.send(req);
   };
 
   GemService.prototype.getDescription = function(gemName) {
     var req = new this.Request('description', 'gem', gemName);
-    this.socket.write(req.to_json());
+    this.socket.send(req);
   };
 
   global.app.gem.service('GemService', [

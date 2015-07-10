@@ -8,6 +8,8 @@
 
     $scope.search = { searchText: '' };
 
+    $scope.isOnX = false;
+
     // --- Private methods -----------------------------------------------------
 
     var selectGem = function(gem) {
@@ -105,6 +107,31 @@
 
     $scope.openGem = function(gem) {
       GemService.open(gem.name);
+    };
+
+    $scope.searching = function() {
+      return $scope.search.searchText.length > 0;
+    };
+
+    $scope.onMouseMove = function($event) {
+      if (!$scope.searching()) {
+        return;
+      }
+
+      var el = $event.toElement,
+          inputWidth = el.offsetWidth-18,
+          searchBarWidth = el.getBoundingClientRect().left;
+
+      $scope.isOnX = inputWidth < $event.clientX - searchBarWidth;
+    };
+
+    $scope.clearSearch = function($event) {
+      if (!$scope.isOnX) {
+        return;
+      }
+
+      $event.preventDefault();
+      $scope.search.searchText = '';
     };
   };
 

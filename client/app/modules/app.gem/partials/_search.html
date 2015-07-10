@@ -1,5 +1,9 @@
 <div class="filter-input">
   <input type="text"
          ng-model="search.searchText"
-         placeholder="Search gems...">
+         placeholder="Search gems..."
+         class="clearable"
+         ng-class="{x: searching(), 'on-x': isOnX}"
+         ng-click="clearSearch($event)"
+         ng-mousemove="onMouseMove($event)">
 </div>

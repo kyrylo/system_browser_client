@@ -17,7 +17,11 @@
 
     return messages.map(function(message) {
       var msg = JSON.parse(message);
-      return msg.system_browser_client;
+
+      return {
+        callbackId: msg.callback_id,
+        data: msg.system_browser_client
+      };
     });
   };
 

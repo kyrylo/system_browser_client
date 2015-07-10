@@ -10,12 +10,25 @@
   });
 
   socket.send = function(request) {
+    var defer = this.$q.defer(),
+        callbackId = this.callbackStoreService.set(defer);
+
+    request.setCallbackId(callbackId);
     socket.write(request.to_json());
+
+    return defer.promise;
   };
 
-  var factory = function() {
+  var factory = function($q, callbackStoreService) {
+    socket.$q = $q;
+    socket.callbackStoreService = callbackStoreService;
+
     return socket;
   };
 
-  global.app.factory('socket', [factory]);
+  global.app.factory('socket', [
+    '$q',
+    'callbackStoreService',
+    factory
+  ]);
 })(window.global);

@@ -9,7 +9,7 @@
 
   GemService.prototype.getAll = function() {
     var req = new this.Request('get', 'gem', 'all');
-    this.socket.send(req);
+    return this.socket.send(req);
   };
 
   GemService.prototype.open = function(gemName) {

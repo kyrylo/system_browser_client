@@ -2,9 +2,8 @@
   'use strict';
 
   var Request = function(action, resource, scope, other) {
-    this.$q = null;
-
     this.body = {
+      callbackId: null,
       system_browser_server: {
         action: action,
         resource: resource,
@@ -20,14 +19,15 @@
     return JSON.stringify(this.body) + '\n';
   };
 
-  var factory = function($q) {
-    Request.prototype.$q = $q;
+  Request.prototype.setCallbackId = function(callbackId) {
+    this.body.callbackId = callbackId;
+  };
 
+  var factory = function() {
     return Request;
   };
 
   global.app.factory('Request', [
-    '$q',
     factory
   ]);
 })(window.global);

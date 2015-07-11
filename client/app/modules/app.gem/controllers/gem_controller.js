@@ -99,8 +99,6 @@
     };
 
     $scope.selectGem = function(gem, selectGemDeferred) {
-      $rootScope.$broadcast('reset-behaviour');
-
       $scope.gems.forEach(deselectGem);
 
       selectGem(gem).then(function() {

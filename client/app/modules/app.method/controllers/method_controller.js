@@ -2,7 +2,7 @@
   'use strict';
 
   var controller = function($scope, $rootScope, $timeout, MethodGroup,
-                            MethodService, groupBar, _) {
+                            methodService, groupBar, _) {
     // --- Private variables ---------------------------------------------------
 
     var methodGroup = null;
@@ -56,7 +56,7 @@
     // --- Events --------------------------------------------------------------
 
     $scope.$on('get:method:all', function(_event, behaviour) {
-      MethodService.getAllFrom(behaviour.name).then(function(methods) {
+      methodService.getAllFrom(behaviour.name).then(function(methods) {
         $rootScope.$broadcast('reset-source');
 
         methodGroup = new MethodGroup(methods, behaviour.name);
@@ -112,7 +112,7 @@
     '$rootScope',
     '$timeout',
     'MethodGroup',
-    'MethodService',
+    'methodService',
     'groupBar',
     '_',
     controller]);

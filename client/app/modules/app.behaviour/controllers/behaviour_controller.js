@@ -2,7 +2,7 @@
   'use strict';
 
   var controller = function($scope, $rootScope, $sce, $timeout, behaviourService,
-                            GemService, Behaviour, _) {
+                            gemService, Behaviour, _) {
     // --- Public variables ----------------------------------------------------
 
     $scope.behaviours = [];
@@ -130,7 +130,7 @@
       $event.stopPropagation();
 
       behaviourService.openClass(superclass).then(function(selectables) {
-        GemService.selectGem(selectables.gem).then(function() {
+        gemService.selectGem(selectables.gem).then(function() {
           var behaviour = findBehaviourByName(selectables.behaviour);
 
           $scope.showGroups(behaviour);
@@ -150,7 +150,7 @@
     '$sce',
     '$timeout',
     'behaviourService',
-    'GemService',
+    'gemService',
     'Behaviour',
     '_',
     controller

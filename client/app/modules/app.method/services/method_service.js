@@ -1,20 +1,21 @@
 (function(global) {
   'use strict';
 
-  var MethodService = function(socket, Request) {
+  var methodService = function(socket, Request) {
     this.socket = socket;
     this.Request = Request;
   };
 
-  MethodService.prototype.constructor = MethodService;
+  methodService.prototype.constructor = methodService;
 
-  MethodService.prototype.getAllFrom = function(behaviour) {
+  methodService.prototype.getAllFrom = function(behaviour) {
     var req = new this.Request('get', 'method', behaviour);
     return this.socket.send(req);
   };
 
-  global.app.method.service('MethodService', [
+  global.app.method.service('methodService', [
     'socket',
     'Request',
-    MethodService]);
+    methodService
+  ]);
 })(window.global);

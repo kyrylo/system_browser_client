@@ -1,7 +1,7 @@
 (function(global, angular) {
   'use strict';
 
-  var controller = function($scope, $rootScope, $timeout, $q, GemService, _) {
+  var controller = function($scope, $rootScope, $timeout, $q, gemService, _) {
     // --- Public variables ----------------------------------------------------
 
     $scope.gems = [];
@@ -28,7 +28,7 @@
     };
 
     var getDescription = function(gemName) {
-      GemService.getDescription(gemName).then(function(gemspec) {
+      gemService.getDescription(gemName).then(function(gemspec) {
         $timeout(function() {
           $rootScope.$broadcast('show:source', gemspec);
         });
@@ -50,7 +50,7 @@
     // --- Events --------------------------------------------------------------
 
     $scope.$on('get:gem:all', function() {
-      GemService.getAll().then(function(gems) {
+      gemService.getAll().then(function(gems) {
         var ruby_gems = gems.slice(2, gems.length).map(function(gem) {
           setIcon(gem, 'ruby');
           return gem;
@@ -107,7 +107,7 @@
     };
 
     $scope.openGem = function(gem) {
-      GemService.open(gem.name);
+      gemService.open(gem.name);
     };
   };
 
@@ -116,7 +116,7 @@
     '$rootScope',
     '$timeout',
     '$q',
-    'GemService',
+    'gemService',
     '_',
     controller
   ]);

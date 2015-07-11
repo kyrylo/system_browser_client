@@ -2,7 +2,7 @@
   'use strict';
 
   var controller = function($scope, $rootScope, $element, $sce, $compile,
-                            source, GemService, marked) {
+                            source, gemService, marked) {
     $scope.runtime_deps = [];
     $scope.development_deps = [];
 
@@ -54,7 +54,7 @@
       $scope.runtime_deps = [];
       $scope.development_deps = [];
 
-      GemService.selectGem(dep);
+      gemService.selectGem(dep);
     };
   };
 
@@ -65,7 +65,7 @@
     '$sce',
     '$compile',
     'source',
-    'GemService',
+    'gemService',
     'marked',
     controller]);
 })(window.global, window.angular);

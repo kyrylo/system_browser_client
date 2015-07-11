@@ -6,6 +6,8 @@
 
     $scope.isClassSide = groupBar.classSide;
 
+    $scope.hasMethodlessSide = false;
+
     // --- Private methods -----------------------------------------------------
 
     var setSide = function() {
@@ -15,6 +17,8 @@
     // --- Events --------------------------------------------------------------
 
     $scope.$on('method-count:method', function(_event, count) {
+      $scope.hasMethodlessSide =
+        count.classMethods === 0 || count.instanceMethods === 0;
       $scope.classMethods = count.classMethods;
       $scope.instanceMethods = count.instanceMethods;
     });

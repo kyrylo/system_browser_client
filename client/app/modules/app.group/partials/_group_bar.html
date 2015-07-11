@@ -1,7 +1,11 @@
 <div ng-controller="GroupBarController" id="group-bar" ng-show="isVisible()">
   <div id="group-bar-content">
-    <div class="squared-checkbox">
-      <input type="checkbox" id="squared" ng-click="toggleMethodSide()" ng-checked="isClassSide"/>
+    <div class="squared-checkbox" ng-class="{methodless: hasMethodlessSide}">
+      <input type="checkbox"
+             id="squared"
+             ng-click="toggleMethodSide()"
+             ng-checked="isClassSide"
+             ng-disabled="hasMethodlessSide"/>
       <label for="squared">
         <div class="counters">
           <div id="cm-count"

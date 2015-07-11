@@ -1,7 +1,7 @@
 (function(global, angular) {
   'use strict';
 
-  var controller = function($scope, $rootScope, $timeout, GemService, _) {
+  var controller = function($scope, $rootScope, $timeout, $q, GemService, _) {
     // --- Public variables ----------------------------------------------------
 
     $scope.gems = [];
@@ -13,9 +13,10 @@
     var selectGem = function(gem) {
       var container = angular.element(document.getElementById('gem-container'));
       var li = angular.element(document.getElementById(gem.name));
-      container.scrollTo(li, 50, 300);
-
+      var promise = container.scrollTo(li, 50, 300);
       gem.selected = true;
+
+      return promise;
     };
 
     var deselectGem = function(gem) {
@@ -70,7 +71,6 @@
 
       if (gem) {
         $scope.selectGem(gem, deferred);
-        deferred.resolve();
       } else {
         throw new Error('gem not found: ' + gemName);
       }
@@ -83,17 +83,27 @@
     // --- Public methods ------------------------------------------------------
 
     $scope.showBehaviours = function(gem) {
-      $rootScope.$broadcast('get:behaviour:all', gem);
+      var deferred = $q.defer();
+
+      $rootScope.$broadcast('get:behaviour:all', gem, deferred);
+
+      return deferred.promise;
     };
 
-    $scope.selectGem = function(gem) {
+    $scope.selectGem = function(gem, selectGemDeferred) {
       $rootScope.$broadcast('reset-behaviour');
 
-      $scope.showBehaviours(gem);
-      getDescription(gem.name);
-
       $scope.gems.forEach(deselectGem);
-      selectGem(gem);
+
+      selectGem(gem).then(function() {
+        $scope.showBehaviours(gem).then(function() {
+          if (selectGemDeferred) {
+            selectGemDeferred.resolve();
+          }
+        }).then(function() {
+          getDescription(gem.name);
+        });
+      });
     };
 
     $scope.openGem = function(gem) {
@@ -105,6 +115,7 @@
     '$scope',
     '$rootScope',
     '$timeout',
+    '$q',
     'GemService',
     '_',
     controller

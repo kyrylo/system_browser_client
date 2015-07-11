@@ -11,8 +11,6 @@
 
     var noBehavioursMsg = 'No behaviours found';
 
-    var behaviourToSelect;
-
     // --- Private methods -----------------------------------------------------
 
     var resetMethodState = function() {
@@ -56,19 +54,6 @@
       behaviour.visibleIndentation = true;
     };
 
-    var autoSelectBehaviour = function(behaviourName) {
-      var behaviour = $scope.behaviours.filter(function(behaviour) {
-        if (behaviour.name === behaviourName) {
-          return behaviour;
-        } else {
-          return false;
-        }
-      });
-
-      $scope.showGroups(behaviour[0]);
-      $scope.selectBehaviour({}, behaviour[0]);
-    };
-
     var findBehaviourByName = function(behaviourName) {
       var behaviour = _.find($scope.behaviours, function(behaviour) {
         if (behaviour.name === behaviourName) {
@@ -99,7 +84,7 @@
 
     // --- Events --------------------------------------------------------------
 
-    $scope.$on('get:behaviour:all', function(_e, gem) {
+    $scope.$on('get:behaviour:all', function(_e, gem, selectGemDeferred) {
       behaviourService.getAllFrom(gem.name).then(function(behaviours) {
         resetMethodState();
 
@@ -115,6 +100,7 @@
         }
 
         $scope.behaviours = behaviours;
+        selectGemDeferred.resolve();
       });
     });
 
@@ -146,12 +132,10 @@
 
       behaviourService.openClass(superclass).then(function(selectables) {
         GemService.selectGem(selectables.gem).then(function() {
-          $timeout(function() {
-            var behaviour = findBehaviourByName(selectables.behaviour);
+          var behaviour = findBehaviourByName(selectables.behaviour);
 
-            $scope.showGroups(behaviour);
-            $scope.selectBehaviour({}, behaviour);
-          });
+          $scope.showGroups(behaviour);
+          selectBehaviour(behaviour);
         });
       });
     };

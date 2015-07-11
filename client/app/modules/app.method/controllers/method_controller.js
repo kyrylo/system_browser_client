@@ -55,6 +55,7 @@
     // --- Events --------------------------------------------------------------
 
     $scope.$on('get:method:all', function(_event1, behaviour) {
+      return;
       var name = 'add:method:' + behaviour.name;
 
       if (!$scope.$$listeners.hasOwnProperty(name)) {

@@ -110,6 +110,7 @@
 
     $scope.$on('reset-behaviour', function() {
       $scope.behaviours = [];
+      $rootScope.$broadcast('reset-source');
     });
 
     // --- Public methods ------------------------------------------------------

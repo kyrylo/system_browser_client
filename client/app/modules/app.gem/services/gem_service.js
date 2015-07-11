@@ -33,6 +33,14 @@
     return deferred.promise;
   };
 
+  gemService.prototype.getSelectedGem = function() {
+    var deferred = this.$q.defer();
+
+    this.$rootScope.$broadcast('get-selected-gem', deferred);
+
+    return deferred.promise;
+  };
+
   global.app.gem.service('gemService', [
     '$rootScope',
     '$q',

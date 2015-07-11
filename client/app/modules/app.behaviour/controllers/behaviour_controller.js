@@ -134,12 +134,14 @@
     $scope.openSuperclass = function($event, superclass) {
       $event.stopPropagation();
 
-      behaviourService.openClass(superclass).then(function(selectables) {
-        gemService.selectGem(selectables.gem).then(function() {
-          var behaviour = findBehaviourByName(selectables.behaviour);
+      gemService.getSelectedGem().then(function(gem) {
+        behaviourService.openClass(superclass, gem).then(function(selectables) {
+          gemService.selectGem(selectables.gem).then(function() {
+            var behaviour = findBehaviourByName(selectables.behaviour);
 
-          $scope.showGroups(behaviour);
-          selectBehaviour(behaviour);
+            $scope.showGroups(behaviour);
+            selectBehaviour(behaviour);
+          });
         });
       });
     };

@@ -13,8 +13,8 @@
     return this.socket.send(req);
   };
 
-  BehaviourService.prototype.openClass = function(behaviour) {
-    var req = new this.Request('autoget', 'behaviour', behaviour);
+  BehaviourService.prototype.openClass = function(behaviour, gem) {
+    var req = new this.Request('autoget', 'behaviour', behaviour, gem.name);
     return this.socket.send(req);
   };
 

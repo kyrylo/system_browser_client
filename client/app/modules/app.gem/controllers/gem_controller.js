@@ -76,6 +76,14 @@
       }
     });
 
+    $scope.$on('get-selected-gem', function(_event, gemSelectedDeferred) {
+      var selectedGem = _.find($scope.gems, function(gem) {
+        return gem.selected;
+      });
+
+      gemSelectedDeferred.resolve(selectedGem);
+    });
+
     $scope.$on('search-change', function(_event, val) {
       $scope.searchText = val;
     });

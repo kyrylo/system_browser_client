@@ -18,3 +18,12 @@
     text-decoration: underline;
     color: #619DA1;
 }
+
+#behaviour-list-box ul li.no-behaviour {
+    color: #99869d;
+    cursor: default;
+}
+
+#behaviour-list-box ul li.no-behaviour:hover {
+    background-color: #f5f5f5;
+}

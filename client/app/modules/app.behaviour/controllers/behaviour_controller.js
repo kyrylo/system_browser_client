@@ -19,7 +19,7 @@
     };
 
     var emptyBehaviour = function() {
-      return [{displayName: noBehavioursMsg}];
+      return [{displayName: noBehavioursMsg, noop: true}];
     };
 
     var scrollTo = function(behaviour) {
@@ -120,6 +120,10 @@
     };
 
     $scope.selectBehaviour = function($event, behaviour) {
+      if (behaviour.noop) {
+        return;
+      }
+
       $scope.$emit('list-box:behaviour:selected');
       selectBehaviour(behaviour);
 

@@ -9,5 +9,5 @@
     };
   };
 
-  global.app.directive('gemDependency', [directive]);
+  global.app.source.directive('gemDependency', [directive]);
 })(window.global);

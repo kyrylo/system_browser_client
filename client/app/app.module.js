@@ -5,7 +5,8 @@
     'app.gem',
     'app.behaviour',
     'app.group',
-    'app.method'
+    'app.method',
+    'app.source'
   ];
 
   var vendorModules = [

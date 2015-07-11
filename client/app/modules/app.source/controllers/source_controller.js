@@ -1,8 +1,8 @@
-(function(global, angular) {
+(function(global) {
   'use strict';
 
   var controller = function($scope, $rootScope, $element, $sce, $compile,
-                            source, gemService, marked) {
+                            sourceService, gemService, marked) {
     $scope.runtime_deps = [];
     $scope.development_deps = [];
 
@@ -13,7 +13,7 @@
     };
 
     $scope.$on('get:source', function(_event, owner, method) {
-      source.extract(owner, method);
+      sourceService.extract(owner, method);
     });
 
     $scope.$on('add:source:with-comment', function(_event, source) {
@@ -58,14 +58,14 @@
     };
   };
 
-  global.app.controller('SourceController', [
+  global.app.source.controller('SourceController', [
     '$scope',
     '$rootScope',
     '$element',
     '$sce',
     '$compile',
-    'source',
+    'sourceService',
     'gemService',
     'marked',
     controller]);
-})(window.global, window.angular);
+})(window.global);

@@ -11,9 +11,7 @@
       <div id="main-toolbar" ng-controller="ToolbarController">
       </div>
 
-      <div id="source" ng-controller="SourceController">
-        <div ng-bind-html="source" class="source-content"></div>
-      </div>
+      <ng-include src="'modules/app.source/partials/_source.html'"></ng-include>
     </div>
   </div>
 </div>

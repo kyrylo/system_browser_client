@@ -22,6 +22,12 @@
       var groups = [];
       var ctx;
 
+      if (methodGroup.classMethods().length === 0) {
+        groupBar.setInstanceSide();
+      } else if (methodGroup.instanceMethods().length === 0) {
+        groupBar.setClassSide();
+      }
+
       if (groupBar.classSide) {
         ctx = 'singleton';
       } else {
@@ -79,5 +85,6 @@
     '$rootScope',
     'group',
     'groupBar',
-    controller]);
+    controller
+  ]);
 })(window.global);

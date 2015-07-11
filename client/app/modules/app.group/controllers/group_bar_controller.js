@@ -6,6 +6,12 @@
 
     $scope.isClassSide = groupBar.classSide;
 
+    // --- Private methods -----------------------------------------------------
+
+    var setSide = function() {
+      $scope.isClassSide = groupBar.classSide;
+    };
+
     // --- Events --------------------------------------------------------------
 
     $scope.$on('method-count:method', function(_event, count) {
@@ -15,11 +21,12 @@
 
     $scope.$on('reset-groupbar', function() {
       groupBar.reset();
-      $scope.isClassSide = groupBar.classSide;
+      setSide();
     });
 
     $scope.$on('group_bar:show', function() {
       groupBar.show();
+      setSide();
     });
 
     // --- Public methods ------------------------------------------------------
@@ -30,9 +37,6 @@
 
     $scope.toggleMethodSide = function() {
       groupBar.toggleSide();
-
-      $scope.isClassSide = groupBar.classSide;
-
       $rootScope.$broadcast('update-method-side');
     };
   };
@@ -41,5 +45,6 @@
     '$scope',
     '$rootScope',
     'groupBar',
-    controller]);
+    controller
+  ]);
 })(window.global);

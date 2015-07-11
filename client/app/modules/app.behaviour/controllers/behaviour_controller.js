@@ -116,7 +116,6 @@
 
     $scope.showGroups = function(behaviour) {
       $rootScope.$broadcast('get:method:all', behaviour);
-      $rootScope.$broadcast('show:groupbar');
     };
 
     $scope.selectBehaviour = function($event, behaviour) {

@@ -1,7 +1,8 @@
 (function(global) {
   'use strict';
 
-  var controller = function($scope, $rootScope, MethodGroup, MethodService, groupBar, _) {
+  var controller = function($scope, $rootScope, $timeout, MethodGroup,
+                            MethodService, groupBar, _) {
     // --- Private variables ---------------------------------------------------
 
     var methodGroup = null;
@@ -54,28 +55,24 @@
 
     // --- Events --------------------------------------------------------------
 
-    $scope.$on('get:method:all', function(_event1, behaviour) {
-      return;
-      var name = 'add:method:' + behaviour.name;
+    $scope.$on('get:method:all', function(_event, behaviour) {
+      MethodService.getAllFrom(behaviour.name).then(function(methods) {
+        $rootScope.$broadcast('reset-source');
 
-      if (!$scope.$$listeners.hasOwnProperty(name)) {
-        $scope.$on(name, function(_event2, methods) {
-          $rootScope.$broadcast('reset-source');
+        methodGroup = new MethodGroup(methods, behaviour.name);
+        $rootScope.$broadcast('add:method-group', methodGroup);
 
-          methodGroup = new MethodGroup(methods, behaviour.name);
-          $rootScope.$broadcast('add:method-group', methodGroup);
+        var count = {
+          instanceMethods: methodGroup.instanceMethods().length,
+          classMethods: methodGroup.classMethods().length
+        };
 
-          var count = {
-            instanceMethods: methodGroup.instanceMethods().length,
-            classMethods: methodGroup.classMethods().length
-          };
+        $rootScope.$broadcast('method-count:method', count);
 
-          $rootScope.$broadcast('method-count:method', count);
+        $timeout(function() {
           $scope.$apply(collectAllMethods);
         });
-      }
-
-      MethodService.getAllFrom(behaviour.name);
+      });
     });
 
     $scope.$on('reset-methods', function() {
@@ -113,6 +110,7 @@
   global.app.method.controller('MethodController', [
     '$scope',
     '$rootScope',
+    '$timeout',
     'MethodGroup',
     'MethodService',
     'groupBar',

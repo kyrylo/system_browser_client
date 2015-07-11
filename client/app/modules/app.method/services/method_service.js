@@ -10,7 +10,7 @@
 
   MethodService.prototype.getAllFrom = function(behaviour) {
     var req = new this.Request('get', 'method', behaviour);
-    this.socket.send(req);
+    return this.socket.send(req);
   };
 
   global.app.method.service('MethodService', [

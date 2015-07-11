@@ -9,6 +9,9 @@
 
 #source h1 {
     margin: 0;
+    font-family: PT Sans Caption;
+    text-transform: uppercase;
+    letter-spacing: 3px;
 }
 
 #source .CodeRay .code {

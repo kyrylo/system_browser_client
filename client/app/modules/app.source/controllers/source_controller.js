@@ -1,30 +1,26 @@
 (function(global) {
   'use strict';
 
-  var controller = function($scope, $rootScope, $element, $sce, $compile,
+  var controller = function($scope, $element, $sce, $compile, $timeout,
                             sourceService, gemService, marked) {
     $scope.runtime_deps = [];
     $scope.development_deps = [];
 
-    var setSource = function(source) {
-      $scope.$apply(function() {
-        $scope.source = $sce.trustAsHtml(source);
-      });
-    };
-
     $scope.$on('get:source', function(_event, owner, method) {
-      sourceService.extract(owner, method);
-    });
-
-    $scope.$on('add:source:with-comment', function(_event, source) {
-      setSource(source);
+      sourceService.extract(owner, method).then(function(source) {
+        $timeout(function() {
+          $scope.$apply(function() {
+            $scope.source = $sce.trustAsHtml(source);
+          });
+        });
+      });
     });
 
     $scope.$on('reset-source', function() {
       $scope.source = null;
     });
 
-    $scope.$on('show:source', function(_event, gemspec) {
+    $scope.$on('show-gem-deps', function(_event, gemspec) {
       $scope.runtime_deps = [];
       $scope.development_deps = [];
 
@@ -60,10 +56,10 @@
 
   global.app.source.controller('SourceController', [
     '$scope',
-    '$rootScope',
     '$element',
     '$sce',
     '$compile',
+    '$timeout',
     'sourceService',
     'gemService',
     'marked',

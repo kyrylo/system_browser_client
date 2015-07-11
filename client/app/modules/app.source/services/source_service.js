@@ -15,7 +15,7 @@
     };
 
     var req = new this.Request('get', 'source', 'with-comment', params);
-    this.socket.send(req);
+    return this.socket.send(req);
   };
 
   global.app.source.service('sourceService', [

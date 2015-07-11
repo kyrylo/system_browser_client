@@ -30,7 +30,7 @@
     var getDescription = function(gemName) {
       gemService.getDescription(gemName).then(function(gemspec) {
         $timeout(function() {
-          $rootScope.$broadcast('show:source', gemspec);
+          $rootScope.$broadcast('show-gem-deps', gemspec);
         });
       });
     };

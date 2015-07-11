@@ -82,8 +82,8 @@
 
     // --- Public methods ------------------------------------------------------
 
-    $scope.showBehaviours = function(gem, behaviourToSelect) {
-      $rootScope.$broadcast('get:behaviour:all', gem, behaviourToSelect);
+    $scope.showBehaviours = function(gem) {
+      $rootScope.$broadcast('get:behaviour:all', gem);
     };
 
     $scope.selectGem = function(gem) {

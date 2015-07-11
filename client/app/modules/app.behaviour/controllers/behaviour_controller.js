@@ -99,8 +99,7 @@
 
     // --- Events --------------------------------------------------------------
 
-    $scope.$on('get:behaviour:all', function(_e, gem, _behaviourToSelect) {
-      behaviourToSelect = _behaviourToSelect;
+    $scope.$on('get:behaviour:all', function(_e, gem) {
       behaviourService.getAllFrom(gem.name).then(function(behaviours) {
         resetMethodState();
 
@@ -116,9 +115,6 @@
         }
 
         $scope.behaviours = behaviours;
-        if (behaviourToSelect) {
-          autoSelectBehaviour(behaviourToSelect);
-        }
       });
     });
 

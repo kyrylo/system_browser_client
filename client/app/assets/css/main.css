@@ -3,6 +3,11 @@
   src: url('PT Sans.ttf') format('truetype');
 }
 
+@font-face {
+  font-family: 'PT Sans Caption';
+  src: url('PT Sans Caption.ttf') format('truetype');
+}
+
 html, body {
     height: 100vh;
 }

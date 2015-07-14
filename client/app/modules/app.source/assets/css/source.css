@@ -9,7 +9,7 @@
 
 #source h1 {
     margin: 0;
-    font-family: PT Sans Caption;
+    font-family: PT Sans Narrow;
     letter-spacing: 1px;
 }
 
@@ -49,4 +49,8 @@
 #source gem-dependency {
     float: left;
     clear: both;
+}
+
+#source-layout {
+    padding: 5px;
 }

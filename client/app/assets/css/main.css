@@ -8,6 +8,11 @@
   src: url('PT Sans Caption.ttf') format('truetype');
 }
 
+@font-face {
+  font-family: 'PT Sans Narrow';
+  src: url('PT Sans Narrow.ttf') format('truetype');
+}
+
 html, body {
     height: 100vh;
 }

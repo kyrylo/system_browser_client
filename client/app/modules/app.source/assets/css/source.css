@@ -1,6 +1,5 @@
 #source {
-    height: calc(100% - 26px);
-    padding: 5px;
+    height: calc(100% - 21px);
     overflow: auto;
 }
 

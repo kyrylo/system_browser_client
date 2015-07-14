@@ -1,0 +1,9 @@
+<div class="filter-input" ng-controller="BehaviourSearchController" ng-show="behaviours.length > 15">
+  <input type="text"
+         ng-model="search.searchText"
+         placeholder="Search behaviours..."
+         class="clearable"
+         ng-class="{x: searching(), 'on-x': search.hoverX}"
+         ng-click="clearSearch($event)"
+         ng-mousemove="onMouseMove($event)">
+</div>

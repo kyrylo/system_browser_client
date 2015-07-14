@@ -1,4 +1,4 @@
-<li ng-repeat="behaviour in behaviours track by $index"
+<li ng-repeat="behaviour in behaviours | filter:searchText"
     ng-click="showGroups(behaviour); selectBehaviour($event, behaviour)"
     ng-class="{selected: behaviour.selected, 'no-behaviour': behaviour.noop}"
     ng-mouseover="showIndentation(behaviour)"

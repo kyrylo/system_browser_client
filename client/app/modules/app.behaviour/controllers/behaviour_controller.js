@@ -7,6 +7,8 @@
 
     $scope.behaviours = [];
 
+    $scope.searchText = '';
+
     // --- Private variables ---------------------------------------------------
 
     var noBehavioursMsg = 'No behaviours found';
@@ -111,6 +113,10 @@
     $scope.$on('reset-behaviour', function() {
       $scope.behaviours = [];
       $rootScope.$broadcast('reset-source');
+    });
+
+    $scope.$on('search-change', function(_event, val) {
+      $scope.searchText = val;
     });
 
     // --- Public methods ------------------------------------------------------

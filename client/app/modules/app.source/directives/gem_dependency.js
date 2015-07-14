@@ -5,7 +5,7 @@
     return {
       restrict: 'E',
 
-      templateUrl: 'partials/_gem_dependency_directive.html'
+      templateUrl: 'modules/app.source/partials/_gem_dependency_directive.html'
     };
   };
 

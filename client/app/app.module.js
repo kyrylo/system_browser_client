@@ -14,7 +14,8 @@
     'marked',
     'ngRoute',
     'ui.layout',
-    'duScroll'
+    'duScroll',
+    'googlechart'
   ];
 
   var appModules = applicationModules.concat(vendorModules);

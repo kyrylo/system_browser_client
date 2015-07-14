@@ -40,9 +40,36 @@
 
       var depsElem = $compile('<gem-dependency>')($scope);
 
+      if (gemspec.behaviours) {
+        $scope.chart = {
+          type: 'BarChart',
+          data: {
+            cols: [
+              {label: "Behaviours", type: "string"},
+              {label: "Quantity", type: "number"},
+              {label: "Color", type: "string", role: 'style'},
+            ],
+            rows: [
+              {c: [{v: "Classes"}, {v: gemspec.behaviours.classes}, {v: '#63a25f'}]},
+              {c: [{v: "Modules"}, {v: gemspec.behaviours.modules}, {v: '#b6b567'}]},
+              {c: [{v: "Exceptions"}, {v: gemspec.behaviours.exceptions}, {v: '#b6678b'}]}
+            ]
+          },
+          options: {
+            title: 'Behaviours',
+            height: 150,
+            legend: 'none'
+          }
+        };
+      }
+
       $scope.source = $sce.trustAsHtml(marked(desc));
       $scope.$apply();
 
+      if (gemspec.behaviours) {
+        var chartElem = $compile('<div google-chart chart="chart" class="chart">')($scope);
+        $element[0].querySelector('.ng-binding').appendChild(chartElem[0]);
+      }
       $element[0].querySelector('.ng-binding').appendChild(depsElem[0]);
     });
 

@@ -25,6 +25,7 @@ module.exports = function(grunt) {
 
           'bower_components/raf/index.js',
           'bower_components/angular-ui-layout/ui-layout.js',
+          'bower_components/angular-google-chart/ng-google-chart.js',
 
           'client/app/app.module.js',
           'client/app/app.routes.js',

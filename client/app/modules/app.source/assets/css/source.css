@@ -10,8 +10,7 @@
 #source h1 {
     margin: 0;
     font-family: PT Sans Caption;
-    text-transform: uppercase;
-    letter-spacing: 3px;
+    letter-spacing: 1px;
 }
 
 #source .CodeRay .code {
@@ -37,6 +36,17 @@
 }
 
 #source .deps {
+    float: left;
+    clear: both;
+}
+
+#source .chart {
+    float: left;
+    width: 75%;
+    height: auto;
+}
+
+#source gem-dependency {
     float: left;
     clear: both;
 }

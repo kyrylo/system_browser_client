@@ -14,6 +14,7 @@
   ],
   "dependencies": {
     "angular-ui-layout": "bower",
-    "ng-scrollbars": "~0.0.5"
+    "ng-scrollbars": "~0.0.5",
+    "angular-google-chart": "~0.0.11"
   }
 }

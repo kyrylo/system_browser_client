@@ -75,14 +75,6 @@
     white-space: pre;
 }
 
-.list-box-content ul li .superclass {
-    color: #c5bec7;
-}
-
-.list-box-content .selected .superclass {
-    color: #ff95f2;
-}
-
 .icon {
     height: 18px;
     width: 18px;

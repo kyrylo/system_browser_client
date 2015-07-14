@@ -1,22 +1,34 @@
-.class-icon {
+#behaviour-list-box .class-icon {
     background: url("class-icon.svg");
 }
 
-.module-icon {
+#behaviour-list-box .module-icon {
     background: url("module-icon.svg");
 }
 
-.exception-icon {
+#behaviour-list-box .exception-icon {
     background: url("exception-icon.svg");
 }
 
-.superclass .classname {
+#behaviour-list-box .superclass .classname {
     text-decoration: underline;
 }
 
-.superclass .classname:hover {
+#behaviour-list-box .superclass .classname:hover {
     text-decoration: underline;
-    color: #619DA1;
+    color: #619da1;
+}
+
+#behaviour-list-box .superclass {
+    color: #c5bec7;
+}
+
+#behaviour-list-box .selected .superclass {
+    color: #ff95f2;
+}
+
+#behaviour-list-box .selected .classname:hover {
+    color: #fcd7ff;
 }
 
 #behaviour-list-box ul li.no-behaviour {

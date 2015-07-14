@@ -1,5 +1,6 @@
 #source {
-    height: calc(100% - 21px);
+    height: calc(100% - 26px);
+    padding: 5px;
     overflow: auto;
 }
 
@@ -52,5 +53,5 @@
 }
 
 #source-layout {
-    padding: 5px;
+    height: 100%;
 }

@@ -39,7 +39,3 @@
 #behaviour-list-box ul li.no-behaviour:hover {
     background-color: #f5f5f5;
 }
-
-#behaviour-list-box .list-box-content {
-    height: calc(100% - 26px);
-}

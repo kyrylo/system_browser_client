@@ -44,6 +44,8 @@
     float: left;
     width: 75%;
     height: auto;
+    z-index: -1;
+    position: relative;
 }
 
 #source gem-dependency {

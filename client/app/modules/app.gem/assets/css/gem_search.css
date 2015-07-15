@@ -16,3 +16,7 @@
 #gem-list-box .clearable.on-x {
     cursor: pointer;
 }
+
+#gem-list-box > div {
+    height: calc(100% - 27px);
+}

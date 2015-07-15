@@ -13,7 +13,7 @@
 }
 
 .list-box > div {
-    height: calc(100% - 27px);
+    height: 100%;
     margin-bottom: 3px;
     padding-top: 3px;
 }

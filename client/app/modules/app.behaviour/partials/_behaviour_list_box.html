@@ -1,7 +1,7 @@
 <div id="behaviour-list-box" class="list-box" ng-controller="BehaviourController">
   <ng-include src="'modules/app.behaviour/partials/_search.html'"></ng-include>
 
-  <div class="list-box-content" id="behaviour-container">
+  <div class="list-box-content" id="behaviour-container" ng-class="{'with-search': needsSearch()}">
     <ul>
       <ng-include src="'modules/app.behaviour/partials/_behaviour_item.html'"></ng-include>
     </ul>

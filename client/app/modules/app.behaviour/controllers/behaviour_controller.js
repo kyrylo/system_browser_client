@@ -152,6 +152,10 @@
       });
     };
 
+    $scope.needsSearch = function() {
+      return $scope.behaviours.length > 15;
+    };
+
     $scope.showIndentation = showIndentation;
 
     $scope.hideIndentation = hideIndentation;

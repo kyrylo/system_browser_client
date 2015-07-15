@@ -1,4 +1,4 @@
-<div class="filter-input" ng-controller="BehaviourSearchController" ng-show="behaviours.length > 15">
+<div class="filter-input" ng-controller="BehaviourSearchController" ng-show="needsSearch()">
   <input type="text"
          ng-model="search.searchText"
          placeholder="Search behaviours..."

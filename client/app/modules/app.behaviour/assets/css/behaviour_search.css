@@ -16,3 +16,7 @@
 #behaviour-list-box .clearable.on-x {
     cursor: pointer;
 }
+
+#behaviour-list-box > div.with-search {
+    height: calc(100% - 27px);
+}

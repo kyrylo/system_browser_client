@@ -1,5 +1,6 @@
 {
   "name": "system_browser",
+  "version": "0.0.1",
   "main": "dist/index.html",
   "window": {
     "toolbar": false,
@@ -25,6 +26,7 @@
     "grunt-contrib-copy": "^0.8.0",
     "grunt-contrib-cssmin": "^0.12.3",
     "grunt-contrib-watch": "^0.6.1",
+    "grunt-nw-builder": "^2.0.0",
     "jasmine-core": "^2.3.4",
     "karma": "^0.12.37",
     "karma-jasmine": "^0.3.6",

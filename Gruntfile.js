@@ -88,6 +88,14 @@ module.exports = function(grunt) {
           }
         ]
       }
+    },
+
+    nwjs: {
+      options: {
+        platforms: ['linux32', 'linux64', 'osx'],
+        buildDir: './builds'
+      },
+      src: ['./**/*']
     }
   });
 
@@ -95,6 +103,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-nw-builder');
 
   grunt.registerTask('default', ['concat', 'cssmin', 'copy', 'watch']);
 };

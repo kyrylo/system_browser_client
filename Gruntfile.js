@@ -36,7 +36,7 @@ module.exports = function(grunt) {
           'client/app/**/*.js',
         ],
 
-        dest: '<%= dist %><%= pkg.name %>.js'
+        dest: '<%= dist %>sb.js'
       }
     },
 
@@ -48,7 +48,7 @@ module.exports = function(grunt) {
 
       target: {
         files: {
-          '<%= dist %><%= pkg.name %>.css': [
+          '<%= dist %>sb.css': [
             'node_modules/normalize.css/normalize.css',
             'bower_components/angular-ui-layout/ui-layout.css',
 
@@ -92,10 +92,16 @@ module.exports = function(grunt) {
 
     nwjs: {
       options: {
-        platforms: ['linux32', 'linux64', 'osx'],
+        platforms: ['linux64'],
         buildDir: './builds'
       },
-      src: ['./**/*']
+      src: [
+        './**/*'
+        // 'package.json',
+        // 'node_modules',
+        // 'bower_components',
+        // 'dist'
+      ]
     }
   });
 

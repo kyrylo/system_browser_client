@@ -25,8 +25,6 @@ Installation
 At the moment System Browser Client is not packaged, so you have to install it
 manually. Sorry about that.
 
-### v0.1.0 (July 20, 2015)
-
 1. Install the [server][srv]
 1. Select a suitable distribution for your operating system and download it
     * [OSX x32](https://www.dropbox.com/s/8n9d1sz2skau1d5/system-browser-client_osx32.zip?dl=0)

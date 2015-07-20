@@ -92,7 +92,7 @@ module.exports = function(grunt) {
 
     nwjs: {
       options: {
-        platforms: ['linux64'],
+        platforms: ['osx32', 'osx64', 'linux32', 'linux64'],
         buildDir: './builds'
       },
       src: [

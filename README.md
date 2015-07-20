@@ -9,9 +9,9 @@ Description
 
 **NOTE:** this is beta software. It contains bugs and sometimes is unresponsive.
 
-System Browser Client is a desktop application that displays information about
-Ruby classes and modules (behaviours), showing both methods and their source
-code.
+System Browser Client is a desktop app for browsing Ruby code. Just click to get
+details about a module or class and explore its namespace or see the source of a
+method.
 
 ![System Browser Client](/screenshots/readme.png)
 

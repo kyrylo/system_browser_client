@@ -33,9 +33,17 @@ manually. Sorry about that.
     * [OSX x64](https://www.dropbox.com/s/22l6mzmmztdcd2g/system-browser-client_osx64.zip?dl=0)
     * [GNU/Linux x32](https://www.dropbox.com/s/hnb70xmv9sitp45/system-browser-client_linux32.zip?dl=0)
     * [GNU/Linux x64](https://www.dropbox.com/s/kbn9r5dncb9bczw/system-browser-client_linux64.zip?dl=0)
-1.1 For OSX
-    * ...
-1.1 For GNU/Linux add the `system_browser` executable to your `$PATH` variable.
+1. Make sure the server can verify that the client is installed
+    * For OSX drag the unzipped application to Applications folder
+    * For GNU/Linux add the `system_browser` executable to your `$PATH` variable
+1. The client is installed and you are ready to work with the server now
+1. Important: do not run the client manually (the information will be missing)
+
+Credits
+-------
+
+* Big thanks to [@havenwood](https://github.com/havenwood) for helping me
+  testing it on OSX
 
 Licence
 -------

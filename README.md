@@ -25,7 +25,7 @@ Installation
 At the moment System Browser Client is not packaged, so you have to install it
 manually. Sorry about that.
 
-1. Install the [server][srv]
+1. Install the [server][srv] (`gem install system_browser`)
 1. Select a suitable distribution for your operating system and download it
     * [OSX x32](https://www.dropbox.com/s/8n9d1sz2skau1d5/system-browser-client_osx32.zip?dl=0)
     * [OSX x64](https://www.dropbox.com/s/22l6mzmmztdcd2g/system-browser-client_osx64.zip?dl=0)
@@ -37,6 +37,13 @@ manually. Sorry about that.
     * For GNU/Linux add the `system_browser` executable to your `$PATH` variable
 1. The client is installed and you are ready to work with the server now
 1. Important: do not run the client manually (the information will be missing)
+
+Quick test. Start IRB and copy-paste this:
+
+```ruby
+require 'system_browser'
+SystemBrowser.start
+```
 
 Credits
 -------

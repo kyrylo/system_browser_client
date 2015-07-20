@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "main": "dist/index.html",
   "window": {
-    "toolbar": true,
+    "toolbar": false,
     "width": 800,
     "height": 600
   },

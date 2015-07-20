@@ -10,8 +10,8 @@ Description
 **NOTE:** this is beta software. It contains bugs and sometimes is unresponsive.
 
 System Browser Client is a desktop application that displays information about
-Ruby behaviours (classes and modules), its methods and the methods' source
-code. _Make sure that you have the [server][srv]_ installed.
+Ruby classes and modules (behaviours), showing both methods and their source
+code.
 
 ![System Browser Client](/screenshots/readme.png)
 
@@ -27,10 +27,10 @@ manually. Sorry about that.
 
 1. Install the [server][srv] (`gem install system_browser`)
 1. Select a suitable distribution for your operating system and download it
-    * [OSX x32](https://www.dropbox.com/s/8n9d1sz2skau1d5/system-browser-client_osx32.zip?dl=0)
-    * [OSX x64](https://www.dropbox.com/s/22l6mzmmztdcd2g/system-browser-client_osx64.zip?dl=0)
-    * [GNU/Linux x32](https://www.dropbox.com/s/hnb70xmv9sitp45/system-browser-client_linux32.zip?dl=0)
-    * [GNU/Linux x64](https://www.dropbox.com/s/kbn9r5dncb9bczw/system-browser-client_linux64.zip?dl=0)
+    * [OSX x32](https://www.dropbox.com/s/8n9d1sz2skau1d5/system-browser-client_osx32.zip?dl=1)
+    * [OSX x64](https://www.dropbox.com/s/22l6mzmmztdcd2g/system-browser-client_osx64.zip?dl=1)
+    * [GNU/Linux x32](https://www.dropbox.com/s/hnb70xmv9sitp45/system-browser-client_linux32.zip?dl=1)
+    * [GNU/Linux x64](https://www.dropbox.com/s/kbn9r5dncb9bczw/system-browser-client_linux64.zip?dl=1)
 1. Unzip the downloaded archive
 1. Make sure the server can verify that the client is installed
     * For OSX drag the unzipped application to Applications folder

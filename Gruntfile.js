@@ -96,11 +96,12 @@ module.exports = function(grunt) {
         buildDir: './builds'
       },
       src: [
-        './**/*'
-        // 'package.json',
-        // 'node_modules',
-        // 'bower_components',
-        // 'dist'
+        'package.json',
+
+        'node_modules/marked/**/*',
+        'node_modules/underscore/**/*',
+
+        'dist/**/*'
       ]
     }
   });
@@ -111,5 +112,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-nw-builder');
 
-  grunt.registerTask('default', ['concat', 'cssmin', 'copy', 'watch']);
+  grunt.registerTask('compile', ['concat', 'cssmin', 'copy']);
+  grunt.registerTask('default', ['compile', 'watch']);
 };

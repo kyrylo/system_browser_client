@@ -33,6 +33,7 @@ manually. Sorry about that.
     * [OSX x64](https://www.dropbox.com/s/22l6mzmmztdcd2g/system-browser-client_osx64.zip?dl=0)
     * [GNU/Linux x32](https://www.dropbox.com/s/hnb70xmv9sitp45/system-browser-client_linux32.zip?dl=0)
     * [GNU/Linux x64](https://www.dropbox.com/s/kbn9r5dncb9bczw/system-browser-client_linux64.zip?dl=0)
+1. Unzip the downloaded archive
 1. Make sure the server can verify that the client is installed
     * For OSX drag the unzipped application to Applications folder
     * For GNU/Linux add the `system_browser` executable to your `$PATH` variable

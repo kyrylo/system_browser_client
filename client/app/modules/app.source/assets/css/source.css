@@ -56,3 +56,8 @@
 #source-layout {
     height: 100%;
 }
+
+#source .source-content {
+    z-index: 1;
+    position: relative;
+}

@@ -15,7 +15,7 @@ method.
 
 ![System Browser Client](/screenshots/readme.png)
 
-The browser does not display information about behaviours it real time. That
+The browser does not display information about behaviours in realtime. That
 is, if you launch the browser and define a class after it, the browser won't
 display it.
 

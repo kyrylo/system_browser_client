@@ -15,4 +15,10 @@ code. _Make sure that you have the [server][srv]_ installed.
 
 ![System Browser Client](/screenshots/readme.png)
 
+
+Licence
+-------
+
+The project uses the Zlib License. See LICENCE.txt file for more information.
+
 [srv]:  https://github.com/kyrylo/system_browser_server/

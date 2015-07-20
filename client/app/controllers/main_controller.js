@@ -13,7 +13,11 @@
 
     win.on('close', function() {
       console.log('Shutting down the client normally...');
-      socket.end('FIN');
+
+      if (socket.writable) {
+        socket.end('FIN');
+      }
+
       this.close(true);
     });
 

@@ -1,4 +1,4 @@
-(function(global) {
+(function(global, process) {
   'use strict';
 
   var EventLoop = function($rootScope, socket, messageDispatcher,
@@ -37,4 +37,4 @@
     'messageDispatcher',
     'callbackStoreService',
     EventLoop]);
-})(window.global);
+})(window.global, window.process);
